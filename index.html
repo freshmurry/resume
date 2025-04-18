@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html>
-	<head>
+<html><head>
 		<title>Lawrence Murry, CF APMP - Senior Proposal Professional | SaaS Proposal Management Expert</title>
 	
 		<meta charset="UTF-8">
@@ -10,7 +8,7 @@
 		<meta name="description" content="Lawrence Murry, CF APMP, is an experienced Proposal Expert specialized in improving win rates, streamlining proposal processes, and crafting winning narratives for Fortune 500 tech companies. Expert in Cloud SaaS Solutions and Proposal Management.">
 		
 		<!-- Open Graph Meta Tags for LinkedIn and Facebook -->
-		<meta property="og:title" content="Lawrence Murry - Senior Technical Proposal Manager, CF APMP | Proposal Management & Cloud SaaS Expert">
+		<meta property="og:title" content="Lawrence Murry - Senior Technical Proposal Manager, CF APMP | Proposal Management &amp; Cloud SaaS Expert">
 		<meta property="og:description" content="Experienced Senior Proposal Manager, Lawrence Murry specializes in Cloud SaaS Solutions, improving win rates, and crafting winning proposals for Fortune 500 tech companies">
 		<meta property="og:type" content="website">
 		<meta property="og:url" content="https://lawrencemurry.com">
@@ -24,9 +22,9 @@
 		<meta name="twitter:image" content="/images/lawrence-murry-profile.jpg">
 		
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-		<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	
 		<style>
 			html,body,h1,h2,h3,h4,h5,h6 {
@@ -40,15 +38,147 @@
 			.w3-teal {
 				background-color: #660000!important;
 			}
-	/*		.footer {
-			  height: 50px;
-			  margin-top: -50px;
-			}*/
+
+            .w3-margin-top {
+                margin-top: 95px!important;
+            }
+			
+			/* Responsive navbar styles */
+			.navbar {
+				overflow: hidden;
+				background-color: #660000;
+				position: fixed;
+				top: 0;
+				width: 100%;
+				z-index: 1000;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 0 20px;
+			}
+			
+			.navbar-brand {
+				color: white;
+				font-weight: bold;
+				font-size: 1.2em;
+				text-decoration: none;
+				padding: 15px 0;
+			}
+			
+			.navbar-links {
+				display: flex;
+			}
+			
+			.navbar-links a {
+				color: white;
+				text-align: center;
+				padding: 15px 16px;
+				text-decoration: none;
+				transition: background-color 0.3s;
+			}
+			
+			.navbar-links a:hover {
+				background-color: #800000;
+			}
+			
+			.navbar-toggle {
+				display: none;
+				color: white;
+				font-size: 24px;
+				cursor: pointer;
+				padding: 15px 0;
+			}
+			
+			/* Main content padding for fixed navbar */
+			.main-content {
+				margin-top: 60px;
+			}
+			
+			/* Portfolio styles */
+			.portfolio-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+				gap: 20px;
+				padding: 20px 0;
+			}
+			
+			.portfolio-item {
+				border: 1px solid #ddd;
+				border-radius: 5px;
+				overflow: hidden;
+				transition: transform 0.3s;
+			}
+			
+			.portfolio-item:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+			}
+			
+			.portfolio-item img {
+				width: 100%;
+				height: 200px;
+				object-fit: cover;
+			}
+			
+			.portfolio-info {
+				padding: 15px;
+			}
+			
+			.portfolio-info h3 {
+				margin-top: 0;
+				color: #660000;
+			}
+			
+			.portfolio-info p {
+				color: #666;
+			}
+			
+			.portfolio-links {
+				display: flex;
+				justify-content: space-between;
+				padding: 10px 15px;
+				background-color: #f5f5f5;
+			}
+			
+			.portfolio-links a {
+				color: #660000;
+				text-decoration: none;
+				font-weight: bold;
+			}
+			
+			.portfolio-links a:hover {
+				text-decoration: underline;
+			}
+			
+			/* Responsive styles */
+			@media screen and (max-width: 768px) {
+				.navbar-links {
+					display: none;
+					width: 100%;
+					flex-direction: column;
+					position: absolute;
+					top: 50px;
+					left: 0;
+					background-color: #660000;
+				}
+				
+				.navbar-links.show {
+					display: flex;
+				}
+				
+				.navbar-toggle {
+					display: block;
+				}
+				
+				.navbar {
+					justify-content: space-between;
+				}
+			}
 		</style>
 	
 		<!-- GOOGLE ANALYTICS -->
 		<!-- Google tag (gtag.js) -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-J33KDZH512"></script>
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-J33KDZH512"></script>
 		<script>
 		  window.dataLayer = window.dataLayer || [];
 		  function gtag(){dataLayer.push(arguments);}
@@ -59,13 +189,26 @@
 		
 		<!-- <meta name="google-site-verification" content="XdI41_pj4jI5rKQ5e0Xn11OftplCwXPXmrKtsZOdhUI" /> -->
 	
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8786200479780334" crossorigin="anonymous"></script>
+		<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8786200479780334" crossorigin="anonymous"></script>
 		
 	</head>
 	<body class="w3-light-grey">
+		<!-- Responsive Navbar -->
+		<nav class="navbar">
+			<a href="index.html" class="navbar-brand">Lawrence Murry</a>
+			<div class="navbar-toggle" onclick="toggleNavbar()">
+				<i class="fa fa-bars"></i>
+			</div>
+			<div class="navbar-links" id="navbarLinks">
+				<a href="index.html">Home</a>
+				<a href="portfolio.html">Development Portfolio</a>
+				<a href="ecommerce.html">FreshMurry Store</a>
+				<a href="mailto:lawrencemurry@yahoo.com?subject=Mail from My Online Resume">Contact</a>
+			</div>
+		</nav>
 	
 		<!-- Page Container -->
-		<div class="w3-content w3-margin-top" style="max-width:1400px;">
+		<div class="w3-content w3-margin-top main-content" style="margin-top: 100%; max-width:1400px;">
 		
 		 	<!-- The Grid -->
 		  <div class="w3-row-padding">
@@ -80,8 +223,8 @@
 		        </div>
 		        <div class="w3-container">
 							<h1 class="w3-center"><b class="w3-text w3-center" style="font-size: 1.5em;">Lawrence Murry</b></h1>
-				<p>An Experienced Senior Proposal Manager, Lawrence Murry helps proposal teams increase win rates by improving proposal processes, removing wasteful events, streamlining tedius tasks, and crafting narratives that result in multi-million dollar contracts."<p>
-				      <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text"></i>Senior Proposal Manager</p>
+				<p>An Experienced Senior Proposal Manager, Lawrence Murry helps proposal teams increase win rates by improving proposal processes, removing wasteful events, streamlining tedius tasks, and crafting narratives that result in multi-million dollar contracts."</p><p>
+				      </p><p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text"></i>Senior Proposal Manager</p>
 				     	<p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text"></i>Chicago, IL</p>
 		         	<a href="mailto:lawrencemurry@yahoo.com?subject=Mail from My Online Resume"><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text"></i>Email Me</a>
 				      <p><i class="fab fa-linkedin fa-fw w3-margin-right w3-large w3-text"></i><a href="https://www.linkedin.com/in/lawrence-murry/" target="_blank">LinkedIn</a></p>
@@ -171,40 +314,6 @@
 			    	    <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:5%">5%</div>
 			        </div><hr>
 
-<!-- 						  <p class="w3-large w3-text-theme"><b><i class="fas fa-laptop-code fa-fw w3-margin-right w3-text"></i>Ruby on Rails Experience</b></p>
-						  <ul>
-							  <li><b>5 yrs. Experience Building Peer-Sharing Apps</b></li>
-							 	<li>Simple authentication with email/password</li>
-								<li>Advanced authentication with Facebook</li>
-								<li>Sending transactional email when new user signed up</li>
-								<li>Page for users to edit Profile</li>
-								<li>Page for hosts (Company) to create/edit asset</li>
-								<li>Photos Upload to AWS S3</li>
-								<li>Reservation system with Start Date and End Date</li>
-								<li>Searching system with different criteria</li>
-								<li>Functions Allow Hosts to Create Assets in Steps</li>
-								<li>2-way Review System</li>
-								<li>AJAX Searching</li>
-								<li>Dashboard for Host (Company) + Guest (Customers)</li>
-								<li>User Identification with SMS (via mobile #)</li>
-								<li>Real-time Private Message with ActionCable</li>
-								<li>Setting Instant/Request Booking</li>
-								<li>Calendar - Setting Availability and Price</li>
-								<li>Calendar - Showing Reservations</li>
-								<li>Payments with Credit Card (via Stripe)</li>
-								<li>Payout to Hosts (Company) with Stripe Connect</li>
-								<li>Revenue Charts for Hosts (Company)</li>
-								<li>Sending Email Notification When Booking Successfully</li>
-								<li>Sending SMS When Booking Successfully</li>
-						  </ul><hr> -->
-		         <!-- CERTIFICATION BADGES -->	
-<!--  		         <p class="w3-large w3-text-theme"><b><i class="fa fa-certificate fa-fw w3-margin-right w3-text"></i>Certification Badges</b></p>
-		          <a href="https://www.credly.com/badges/13889ad0-2f90-4a73-b4fb-6545de135f64" target="_blank"><img class="w3-margin-right" src="https://www.apmp.org/assets/ContentLayoutImages/APMP+Foundation+-+2020+_600PX__ScaleMaxWidthWzEzNjZd.png" style="width: 80px; height: 80px;"></a>	
-		          <a href="https://www.credly.com/badges/8882bf8b-fd80-4821-bbad-5e6b770863f9" target="_blank"><img class="w3-margin-right" src="https://static.scrum.org/web/badges/badge-psmi.svg" alt="Professional Scrum Master I Badge" style="width: 80px; max-height: 100px;"></a>
-		         	<a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=3FC3D166FAACA867867EAA9A87E0DE3319105684FBC1EB16FF5F0B67822168CC" target="_blank"><img class="w3-margin-right" src="https://brm-workforce.oracle.com/pdf/certview/images/102_Oracle_Cloud_Infrastructure_Foundations_Associate.png" alt="Oracle Cloud Infrastructure Foundations 2021 Associate" style="width: 93px; height: 80px; object-fit: cover; margin:0 auto;"></a>
-		         	<a href="file:///C:/Users/lmurry/Desktop/Online%20Resume/img/LSSGB_Certification.pdf" target="_blank"><img class="w3-margin-right" src="https://gaqm.org/uploads/cert_logos/logo_5442.png" style="width: 90px; height: 90px;"></a> -->
-		         	<hr>
-
 		        	<p class="w3-large w3-text-theme"><b><i class="fa fa-laptop fa-fw w3-margin-right w3-text"></i>Computer Proficiency</b></p>
 						  
 						  <ul>
@@ -248,16 +357,6 @@
 		    <div class="w3-container">
 			    <h5 class="w3-opacity"><b>Senior Proposal Manager | <a href="https://cloudflare.com" target="_blank">Cloudeflare, Inc.</a></b></h5>
 			    <h6 class="w3-text"><i class="fa fa-calendar fa-fw w3-margin-right"></i>July 2024 - Present</h6>
-<!-- 			    <ul>
-				<li>A team of 1, I manage and orchistrat all Hitachi Solution America proposal efforts for all lines of the Microsoft product stack.</li>
-				<li>Responsible for a highly complex proposal process and ensuring compliant, compelling, 
-					and complete proposal responses while managing a large numbers of cross-functional matrixed resources.</li>
-				<li>Sourced viable Proposal Software vendors to finalize and implement company's first ever proposal content management and response software tool.</li>
-				<li>Lead a team of Business Development Directors, Solution Architects, and Solution Princials on RFx response best practices while mantaining a 100% on-time submission rate.</li>
-				<li>Responsible for gathering and building over 1,500 proposal repository content.</li>
-				 <li>Lead a team of Business Development Directors, Pre-Sales Architects, Solution Architects, and Solution Principals on RFx response best practices while maintaining a 100% on-time submission rate.</li>
-				<li>Report to Vice President of Pre-Sales</li>
-			</ul> -->
 				<hr>
 		    </div>
 			    
@@ -284,7 +383,7 @@
 				<li>Strategical federal, state, and local Senior Proposal Manager within a complex proposal process--responsible for ensuring compliant, compelling, 
 				and complete proposal while managing a large numbers of cross-functional matrixed resources.</li>
 			      	<li>Successfully managed a highly complex regulated federal proposal deal that resulted in $1.2MM ARR in my first quarter on a new team (Q1 FY22). 💪🏾</li>
-				<li>Managed a team of 21 SME’s on a highly complex commercial proposal deal that resulted in $1.6MM ARR/ $12.8MM TCV (Q1 FY23). 💪🏾</li>
+				<li>Managed a team of 21 SME's on a highly complex commercial proposal deal that resulted in $1.6MM ARR/ $12.8MM TCV (Q1 FY23). 💪🏾</li>
 				<li>Federal: Dept. of Energy, Dept. of Homeland Security, Dept. of Agriculture</li>
 				<li>Local Government: City of McAllen, City of Vantura, State of New Jersey, Utah State Board of Ed, Province of Ontario, Nunavut, Chicago Housing Authority, Florida Depart. of Transportation</li>
 				<li>Public Sector/Higher-Ed: Illinois Central College, Uniersity of Colorado</li>
@@ -391,115 +490,4 @@
 		    </div>
 
 		    <!-- PROFESSIONAL DEVELOPMENT -->
-		  	<div class="w3-container w3-card w3-white w3-margin-bottom">
-					<h2 class=" w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text"></i><b>Professional Development</b></h2>
-		      <div class="w3-container w3-quarter">
-		      	<h5 class="w3-opacity"><b><a href="img/Certificate of Completion_PMP_CAPM Training.pdf" target="_blank">Project Management Professional</a></b></h5>
-		        <h6 class="w3-text">MicroTrain</h6>
-		      </div>
-		      
-					<div class="w3-container w3-quarter">
-						<h5 class="w3-opacity"><b><a href="img/Certificate of Completion_Certified Business Analyst Training_IIBA.pdf" target="_blank">Business Analysis Fundementals</a></b></h5>
-		      	<h6 class="w3-text">MicroTrain</h6>
-		     	</div>
-
-			  	<div class="w3-container w3-quarter">
-		      	<h5 class="w3-opacity"><b><a href="img/Certificate of Completion_ITIL 4 Foundations Training.pdf" alt="" target="_blank">ITIL Foundations</a></b></h5>
-		       <h6 class="w3-text">MicroTrain</h6>
-		     </div>
-				<div class="w3-container w3-quarter">
-		      	<h5 class="w3-opacity"><b><a href="https://ti-user-certificates.s3.amazonaws.com/9c0b7644-4501-4366-8739-11d3f3d9367e/7dbaf629-e93e-4288-9ca2-ef67d9c03fee-lawrence-murry-0b5910db-4725-4306-9429-f21c30ae5fd0-certificate.pdf" alt="" target="_blank">Shipley Trained</a></b></h5>
-		       <h6 class="w3-text">Shipley</h6>
-		     </div>
-
-				<div class="w3-container w3-quarter">
-		      	<h5 class="w3-opacity"><b><a href="https://academy.responsive.io/student/award/n17V74pnnGzX3avz32Q57wNT?id=302614203" alt="" target="_blank">Certified Content Management</a></b></h5>
-		       <h6 class="w3-text">Responsive Academy</h6>
-		     </div>
-		    </div>
-
-		    <!-- WEB PROJECTS -->
-
-<!-- 			<div class="w3-container w3-card w3-white w3-margin-bottom">
-		    <h2 class="w3-padding-16"><i class="fa fa-laptop-code fa-fw w3-margin-right w3-xxlarge w3-text"></i><b>Web Projects</b></h2>
-		  	
-				<div class="w3-container">
-		      <h5 class="w3-opacity"><b>Ruby on Rails Developer | <a href="https://parkvillain.herokuapp.com/" target="_blank">Parkvillain</a></b></h5>
-		      <h6 class="w3-text"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Sept. 2020</h6>
-		      <p>Parkvillain is a residential parking marketplace app that connects drivers and car owners with under-utilized garage space owners. Parkvillain 
-							owners can rent out their garages to people who maynot have a garage to protect their cars from theft or protection from the weather or other harsh outdoor conditions.</p><hr>
-		    </div>
-					
-		    <div class="w3-container">
-		      <h5 class="w3-opacity"><b>Ruby on Rails Developer | <a href="https://bouncygroup.herokuapp.com/" target="_blank">BouncyGroup</a></b></h5>
-		      <h6 class="w3-text"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Aug. 2020</h6>
-		      <p>BouncyGroup is a peer-sharing bounce house rental marketplace app where people can book and rent a bounce house for a party.</p><hr>
-		    </div>
-			
-		    <div class="w3-container">
-		      <h5 class="w3-opacity"><b>Ruby on Rails Developer | <a href="https://poolcrasher.herokuapp.com/" target="_blank">PoolCrasher</a></b></h5>
-		      <h6 class="w3-text"><i class="fa fa-calendar fa-fw w3-margin-right"></i>July 2020</h6>
-		      <p>PoolCrasher is a peer-sharing marketplace app that connects people with under-utilized pools. Pool owners can rent out their pools to people 
-						who want to book an available pool to take a dip.</p><hr>
-		    </div>
-
-		    <div class="w3-container">
-		      <h5 class="w3-opacity"><b>Ruby on Rails Developer | <a href="https://www.shindigspace.com/" target="_blank">ShindigSpace</a></b></h5>
-		      <h6 class="w3-text"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Jan 2017</h6>
-		      <p>ShindigSpace is a peer-sharing venue space marketplace app for under-utilized venue space owners and people who want to book affordable
-		        venue spaces in high density urban cities.</p><hr>
-		    </div>
-			      
-		    <div class="w3-container">
-		      <h5 class="w3-opacity"><b>Ruby on Rails Developer  | <a href="https://uppercutzz.herokuapp.com" target="_blank">Uppercutzz</a></b></h5>
-		      <h6 class="w3-text"><i class="fa fa-calendar fa-fw w3-margin-right"></i>June 2016</h6>
-		      <p>Uppercutzz is a fully functional stylist booking web app. Uppercutzz is a project that displays my ability to create a real-world booking app 
-							that allows stylst to accept online and mobile bookings.Created with Ruby on Rails, this is an on-going project with aspirations to further 
-							develop it into a stylist marketplace.
-		      </p><hr>
-		    </div>
-
-		    <div class="w3-container">
-		      <h5 class="w3-opacity"><b>Ruby on Rails Developer  | <a href="https://naptivity.herokuapp.com" target="_blank">Naptivity</a></b></h5>
-		      <h6 class="w3-text"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Jun 2016<h6>
-		      <p>Naptivity is a fully functional dorm room sharing rental marketplace. Similar to AirBnB, Naptivity was created to showcase my ability to create 
-			  	a real-world peer-sharing app where users can book a dorm room and submit payments via Paypal's API. This project was created using the Ruby on Rails 
-			  	framwork, Ruby, HTML, CSS, Javascript, and Github as the code repository.</p>
-				</div>
-			</div> -->
-
-			<!-- EXTRA SECTION -->
-	<!-- 		<div class="w3-container w3-card w3-white w3-margin-bottom">
-		    <h2 class="w3-padding-16"><i class="w3-text"></i>Dear Hiring Manager,</h2>
-		  	<p>For much of my career, all I've heard was, <q>you don't have enough experience, you don't have experience in this, you don't have experience in that.</q> If you're reviewing this resume and you're having any hesitations regarding my ability to be successful in your position, just let this resume website serve as justification.</p>
-		    <p>Sincerely,</p>
-		    <p>Top Candidate</p>
-		  </div> -->
-		  <!-- End Right Column -->
-		  </div>    
-		  <!-- End Grid -->
-		</div>
-		  <!-- End Page Container -->
-	</div>
-	
-	<footer class="w3-container w3-teal w3-center w3-margin-top">
-		<div class="w3-third">
-			<p>Connect with me on Social Media</p>
-			<!--<i class="fa fa-facebook-official w3-hover-opacity"></i>-->
-			<a i class="fab fa-linkedin w3-hover-opacity" height="50" width="50" href="https://www.linkedin.com/in/lawrence-murry/" target="_blank"></a>
-			<a class="fab fa-github w3-hover-opacity" href="https://github.com/freshmurry" target="_blank"></a>
-<!-- 			<a class="fab fa-instagram w3-hover-opacity" href="https://instagram.com/freshmurry" target="_blank"></a>
-			<a class="fab fa-twitter w3-hover-opacity" href="https://twitter.com/freshmurry" target="_blank"></a> -->
-		</div>
-		<div class="w3-third">
-			<a><p>Created by <a href="https://www.linkedin.com/in/lawrence-murry" target="_blank">Lawrence Murry</a></p>
-			<a href="ecommerce.html" target="_blank">FreshMurry Store</a>
-		</div>
-		<div class="w3-third">
-			<p>Want an Online Resume Created?</p><a href="mailto:lawrencemurry@yahoo.com?subject=Mail from My Online Resume"><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text"></i>Email Me</a>
-		</div>
-		<!--<br></br>-->
-	</footer>
-	
-	</body>
-</html>
+		  	</div></div></div></body></html>
