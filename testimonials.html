@@ -175,6 +175,76 @@
   					justify-content: space-between;
   				}
   			}
+
+        .testimonial-section {
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+            background-color: #f9f9f9;
+          }
+        
+          .testimonial-item {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 2rem;
+            max-width: 1000px;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+          }
+        
+          .testimonial-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        
+          .testimonial-content {
+            flex: 1;
+          }
+        
+          .stars {
+            color: #ffc107; /* Gold color */
+            margin-bottom: 1rem;
+          }
+        
+          .testimonial-text {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333;
+          }
+        
+          .profile-details {
+            margin-top: 1rem;
+          }
+        
+          .profile-name {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+          }
+        
+          .profile-title {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #666;
+          }
+        
+          @media (max-width: 768px) {
+            .testimonial-item {
+              flex-direction: column;
+              align-items: center;
+              text-align: center;
+            }
+        
+            .testimonial-content {
+              text-align: left;
+            }
+          }
   		</style>
   	
   		<!-- GOOGLE ANALYTICS -->
@@ -192,7 +262,7 @@
   	
   		<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8786200479780334" crossorigin="anonymous" data-checked-head="true"></script>
   		
-  	<script data-cfasync="false" nonce="03b1b125-d7c4-4ab4-a4c9-718f0201c70c">try{(function(w,d){!function(bz,bA,bB,bC){if(bz.zaraz)console.error("zaraz is loaded twice");else{bz[bB]=bz[bB]||{};bz[bB].executed=[];bz.zaraz={deferred:[],listeners:[]};bz.zaraz._v="5853";bz.zaraz._n="03b1b125-d7c4-4ab4-a4c9-718f0201c70c";bz.zaraz.q=[];bz.zaraz._f=function(bD){return async function(){var bE=Array.prototype.slice.call(arguments);bz.zaraz.q.push({m:bD,a:bE})}};for(const bF of["track","set","debug"])bz.zaraz[bF]=bz.zaraz._f(bF);bz.zaraz.init=()=>{var bG=bA.getElementsByTagName(bC)[0],bH=bA.createElement(bC),bI=bA.getElementsByTagName("title")[0];bI&&(bz[bB].t=bA.getElementsByTagName("title")[0].text);bz[bB].x=Math.random();bz[bB].w=bz.screen.width;bz[bB].h=bz.screen.height;bz[bB].j=bz.innerHeight;bz[bB].e=bz.innerWidth;bz[bB].l=bz.location.href;bz[bB].r=bA.referrer;bz[bB].k=bz.screen.colorDepth;bz[bB].n=bA.characterSet;bz[bB].o=(new Date).getTimezoneOffset();if(bz.dataLayer)for(const bJ of Object.entries(Object.entries(dataLayer).reduce(((bK,bL)=>({...bK[1],...bL[1]})),{})))zaraz.set(bJ[0],bJ[1],{scope:"page"});bz[bB].q=[];for(;bz.zaraz.q.length;){const bM=bz.zaraz.q.shift();bz[bB].q.push(bM)}bH.defer=!0;for(const bN of[localStorage,sessionStorage])Object.keys(bN||{}).filter((bP=>bP.startsWith("_zaraz_"))).forEach((bO=>{try{bz[bB]["z_"+bO.slice(7)]=JSON.parse(bN.getItem(bO))}catch{bz[bB]["z_"+bO.slice(7)]=bN.getItem(bO)}}));bH.referrerPolicy="origin";bH.src="/cdn-cgi/zaraz/s.js?z="+btoa(encodeURIComponent(JSON.stringify(bz[bB])));bG.parentNode.insertBefore(bH,bG)};["complete","interactive"].includes(bA.readyState)?zaraz.init():bz.addEventListener("DOMContentLoaded",zaraz.init)}}(w,d,"zarazData","script");window.zaraz._p=async dq=>new Promise((dr=>{if(dq){dq.e&&dq.e.forEach((ds=>{try{const dt=d.querySelector("script[nonce]"),du=dt?.nonce||dt?.getAttribute("nonce"),dv=d.createElement("script");du&&(dv.nonce=du);dv.innerHTML=ds;dv.onload=()=>{d.head.removeChild(dv)};d.head.appendChild(dv)}catch(dw){console.error(`Error executing script: ${ds}\n`,dw)}}));Promise.allSettled((dq.f||[]).map((dx=>fetch(dx[0],dx[1]))))}dr()}));zaraz._p({"e":["(function(w,d){})(window,document)"]});})(window,document)}catch(e){throw fetch("/cdn-cgi/zaraz/t"),e;};</script><script>(function(w,d){})(window,document)</script><meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9wSqI5i0iwGdf6L1CERNdmsTPgVu44ewj8QxTBYgsv1LCPUVF7YmWOvTappqB1139jAymxUW/RO8zmMqo4zlAAAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A+d7vJfYtay4OUbdtRPZA3y7bKQLsxaMEPmxgfhBGqKXNrdkCQeJlUwqa6EBbSfjwFtJWTrWIioXeMW+y8bWAgQAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><script>(function(w,d){;w.zarazData.executed.push("Pageview");})(window,document)</script><script>(function(w,d){})(window,document)</script></head>
+  	<script data-cfasync="false" nonce="03b1b125-d7c4-4ab4-a4c9-718f0201c70c">try{(function(w,d){!function(bz,bA,bB,bC){if(bz.zaraz)console.error("zaraz is loaded twice");else{bz[bB]=bz[bB]||{};bz[bB].executed=[];bz.zaraz={deferred:[],listeners:[]};bz.zaraz._v="5853";bz.zaraz._n="03b1b125-d7c4-4ab4-a4c9-718f0201c70c";bz.zaraz.q=[];bz.zaraz._f=function(bD){return async function(){var bE=Array.prototype.slice.call(arguments);bz.zaraz.q.push({m:bD,a:bE})}};for(const bF of["track","set","debug"])bz.zaraz[bF]=bz.zaraz._f(bF);bz.zaraz.init=()=>{var bG=bA.getElementsByTagName(bC)[0],bH=bA.createElement(bC),bI=bA.getElementsByTagName("title")[0];bI&&(bz[bB].t=bA.getElementsByTagName("title")[0].text);bz[bB].x=Math.random();bz[bB].w=bz.screen.width;bz[bB].h=bz.screen.height;bz[bB].j=bz.innerHeight;bz[bB].e=bz.innerWidth;bz[bB].l=bz.location.href;bz[bB].r=bA.referrer;bz[bB].k=bz.screen.colorDepth;bz[bB].n=bA.characterSet;bz[bB].o=(new Date).getTimezoneOffset();if(bz.dataLayer)for(const bJ of Object.entries(Object.entries(dataLayer).reduce(((bK,bL)=>({...bK[1],...bL[1]})),{})))zaraz.set(bJ[0],bJ[1],{scope:"page"});bz[bB].q=[];for(;bz.zaraz.q.length;){const bM=bz.zaraz.q.shift();bz[bB].q.push(bM)}bH.defer=!0;for(const bN of[localStorage,sessionStorage])Object.keys(bN||{}).filter((bP=>bP.startsWith("_zaraz_"))).forEach((bO=>{try{bz[bB]["z_"+bO.slice(7)]=JSON.parse(bN.getItem(bO))}catch{bz[bB]["z_"+bO.slice(7)]=bN.getItem(bO)}}));bH.referrerPolicy="origin";bH.src="/cdn-cgi/zaraz/s.js?z="+btoa(encodeURIComponent(JSON.stringify(bz[bB])));bG.parentNode.insertBefore(bH,bG)};["complete","interactive"].includes(bA.readyState)?zaraz.init():bz.addEventListener("DOMContentLoaded",zaraz.init)}}(w,d,"zarazData","script");window.zaraz._p=async dq=>new Promise((dr=>{if(dq){dq.e&&dq.e.forEach((ds=>{try{const dt=d.querySelector("script[nonce]"),du=dt?.nonce||dt?.getAttribute("nonce"),dv=d.createElement("script");du&&(dv.nonce=du);dv.innerHTML=ds;dv.onload=()=>{d.head.removeChild(dv)};d.head.appendChild(dv)}catch(dw){console.error(`Error executing script: ${ds}\n`,dw)}}));Promise.allSettled((dq.f||[]).map((dx=>fetch(dx[0],dx[1]))))}dr()}));zaraz._p({"e":["(function(w,d){})(window,document)"]});})(window,document)}catch(e){throw fetch("/cdn-cgi/zaraz/t"),e;};</script><script>(function(w,d){})(window,document)</script><meta http-equiv="origin-trial" content="AlK2UR5SkAlj8jjdEc9p3F3xuFYlF6LYjAML3EOqw1g26eCwWPjdmecULvBH5MVPoqKYrOfPhYVL71xAXI1IBQoAAAB8eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="Amm8/NmvvQfhwCib6I7ZsmUxiSCfOxWxHayJwyU1r3gRIItzr7bNQid6O8ZYaE1GSQTa69WwhPC9flq/oYkRBwsAAACCeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViVmlld1hSZXF1ZXN0ZWRXaXRoRGVwcmVjYXRpb24iLCJleHBpcnkiOjE3NTgwNjcxOTksImlzU3ViZG9tYWluIjp0cnVlfQ=="><meta http-equiv="origin-trial" content="A9wSqI5i0iwGdf6L1CERNdmsTPgVu44ewj8QxTBYgsv1LCPUVF7YmWOvTappqB1139jAymxUW/RO8zmMqo4zlAAAAACNeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A+d7vJfYtay4OUbdtRPZA3y7bKQLsxaMEPmxgfhBGqKXNrdkCQeJlUwqa6EBbSfjwFtJWTrWIioXeMW+y8bWAgQAAACTeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiRmxlZGdlQmlkZGluZ0FuZEF1Y3Rpb25TZXJ2ZXIiLCJleHBpcnkiOjE3MzY4MTI4MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><script>(function(w,d){;w.zarazData.executed.push("Pageview");})(window,document)</script><script>(function(w,d){})(window,document)</script>
   </head>
 
   <body class="w3-light-grey">
@@ -222,216 +292,328 @@
               </div>
       
               <div class="slides-3 swiper" data-aos="fade-up" data-aos-delay="100">
-                <div class="">
-      
-                  <div class="">
-                    <div class="testimonial-item">
+                <div class="testimonial-section">
+                  <div class="testimonial-item">
+                    <img src="https://media.licdn.com/dms/image/v2/D4D03AQFFLv_wcTejDQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1722291028887?e=2147483647&amp;v=beta&amp;t=jC5T5hgC7ZXwz_OUBO56hTI3eAkCHmSmTPWdN25QFMc" 
+                         class="testimonial-img" alt="Brad Koontz">
+                
+                    <div class="testimonial-content">
                       <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="fa f-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
                       </div>
-                      <p>
+                
+                      <p class="testimonial-text">
                         I had the pleasure of managing Lawrence Murry during his time at Hitachi Solutions, and I can confidently say that he is an exceptional professional. Lawrence helped expand the scope, scale and quality of presales/deal desk function, and installed a level of professionalism to the RFx produced by the firm.
                       </p>
-                      <p>
+                      <p class="testimonial-text">
                         He led the complex effort of implementing a new AI-powered response platform for the larger sales team. Lawrence's innovative thinking and problem-solving skills were invaluable to our team, and he often went above and beyond to ensure the success of our initiatives.
                       </p>
-                      <p>
+                      <p class="testimonial-text">
                         I highly recommend Lawrence for any role that requires dedication, expertise, and a proactive approach. He will undoubtedly be a tremendous asset to any organization.
                       </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQFFLv_wcTejDQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1722291028887?e=2147483647&amp;v=beta&amp;t=jC5T5hgC7ZXwz_OUBO56hTI3eAkCHmSmTPWdN25QFMc" class="testimonial-img" alt="Brad Koontz">
-                        <h3>Brad Koontz, MBA</h3>
-                        <h4>Vice President, Pre-Sales, Hitachi Solutions</h4>
+                
+                      <div class="profile-details">
+                        <h3 class="profile-name">Brad Koontz, MBA</h3>
+                        <h4 class="profile-title">Vice President, Pre-Sales, Hitachi Solutions</h4>
                       </div>
                     </div>
-                  </div><!-- End testimonial item -->
+                  </div>
+                </div><!-- End testimonial item -->
                   
-                  <div class="">
+                 <div class="testimonial-section">
                     <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                      <p>
-                        Lawrence has been a pleasure to work with and more importantly, an effective business partner when writing bids in the public sector. My team has won every bid when partnered with Lawerence, batting 1000. His professionalism and attention to detail have been key to his success. I would choose to work with Lawrence anywhere anytime!
-                      </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/C5603AQEAmV8JYXPzFA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1611098218278?e=1753920000&v=beta&t=dXx9G3VdzDAaDcM9lBx-LQI_b-TtVC8NoP6MpQ81pEw" class="testimonial-img" alt="Kevin O'meara">
-                        <h3>Kevin O'Meara</h3>
-                        <h4>Account Manager, Oracle NetSuite</h4>
+                      <img src="https://media.licdn.com/dms/image/v2/C5603AQEAmV8JYXPzFA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1611098218278?e=1753920000&v=beta&t=dXx9G3VdzDAaDcM9lBx-LQI_b-TtVC8NoP6MpQ81pEw"
+                           class="testimonial-img" alt="Kevin O'Meara">
+                  
+                      <div class="testimonial-content">
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                        </div>
+                  
+                        <p class="testimonial-text">
+                          Lawrence has been a pleasure to work with and more importantly, an effective business partner when writing bids in the public sector. My team has won every bid when partnered with Lawrence, batting 1000. His professionalism and attention to detail have been key to his success. I would choose to work with Lawrence anywhere anytime!
+                        </p>
+                  
+                        <div class="profile-details">
+                          <h3 class="profile-name">Kevin O'Meara</h3>
+                          <h4 class="profile-title">Account Manager, Oracle NetSuite</h4>
+                        </div>
                       </div>
                     </div>
-                  </div><!-- End testimonial item -->
+                  </div> <!-- End Testimonial Item -->
+
       
-                  <div class="">
+                  <div class="testimonial-section">
+                      <div class="testimonial-item">
+                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQEtYimx3h5pIw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1698595056324?e=1753920000&v=beta&t=pmS7TqMeCiV7HoITDJrqWwKXcxkJyEqVgwwXB0Wzj1I"
+                             class="testimonial-img" alt="Rachel Wolsfelt">
+                    
+                        <div class="testimonial-content">
+                          <div class="stars">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                          </div>
+                    
+                          <p class="testimonial-text">
+                            I've worked with Lawrence on multiple proposals and he was a great asset to each process. When he is working on a proposal, the process always goes smoothly. He communicated his plan and executed it with ease and as promised with his timeline. He is very organized and gets the job done successfully! I would recommend Lawrence for any proposal!
+                          </p>
+                    
+                          <div class="profile-details">
+                            <h3 class="profile-name">Rachel Wolsfelt</h3>
+                            <h4 class="profile-title">Account Manager, Oracle NetSuite</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div> <!-- End Testimonial Item -->
+
+                  <div class="testimonial-section">
                     <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                      <p>
-                        I've worked with Lawrence on multiple proposals and he was a great asset to each process. When he is working on a proposal, the process always goes smoothly. He communicated his plan and executed it with ease and as promised with his timeline. He is very organized and gets the job done successfully! I would recommend Lawrence for any proposal!
-                      </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQEtYimx3h5pIw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1698595056324?e=1753920000&v=beta&t=pmS7TqMeCiV7HoITDJrqWwKXcxkJyEqVgwwXB0Wzj1I" class="testimonial-img" alt="Rachel Wolsfelt">
-                        <h3>Rachel Wolsfelt</h3>
-                        <h4>Account Manager, Oracle NetSuite</h4>
-                      </div>
-                    </div>
-                  </div><!-- End testimonial item -->
+                      <img src="https://media.licdn.com/dms/image/v2/D4E03AQGpWKb2ejpOBQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1680710227160?e=1753920000&v=beta&t=pYzv7fNJguQemZufA461htju6BpfS7rIsvsSG0paAkc"
+                           class="testimonial-img" alt="Eric Browning">
+                              <div class="testimonial-content">
+                                <div class="stars">
+                                  <i class="bi bi-star-fill"></i>
+                                  <i class="bi bi-star-fill"></i>
+                                  <i class="bi bi-star-fill"></i>
+                                  <i class="bi bi-star-fill"></i>
+                                  <i class="bi bi-star-fill"></i>
+                                </div>
+                          
+                                <p class="testimonial-text">
+                                  Lawrence and I first worked together on what was my first RFP with NetSuite in March of 2020, and it was a fairly complex public sector one at that. Immediately Lawrence took the reins and administered the RFP process in such a detailed and defined manner that it allowed me comfort that this process was under complete control and nothing would slip through the cracks. We won that RFP because of Lawrence's well-defined timeline, and his ability to somehow manage the project in spite of the varying geographic locations of the personnel he's coordinating with. There were key areas required to tie this all together, and those areas pertained to both project and time management, in which he excels.
+                                </p>
+                          
+                                <p class="testimonial-text">
+                                  A year later, we have collaborated on several other RFPs and his process has only gotten tighter and more refined. He catches mistakes others may have made as he's compiling the many pieces required to put together a response. That is invaluable in any proposal process.
+                                </p>
+                          
+                                <p class="testimonial-text">
+                                  The shortest way I can get my point across is to state that when Lawrence gets assigned to an RFP I've received, I smile because I know it will be handled flawlessly.
+                                </p>
+                          
+                                <div class="profile-details">
+                                  <h3 class="profile-name">Eric Browning</h3>
+                                  <h4 class="profile-title">Account Executive, Oracle NetSuite (HigherEd)</h4>
+                                </div>
+                              </div>
+                            </div>
+                          </div> <!-- End Tesimonial Item -->
+
       
-                  <div class="">
+                  <div class="testimonial-section">
                     <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                      <p>
-                        Lawrence and I first worked together on what was my first RFP with NetSuite in March of 2020, and it was a fairly complex public sector one at that. Immediately Lawrence took the reins and administered the RFP process in such a detailed and defined manner that it allowed me comfort that this process was under complete control and nothing would slip through the cracks. We won that RFP because of Lawrence's well-defined timeline, and his ability to somehow manage the project in spite of the varying geographic locations of the personnel he's coordinating with. There were key areas required to tie this all together, and those areas pertained to both project and time management, in which he excels.</p>
-      
-                        <p>A year later, we have collaborated on several other RFP’s and his process has only gotten tighter and more refined. He catches mistakes others may have made as he's compiling the many pieces required to put together a response. That is invaluable in any proposal process.</p>
-                        
-                        <p>The shortest way I can get my point across is to state that when Lawrence gets assigned to an RFP I've received, I smile because I know it will be handled flawlessly.</p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQGpWKb2ejpOBQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1680710227160?e=1753920000&v=beta&t=pYzv7fNJguQemZufA461htju6BpfS7rIsvsSG0paAkc" class="testimonial-img" alt="Eric Browning">
-                        <h3>Erice Browning</h3>
-                        <h4>Account Executive, Oracle NetSuite (HigherEd)</h4>
+                      <img src="https://media.licdn.com/dms/image/v2/C4E03AQGG0tYvciGp1Q/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1561044480188?e=1753920000&v=beta&t=mwz7H1PkKgjrEaZ4wVDAAw4mYrWFxtAPZQ0L9w6Y-Uo"
+                           class="testimonial-img" alt="James Wilson">
+                  
+                      <div class="testimonial-content">
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                        </div>
+                  
+                        <p class="testimonial-text">
+                          Lawrence and I have partnered on multiple projects with great success. He is talented and driven which is why he such a pleasure to partner with. Thanks for all of your assistance over the past two years Lawrence! 
+                        </p>
+                  
+                        <div class="profile-details">
+                          <h3 class="profile-name">James Wilson, MBA</h3>
+                          <h4 class="profile-title">Account Executive, Oracle NetSuite</h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <!-- End testimonial item -->
       
-                  <div class="">
+                  <div class="testimonial-section">
                     <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                      <p>
-                        Lawrence and I have partnered on multiple projects with great success. He is talented and driven which is why he such a pleasure to partner with. Thanks for all of your assistance over the past two years Lawrence! 
-                      </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/C4E03AQGG0tYvciGp1Q/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1561044480188?e=1753920000&v=beta&t=mwz7H1PkKgjrEaZ4wVDAAw4mYrWFxtAPZQ0L9w6Y-Uo" class="testimonial-img" alt="James Wilson">
-                        <h3>James Wilson, MBA</h3>
-                        <h4>Account Executive, Oracle NetSuite</h4>
+                      <img src="https://media.licdn.com/dms/image/v2/D5603AQEtFYOwzUZc9Q/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1688065405446?e=1753920000&v=beta&t=2Bc3_7c3l8vrIbiYe72VMcsc1bhDcABeoz0vCZNaNSU"
+                           class="testimonial-img" alt="Chelsea Snell">
+                  
+                      <div class="testimonial-content">
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                        </div>
+                  
+                        <p class="testimonial-text">
+                          I have had the pleasure of working with Lawrence on many occasions when completing Requests for Proposals for clients. He is incredibly professional and efficient at coordinating these projects. He delegates the appropriate portion of the project to the team members who specifically address those areas, communicates clear deadlines and expectations, and is such a delight to work with. I highly recommend Lawrence.
+                        </p>
+                  
+                        <div class="profile-details">
+                          <h3 class="profile-name">Chelsea Snell, MAcc</h3>
+                          <h4 class="profile-title">Account Executive, Oracle NetSuite (NonProfits)</h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <!-- End testimonial item -->
       
-                  <div class="">
+                  <div class="testimonial-section">
                     <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                      <img src="https://media.licdn.com/dms/image/v2/C4E03AQGnR1YWQR2K_g/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1544802743159?e=1753920000&v=beta&t=63yKEf8o30IMVm1PKjWmQr31yw9eYhJGDtyFl9l6DVE"
+                           class="testimonial-img" alt="Adam Conrad">
+                  
+                      <div class="testimonial-content">
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                        </div>
+                  
+                        <p class="testimonial-text">
+                          Lawrence and the work his team does is an incredible support. He always delivers top quality material, and does it ahead of schedule. He's organized, diligent, and keeps the team moving forward. I've benefited tremendously from the fantastic work he does.
+                        </p>
+                  
+                        <div class="profile-details">
+                          <h3 class="profile-name">Adam Conrad</h3>
+                          <h4 class="profile-title">Account Executive, Cupa Software</h4>
+                        </div>
                       </div>
-                      <p>
-                        I have had the pleasure of working with Lawrence on many occasions when completing Requests for Proposals for clients. He is incredibly professional and efficient at coordinating these projects. He delegates the appropriate portion of the project to the team members who specifically address those areas, communicates clear deadlines and expectations, and is such a delight to work with. I highly recommend Lawrence.
-                      </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/D5603AQEtFYOwzUZc9Q/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1688065405446?e=1753920000&v=beta&t=2Bc3_7c3l8vrIbiYe72VMcsc1bhDcABeoz0vCZNaNSU" class="testimonial-img" alt="Chelsea Snell">
-                        <h3>Chelsea Snell, MAcc</h3>
-                        <h4>Account Executive, Oracle NetSuite (NonProfits)</h4>
+                    </div>
+                  </div>
+                  <!-- End testimonial item -->
+
+                  <div class="testimonial-section">
+                    <div class="testimonial-item">
+                      <img src="https://media.licdn.com/dms/image/v2/C4E03AQF19_BN4LUkNQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1626970157150?e=1753920000&v=beta&t=vK0oE1v4y99IMRWo1km_hLmyto2ZFgVZpI5yyZSJDlc"
+                           class="testimonial-img" alt="Kendall Ray">
+                  
+                      <div class="testimonial-content">
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                        </div>
+                  
+                        <p class="testimonial-text">
+                          Lawrence and I have worked together on a couple of request for proposals from organizations. Often, these requests were very complex detailing the specific functionality an organization was looking for. When working with Lawrence, I was never concerned for our ability to turnaround these requests in a timely manner despite the complexities. Lawrence is extremely professional, capable and skilled in managing intricate proposals. He keeps our whole team on track when RFPs are received. Awesome resource to work with! 
+                        </p>
+                  
+                        <div class="profile-details">
+                          <h3 class="profile-name">Kendall Ray</h3>
+                          <h4 class="profile-title">Account Executive, Oracle NetSuite (Emergining Markets)</h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <!-- End testimonial item -->
       
-                  <div class="">
+                  <div class="testimonial-section">
                     <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                      <p>
-                        Lawrence and the work his team does is an incredible support. He always delivers top quality material, and does it ahead of schedule. He's organized, diligent, and keeps the team moving forward. I've benefited tremendously from the fantastic work he does.
-                      </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/C4E03AQGnR1YWQR2K_g/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1544802743159?e=1753920000&v=beta&t=63yKEf8o30IMVm1PKjWmQr31yw9eYhJGDtyFl9l6DVE" class="testimonial-img" alt="Adam Conrad">
-                        <h3>Adam Conrad</h3>
-                        <h4>Account Executive, Cupa Software</h4>
+                      <img src="https://media.licdn.com/dms/image/v2/D5603AQEzPropmL8qog/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1697847350393?e=1753920000&v=beta&t=KWJqnETDQZRUZik1YQC11toWOMuKDXsNTHi_j5hcstM"
+                           class="testimonial-img" alt="Erica Wellman">
+                  
+                      <div class="testimonial-content">
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                        </div>
+                  
+                        <p class="testimonial-text">
+                          I have had the pleasure of working closely with Lawrence for the past 2 years. Lawrence, is a Senior Proposal Manager on our RFP team who consistently manages multiple RFP responses at any given time. Lawrence is extremely organized and thorough, and those qualities are evident in the work he produces. Lawrence successfully meets deadlines while delivering RFPs that result in winning bids. I have enjoyed working with Lawrence and he has proven to be a reliable and valuable teammate.
+                        </p>
+                  
+                        <div class="profile-details">
+                          <h3 class="profile-name">Erica Wellman</h3>
+                          <h4 class="profile-title">Proposal Team Manager, Oracle NetSuite</h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <!-- End testimonial item -->
+
       
-                  <div class="">
+                  <div class="testimonial-section">
                     <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                      <p>
-                        Lawrence and I have worked together on a couple of request for proposals from organizations. Often, these requests were very complex detailing the specific functionality an organization was looking for. When working with Lawrence, I was never concerned for our ability to turnaround these requests in a timely manner despite the complexities. Lawrence is extremely professional, capable and skilled in managing intricate proposals. He keeps our whole team on track when RFPs are received. Awesome resource to work with! 
-                      </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/C4E03AQF19_BN4LUkNQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1626970157150?e=1753920000&v=beta&t=vK0oE1v4y99IMRWo1km_hLmyto2ZFgVZpI5yyZSJDlc" class="testimonial-img" alt="Kendall Ray">
-                        <h3>Kendall Ray</h3>
-                        <h4>Account Executive, Oracle NetSuite (Emergining Markets)</h4>
+                      <img src="https://media.licdn.com/dms/image/v2/D5603AQGCWspunDweXQ/profile-displayphoto-shrink_100_100/B56ZStdUXvGsAU-/0/1738076931877?e=1753920000&v=beta&t=gRl9BTRu_CiDYnyJLSK0AvuxZBkXi5Ujn1pVd0Rf758"
+                           class="testimonial-img" alt="Adan Adam Miranda">
+                  
+                      <div class="testimonial-content">
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                        </div>
+                  
+                        <p class="testimonial-text">
+                          Lawrence and I worked together during his time at Oracle. Lawrence's attention to detail was a difference-maker as a proposal manager. At the same time, he expertly navigated the management of a team from various business units who shared responsibilities for creating, auditing, and completing business proposals for multi-billion dollar organizations. Lawrence translated our strategy into a thoughtfully delivered proposal that exceeded the prospect's expectations.
+                        </p>
+                  
+                        <div class="profile-details">
+                          <h3 class="profile-name">Adan Adam Miranda</h3>
+                          <h4 class="profile-title">Account Executive - Local Government ERP, Oracle</h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <!-- End testimonial item -->
-      
-                  <div class="">
+
+                  <div class="testimonial-section">
                     <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                      <p>
-                        I have had the pleasure of working closely with Lawrence for the past 2 years. Lawrence, is a Senior Proposal Manager on our RFP team who consistently manages multiple RFP responses at any given time. Lawrence is extremely organized and thorough, and those qualities are evident in the work he produces. Lawrence successfully meets deadlines while delivering RFPs that result in winning bids. I have enjoyed working with Lawrence and he has proven to be a reliable and valuable teammate.
-                      </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/D5603AQEzPropmL8qog/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1697847350393?e=1753920000&v=beta&t=KWJqnETDQZRUZik1YQC11toWOMuKDXsNTHi_j5hcstM" alt="Erica Wellman">
-                        <h3>Erica Wellman</h3>
-                        <h4>Proposal Team Manager, Oracle NetSuite</h4>
+                      <img src="https://media.licdn.com/dms/image/v2/C5603AQEBPeOMseJFVQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1598828510603?e=1753920000&v=beta&t=jUtykvlLT8TxC05WTCApelutS_dlfeUQxzkr5klxZOQ" 
+                           class="testimonial-img" alt="Karin Hardison">
+                      <div class="testimonial-content">
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="testimonial-text">
+                          I had the pleasure to mentor Lawrence during his time at Oracle and recommend him when you need someone that is tenacious, cares about quality, self-starter, quick learner and excellent at building relationships. I looked forward to our bi-directional conversations where both of us come away with a gift; those are the best mentor – mentee relationships.
+                        </p>
+                        <div class="profile-details">
+                          <h3 class="profile-name">Karin Hardison</h3>
+                          <h4 class="profile-title">Director - Energy &amp; Water, Oracle</h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <!-- End testimonial item -->
-      
-                  <div class="">
+                  
+                  <div class="testimonial-section">
                     <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                      <p>
-                        Lawrence and I worked together during his time at Oracle. Lawrence's attention to detail was a difference-maker as a proposal manager. At the same time, he expertly navigated the management of a team from various business units who shared responsibilities for creating, auditing, and completing business proposals for multi-billion dollar organizations. Lawrence translated our strategy into a thoughtfully delivered proposal that exceeded the prospect's expectations.
-                      </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/D5603AQGCWspunDweXQ/profile-displayphoto-shrink_100_100/B56ZStdUXvGsAU-/0/1738076931877?e=1753920000&v=beta&t=gRl9BTRu_CiDYnyJLSK0AvuxZBkXi5Ujn1pVd0Rf758" class="testimonial-img" alt="Adan Adam Miranda">
-                        <h3>Adan Adam Miranda</h3>
-                        <h4>Account Executive - Local Government ERP, Oracle</h4>
+                      <img src="https://media.licdn.com/dms/image/v2/D5603AQGa07gPKWiXxQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1697049902325?e=1753920000&v=beta&t=Mivk8DTpKo6GigxW2UpWAN5RB1ZVSYqjuiNNdP4r8fo" 
+                           class="testimonial-img" alt="Colleen McFarland">
+                      <div class="testimonial-content">
+                        <div class="stars">
+                          <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="testimonial-text">
+                          Lawrence was amazing from beginning to end! Our team faced many challenges in the way of getting this RFP completed but Lawrence kept us on track and on schedule to provide our customer with the absolute best possible response. Thank you, Lawrence!
+                        </p>
+                        <div class="profile-details">
+                          <h3 class="profile-name">Colleen McFarland</h3>
+                          <h4 class="profile-title">Enterprise Application Sales Manager, Oracle</h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <!-- End testimonial item -->
-                  <div class="">
-                    <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                      <p>
-                        I had the pleasure to mentor Lawrence during his time at Oracle and recommend him when you need someone that is tenacious, cares about quality, self-starter, quick learner and excellent at building relationships. I looked forward to our bi-directional conversations where both of us come away with a gift; those are the best mentor – mentee relationships.
-                      </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/C5603AQEBPeOMseJFVQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1598828510603?e=1753920000&v=beta&t=jUtykvlLT8TxC05WTCApelutS_dlfeUQxzkr5klxZOQ" class="testimonial-img" alt="Erica Wellman">
-                        <h3>Karin Hardison</h3>
-                        <h4>Director - Energy &amp; Water, Oracle</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End testimonial item -->
-      
-                  <div class="">
-                    <div class="testimonial-item">
-                      <div class="stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div>
-                      <p>
-                        Lawrence was amazing from beginning to end! Our team faced many challenges in the way of getting this RFP completed but Lawrence kept us on track and on schedule to provide our customer with the absolute best possible response. Thank you, Lawrence!
-                      </p>
-                      <div class="profile mt-auto">
-                        <img src="https://media.licdn.com/dms/image/v2/D5603AQGa07gPKWiXxQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1697049902325?e=1753920000&v=beta&t=Mivk8DTpKo6GigxW2UpWAN5RB1ZVSYqjuiNNdP4r8fo" class="testimonial-img" alt="Colleen McFarland">
-                        <h3>Colleen McFarland</h3>
-                        <h4>Enterprise Application Sales Manager, Oracle</h4>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End testimonial item -->
+
                 </div>
                 <div class="swiper-pagination"></div>
               </div>
