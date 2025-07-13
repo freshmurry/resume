@@ -1,10 +1,15 @@
 <style>
-  html, body, h1, h2, h3, h4, h5, h6 {
+  html, body {
     font-family: "Roboto", sans-serif;
-    max-width: 100%;
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
+    width: 100%;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Roboto", sans-serif;
+  }
   .w3-text {
     color: #660000;
   }
@@ -155,6 +160,11 @@
     .navbar-links a {
       padding: 10px 15px;
     }
+
+    footer.w3-container {
+      padding: 0;
+    }
+
   }
 
 }
