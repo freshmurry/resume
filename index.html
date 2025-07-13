@@ -593,38 +593,45 @@
 		</div>
 		
 		<!-- FOOTER -->
-		<footer class="site-footer">
-	  <div class="footer-container">
-	    <div class="footer-section">
-	      <h4>Let's Connect</h4>
-	      <p>Follow Lawrence on social media:</p>
-	      <a href="https://www.linkedin.com/in/lawrence-murry/" target="_blank" aria-label="LinkedIn">
-	        <i class="fab fa-linkedin fa-2x"></i>
-	      </a>
-	      <a href="https://github.com/freshmurry" target="_blank" aria-label="GitHub">
-	        <i class="fab fa-github fa-2x"></i>
-	      </a>
-	    </div>
-	
-	    <div class="footer-section">
-	      <h4>About This Site</h4>
-	      <p>Created by <a href="https://www.linkedin.com/in/lawrence-murry" target="_blank">Lawrence Murry</a></p>
-	      <a href="ecommerce.html" target="_blank" rel="noopener">Free eBay Template</a>
-	    </div>
-	
-	    <div class="footer-section">
-	      <h4>Contact</h4>
-	      <p>Want a custom resume website?</p>
-	      <a href="mailto:lawrencemurry@yahoo.com?subject=Resume Site Inquiry">
-	        <i class="fa fa-envelope fa-fw"></i> Email Me
-	      </a>
-	    </div>
-	  </div>
-	  <div class="footer-bottom">
-	    <p>&copy; <span id="year"></span> Lawrence Murry | All Rights Reserved</p>
-	  </div>
-	</footer>
+		<footer class="w3-container w3-teal w3-center w3-padding-32" style="width: 100%;">
+		  <div class="w3-row-padding">
+		    
+		    <div class="w3-third w3-margin-bottom">
+		      <h5 class="w3-text-white">Connect with Me</h5>
+		      <a href="https://www.linkedin.com/in/lawrence-murry/" target="_blank" class="w3-hover-opacity" aria-label="LinkedIn">
+		        <i class="fab fa-linkedin fa-2x w3-margin-right"></i>
+		      </a>
+		      <a href="https://github.com/freshmurry" target="_blank" class="w3-hover-opacity" aria-label="GitHub">
+		        <i class="fab fa-github fa-2x w3-margin-right"></i>
+		      </a>
+		    </div>
+		
+		    <div class="w3-third w3-margin-bottom">
+		      <h5 class="w3-text-white">About This Site</h5>
+		      <p>Created by <a href="https://www.linkedin.com/in/lawrence-murry" target="_blank" class="w3-text-white w3-hover-opacity">Lawrence Murry</a></p>
+		      <a href="ecommerce.html" target="_blank" class="w3-text-white w3-hover-opacity">Free eBay Template</a>
+		    </div>
+		
+		    <div class="w3-third w3-margin-bottom">
+		      <h5 class="w3-text-white">Want an Online Resume?</h5>
+		      <p>
+		        <a href="mailto:lawrencemurry@yahoo.com?subject=Resume Site Inquiry" class="w3-text-white">
+		          <i class="fa fa-envelope fa-fw w3-margin-right"></i>Email Me
+		        </a>
+		      </p>
+		    </div>
+		
+		  </div>
+		
+		  <div class="w3-center w3-padding-small w3-opacity w3-small">
+		    <p>&copy; <span id="year"></span> Lawrence Murry | All rights reserved</p>
+		  </div>
+		</footer>
 	<!-- END FOOTER -->
+		<script>
+		  document.getElementById("year").textContent = new Date().getFullYear();
+		</script>
+
 		<script>
 		  function toggleNavbar() {
 		    const links = document.getElementById("navbarLinks");
