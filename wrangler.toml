@@ -1,4 +1,4 @@
-name = "resume-master"
+name = "resume"
 main = "worker.js"
 compatibility_date = "2024-07-14"
 
