@@ -1,0 +1,10 @@
+name = "resume"
+main = "worker.js"
+compatibility_date = "2024-07-14"
+
+kv_namespaces = [
+  { binding = "VISITOR_COUNTER", id = "6478cc2d87214a4b8d40e4dc5fab549f" }
+]
+
+[site]
+bucket = "./public" 
