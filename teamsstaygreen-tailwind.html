@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Make Microsoft Teams Stay Green - eBook | Teams Stay Green</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Discover how to keep Microsoft Teams in a constant green status with this comprehensive eBook, designed for professionals who want to stay online all day.">
+  <meta name="keywords" content="Microsoft Teams Stay Green, Teams Stay Green, Teams Stay Green eBook, How to Make Microsoft Teams Stay Green eBook">
+  <meta name="author" content="Lawrence Murry">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="How to Make Microsoft Teams Stay Green - eBook">
+  <meta property="og:description" content="Discover how to keep Microsoft Teams in a constant green status with this comprehensive eBook, perfect for professionals who want to stay online all day.">
+  <meta property="og:image" content="https://teamsstaygreen.com/assets/teamsstaygreen-692f97272f3b0b2337bc9ededbe4b2ab549a448f1e211e8e03e550f92e8b8d74.png">
+  <meta property="og:url" content="https://teamsstaygreen.com/">
+  <meta property="og:type" content="website">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#660000',
+            'primary-dark': '#800000',
+            'primary-light': '#8B0000'
+          },
+          fontFamily: {
+            'roboto': ['Roboto', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J33KDZH512"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J33KDZH512');
+  </script>
+  
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8786200479780334" crossorigin="anonymous"></script>
+  
+  <!-- Custom Styles -->
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .gradient-bg { background: linear-gradient(135deg, #660000 0%, #800000 100%); }
+    .card-hover { transition: all 0.3s ease; }
+    .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    .navbar-link { @apply text-white hover:text-gray-200 transition-colors duration-300 px-3 py-2 rounded-md; }
+    .navbar-link.active { @apply bg-white/20 text-white; }
+    .price-tag { @apply text-3xl font-bold text-green-600; }
+    .ebook-cover { @apply max-w-sm mx-auto rounded-lg shadow-xl; }
+  </style>
+</head>
+
+<body class="bg-gray-50">
+  <!-- Responsive Navbar -->
+  <nav class="fixed top-0 w-full bg-primary z-50 flex justify-between items-center px-5 py-3 text-white flex-wrap shadow-lg">
+    <a href="index-tailwind.html" class="text-white font-bold text-xl no-underline transition-opacity duration-300 hover:opacity-80">
+      Lawrence Murry, CF APMP, PSM I
+    </a>
+  
+    <div class="md:hidden text-white text-2xl cursor-pointer p-4 transition-transform duration-300 hover:scale-110" onclick="toggleNavbar()">
+      <i class="fas fa-bars"></i>
+    </div>
+  
+    <div class="hidden md:flex gap-4 items-center" id="navbarLinks">
+      <a href="/Proposal-Manager-Resume-Lawrence-Murry.pdf" target="_blank" 
+         class="bg-white text-primary font-bold rounded-full px-6 py-3 transition-all duration-300 hover:bg-gray-100 hover:-translate-y-0.5 hover:shadow-lg">
+        Download Resume
+      </a>
+      <a href="index-tailwind.html#education" 
+         class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark hover:-translate-y-0.5">
+        Education
+      </a>
+      <a href="index-tailwind.html#certifications" 
+         class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark hover:-translate-y-0.5">
+        Certifications
+      </a>
+      <a href="index-tailwind.html#professional-development" 
+         class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark hover:-translate-y-0.5">
+        Professional Development
+      </a>
+      <a href="index-tailwind.html#web-projects" 
+         class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark hover:-translate-y-0.5">
+        Web Projects
+      </a>
+      <a href="teamsstaygreen-tailwind.html" 
+         class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark hover:-translate-y-0.5 bg-primary-dark">
+        Teams Stay Green eBook
+      </a>
+      <a href="testimonials.html" 
+         class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark hover:-translate-y-0.5">
+        Testimonials
+      </a>
+      <a href="index-tailwind.html#get-in-touch" 
+         class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark hover:-translate-y-0.5">
+        Let's Chat
+      </a>
+    </div>
+    
+    <!-- Mobile Navigation -->
+    <div class="md:hidden w-full" id="mobileNavbarLinks" style="display: none;">
+      <div class="flex flex-col gap-2 pt-4">
+        <a href="/Proposal-Manager-Resume-Lawrence-Murry.pdf" target="_blank" 
+           class="bg-white text-primary font-bold rounded-full px-6 py-3 text-center transition-all duration-300 hover:bg-gray-100">
+          Download Resume
+        </a>
+        <a href="index-tailwind.html#education" 
+           class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark">
+          Education
+        </a>
+        <a href="index-tailwind.html#certifications" 
+           class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark">
+          Certifications
+        </a>
+        <a href="index-tailwind.html#professional-development" 
+           class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark">
+          Professional Development
+        </a>
+        <a href="index-tailwind.html#web-projects" 
+           class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark">
+          Web Projects
+        </a>
+        <a href="teamsstaygreen-tailwind.html" 
+           class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark bg-primary-dark">
+          Teams Stay Green eBook
+        </a>
+        <a href="testimonials.html" 
+           class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark">
+          Testimonials
+        </a>
+        <a href="index-tailwind.html#get-in-touch" 
+           class="text-white no-underline text-sm p-4 text-center transition-all duration-300 rounded hover:bg-primary-dark">
+          Let's Chat
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="pt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      
+      <!-- Header Section -->
+      <div class="text-center mb-12">
+        <!-- Enhanced Price Display -->
+        <div class="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg p-6 mb-8 shadow-lg">
+          <div class="flex items-center justify-center space-x-4">
+            <div class="text-center">
+              <div class="text-4xl font-bold">$18.99</div>
+              <div class="text-sm opacity-90">One-time payment</div>
+            </div>
+            <div class="border-l border-white/30 h-16"></div>
+            <div class="text-center">
+              <div class="text-lg font-semibold">Instant Download</div>
+              <div class="text-sm opacity-90">PDF + Bonus Content</div>
+            </div>
+            <div class="border-l border-white/30 h-16"></div>
+            <div class="text-center">
+              <div class="text-lg font-semibold">30-Day Guarantee</div>
+              <div class="text-sm opacity-90">Money back guarantee</div>
+            </div>
+          </div>
+        </div>
+        
+        <img src="https://teamsstaygreen.com/assets/teamsstaygreen-692f97272f3b0b2337bc9ededbe4b2ab549a448f1e211e8e03e550f92e8b8d74.png" 
+             alt="Teams Stay Green eBook Cover" 
+             class="ebook-cover mb-8">
+      </div>
+      
+      <!-- Content Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+            <h1 class="text-4xl font-bold text-primary mb-4">
+              How to Make Microsoft Teams Stay Green
+              <span class="block text-2xl font-light text-gray-600">Appear Online All Day</span>
+            </h1>
+            
+            <h3 class="text-lg text-gray-600 mb-6">
+              By <a href="#" data-toggle="modal" data-target="#author-modal" class="text-primary hover:text-primary-dark">Lawrence Murry</a>
+            </h3>
+            
+            <div class="prose prose-lg max-w-none">
+              <p class="text-gray-700 mb-6">
+                If you are working at a company that uses Microsoft Teams and want to learn how to make Teams Stay Green, this eGuide is just for you!
+              </p>
+              
+              <p class="text-gray-700 mb-6">
+                My goal is to take away the pain of searching for ways to keep your Microsoft Teams stay green while you run out for a quick coffee.
+              </p>
+              
+              <h4 class="text-xl font-semibold text-primary mb-4">What You'll Learn:</h4>
+              <ul class="list-disc list-inside space-y-2 text-gray-700 mb-6">
+                <li>Make Microsoft Teams Stay Green Guide</li>
+                <li>Screenshots</li>
+                <li>Illustrations</li>
+                <li>Link to desktop app</li>
+              </ul>
+              
+              <p class="text-gray-700">
+                Be sure to follow me on <a href="https://www.instagram.com/l.a.murry/" target="_blank" class="text-primary hover:text-primary-dark">@l.a.murry</a> and send me a message should you have any questions.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="lg:col-span-1">
+          <!-- Purchase Button -->
+          <div class="bg-white rounded-lg shadow-lg p-6 card-hover mb-6">
+            <button id="buy-button" 
+                    class="w-full bg-green-600 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-green-700 transition-colors mb-4 flex items-center justify-center"
+                    onclick="initiateStripePayment()">
+              <i class="fas fa-credit-card mr-2"></i>Buy Now - $18.99
+            </button>
+            
+            <!-- Stripe Payment Info -->
+            <div class="text-center mb-4">
+              <div class="flex items-center justify-center space-x-2 text-sm text-gray-600">
+                <i class="fas fa-lock text-green-600"></i>
+                <span>Secure payment powered by Stripe</span>
+              </div>
+            </div>
+            
+            <!-- Product Details -->
+            <div class="border-t pt-4">
+              <h4 class="font-semibold text-gray-800 mb-2">DETAILS</h4>
+              <ul class="space-y-2 text-sm text-gray-600">
+                <li>✓ You'll receive one downloadable eGuide</li>
+                <li>✓ Quantity: (1) eGuide</li>
+                <li>✓ Instant download</li>
+                <li>✓ 30-day money-back guarantee</li>
+                <li>✓ Secure payment processing</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Related Products -->
+          <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+            <h4 class="font-semibold text-primary mb-4">Related Resources</h4>
+            <div class="space-y-4">
+              <div class="border-l-4 border-primary pl-4">
+                <h5 class="font-semibold">APMP Certification</h5>
+                <p class="text-sm text-gray-600 mb-2">Get certified in proposal management</p>
+                <a href="https://www.apmp.org/certification" target="_blank" 
+                   class="text-primary hover:text-primary-dark text-sm"
+                   onclick="trackAffiliateClick('APMP Certification')">
+                  Learn More →
+                </a>
+              </div>
+              <div class="border-l-4 border-primary pl-4">
+                <h5 class="font-semibold">Proposal Tools</h5>
+                <p class="text-sm text-gray-600 mb-2">Professional RFP response tools</p>
+                <a href="https://www.shipleyassociates.com/" target="_blank" 
+                   class="text-primary hover:text-primary-dark text-sm"
+                   onclick="trackAffiliateClick('Shipley Associates')">
+                  Explore Tools →
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Ad Placement -->
+      <div class="my-8 p-4 bg-gray-100 rounded-lg text-center">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8786200479780334"
+             data-ad-slot="1234567891"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+      
+      <!-- FAQ Section -->
+      <div class="bg-white rounded-lg shadow-lg p-8 card-hover">
+        <h2 class="text-2xl font-bold text-primary mb-6">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+          <details class="group">
+            <summary class="cursor-pointer font-semibold text-gray-800 hover:text-primary transition-colors">
+              Is this tool safe to use at work?
+            </summary>
+            <p class="mt-2 text-gray-600">Yes! The tool uses simple automation to keep your status green. It does not access or modify any company data.</p>
+          </details>
+          <details class="group">
+            <summary class="cursor-pointer font-semibold text-gray-800 hover:text-primary transition-colors">
+              Does it work on Mac and Windows?
+            </summary>
+            <p class="mt-2 text-gray-600">Yes, the eBook includes instructions and downloads for both platforms.</p>
+          </details>
+          <details class="group">
+            <summary class="cursor-pointer font-semibold text-gray-800 hover:text-primary transition-colors">
+              Will this work for other platforms like Slack or Zoom?
+            </summary>
+            <p class="mt-2 text-gray-600">The main tool is optimized for Microsoft Teams, but the eBook includes tips for other platforms.</p>
+          </details>
+          <details class="group">
+            <summary class="cursor-pointer font-semibold text-gray-800 hover:text-primary transition-colors">
+              Is there a money-back guarantee?
+            </summary>
+            <p class="mt-2 text-gray-600">Absolutely! If you're not satisfied, contact us within 30 days for a full refund.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Author Modal -->
+  <div id="author-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-lg max-w-md w-full p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold">
+            <i class="fas fa-user mr-2"></i>About the Author
+          </h3>
+          <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-1">
+            <h4 class="font-semibold text-primary">Lawrence Murry</h4>
+            <p class="text-gray-600 text-sm mt-2">
+              Hey Y'all, I'm Lawrence Murry! I'm a Senior Technical Proposal Manager. Aside from my day job, I enjoy working on techy things, spending time with my two kids, and watching my beloved Chicago Bears, Bulls, and Cubs kick ass.
+            </p>
+          </div>
+          <img src="img/lawrence-murry.jpg" alt="Lawrence Murry" class="w-20 h-20 rounded-full object-cover">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modern Footer -->
+  <footer class="gradient-bg text-white mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Connect Section -->
+        <div class="text-center md:text-left">
+          <h5 class="text-lg font-semibold mb-4">Connect with Me</h5>
+          <div class="flex justify-center md:justify-start space-x-4">
+            <a href="https://www.linkedin.com/in/lawrence-murry/" target="_blank" 
+               class="text-white hover:text-gray-200 transition-colors">
+              <i class="fab fa-linkedin text-2xl"></i>
+            </a>
+            <a href="https://github.com/freshmurry" target="_blank" 
+               class="text-white hover:text-gray-200 transition-colors">
+              <i class="fab fa-github text-2xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- About Section -->
+        <div class="text-center md:text-left">
+          <h5 class="text-lg font-semibold mb-4">About This Site</h5>
+          <p class="mb-2">Created by 
+            <a href="https://www.linkedin.com/in/lawrence-murry" target="_blank" 
+               class="text-white hover:text-gray-200 underline">Lawrence Murry</a>
+          </p>
+          <a href="ecommerce.html" target="_blank" 
+             class="text-white hover:text-gray-200 underline">Free eBay Template</a>
+        </div>
+        
+        <!-- Contact Section -->
+        <div class="text-center md:text-left">
+          <h5 class="text-lg font-semibold mb-4">Want an Online Resume?</h5>
+          <a href="mailto:lawrencemurry@yahoo.com?subject=Resume Site Inquiry" 
+             class="text-white hover:text-gray-200 transition-colors">
+            <i class="fas fa-envelope mr-2"></i>Email Me
+          </a>
+        </div>
+      </div>
+      
+      <!-- Copyright -->
+      <div class="text-center mt-8 pt-8 border-t border-white/20">
+        <p class="text-sm opacity-75">&copy; <span id="year"></span> Lawrence Murry | All rights reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Mobile menu toggle function (from original index.html)
+    function toggleNavbar() {
+      const navbarLinks = document.getElementById('mobileNavbarLinks');
+      if (navbarLinks.style.display === 'none' || navbarLinks.style.display === '') {
+        navbarLinks.style.display = 'block';
+      } else {
+        navbarLinks.style.display = 'none';
+      }
+    }
+    
+    // Update copyright year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Stripe Payment Integration
+    function initiateStripePayment() {
+      // Track purchase attempt
+      gtag('event', 'purchase_click', {
+        event_category: 'monetization',
+        event_label: 'Teams Stay Green eBook',
+        value: 18.99
+      });
+      
+      // Show loading state
+      const button = document.getElementById('buy-button');
+      const originalText = button.innerHTML;
+      button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+      button.disabled = true;
+      
+      // Create Stripe checkout session
+      fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product: 'teams-stay-green-ebook',
+          price: 1899, // $18.99 in cents
+          currency: 'usd',
+          success_url: window.location.origin + '/success.html',
+          cancel_url: window.location.origin + '/teamsstaygreen-tailwind.html'
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.sessionId) {
+          // Redirect to Stripe Checkout
+          window.location.href = data.url;
+        } else {
+          // Fallback to original site
+          window.open('https://teamsstaygreen.com', '_blank');
+        }
+      })
+      .catch(error => {
+        console.error('Payment error:', error);
+        // Fallback to original site
+        window.open('https://teamsstaygreen.com', '_blank');
+      })
+      .finally(() => {
+        // Reset button state
+        button.innerHTML = originalText;
+        button.disabled = false;
+      });
+    }
+    
+    // Fallback purchase function (if Stripe is not available)
+    function fallbackPurchase() {
+      gtag('event', 'purchase_click', {
+        event_category: 'monetization',
+        event_label: 'Teams Stay Green eBook',
+        value: 18.99
+      });
+      
+      window.open('https://teamsstaygreen.com', '_blank');
+    }
+    
+    // Affiliate link tracking
+    function trackAffiliateClick(affiliateName) {
+      gtag('event', 'affiliate_click', {
+        event_category: 'monetization',
+        event_label: affiliateName,
+        value: 1
+      });
+    }
+    
+    // Modal functions
+    function closeModal() {
+      document.getElementById('author-modal').classList.add('hidden');
+    }
+    
+    // Page view tracking
+    gtag('event', 'page_view', {
+      page_title: 'Teams Stay Green eBook',
+      page_location: window.location.href
+    });
+    
+    // Track scroll depth
+    let maxScroll = 0;
+    window.addEventListener('scroll', function() {
+      const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+      if (scrollPercent > maxScroll) {
+        maxScroll = scrollPercent;
+        if (maxScroll % 25 === 0) {
+          gtag('event', 'scroll_depth', {
+            event_category: 'engagement',
+            event_label: `${maxScroll}%`,
+            value: maxScroll
+          });
+        }
+      }
+    });
+  </script>
+</body>
+</html> 

@@ -1,0 +1,28 @@
+# Cloudflare Pages Configuration
+build:
+  command: ""
+  output: "."
+  environment:
+    NODE_VERSION: "18"
+
+# Headers for search engine access
+headers:
+  - pattern: "/*"
+    headers:
+      - key: "X-Robots-Tag"
+        value: "index, follow"
+      - key: "Access-Control-Allow-Origin"
+        value: "*"
+      - key: "Access-Control-Allow-Methods"
+        value: "GET, POST, OPTIONS"
+      - key: "Access-Control-Allow-Headers"
+        value: "Content-Type"
+
+# Redirects
+redirects:
+  - from: "/index.html"
+    to: "/"
+    status: 301
+  - from: "/testimonials.html"
+    to: "/testimonials"
+    status: 301 
