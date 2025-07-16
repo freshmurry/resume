@@ -23,6 +23,7 @@
     <!-- Custom Tailwind Config -->
     <script>
         tailwind.config = {
+        darkMode: 'class',
         theme: {
             extend: {
             colors: {
@@ -71,12 +72,16 @@
     </style>
     </head>
 
-    <body class="bg-gray-50">
+    <body class="bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
     <!-- Responsive Navbar -->
-    <nav class="fixed top-0 w-full bg-primary z-50 flex justify-between items-center px-5 py-3 text-white flex-wrap shadow-lg">
+    <nav class="fixed top-0 w-full bg-primary dark:bg-gray-950 z-50 flex justify-between items-center px-5 py-3 text-white flex-wrap shadow-lg">
         <a href="index.html" class="text-white font-bold text-xl no-underline transition-opacity duration-300 hover:opacity-80">
         Lawrence Murry
         </a>
+    
+        <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 text-xl p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-300">
+            <i id="darkModeIcon" class="fas fa-moon"></i>
+        </button>
     
         <div class="md:hidden text-white text-2xl cursor-pointer p-4 transition-transform duration-300 hover:scale-110" onclick="toggleNavbar()">
         <i class="fas fa-bars"></i>
@@ -163,14 +168,14 @@
             
             <!-- Left Column - Profile -->
             <div class="lg:col-span-1">
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden card-hover">
                 <img src="img/lawrence-murry-senior-proposal-manager.jpg" 
                     alt="Lawrence Murry - Senior Proposal Manager" 
                     class="w-full h-auto object-contain">
                 
                 <div class="p-6">
-                <h1 class="text-2xl font-bold text-center text-primary mb-4">Lawrence Murry, CF APMP, PSM I</h1>
-                <p class="text-gray-600 mb-6">
+                <h1 class="text-2xl font-bold text-center text-primary dark:text-yellow-300 mb-4">Lawrence Murry, CF APMP, PSM I</h1>
+                <p class="text-gray-600 dark:text-gray-200 mb-6">
                     An experienced APMP-certified Senior Proposal Manager, Lawrence Murry helps proposal, sales teams, and internal stakeholders be successful through improving processes, streamlining tedious tasks, and crafting winning narratives that result in multi-million dollar contracts.
                 </p>
                 
@@ -1082,6 +1087,42 @@
             }
         }
         });
+    </script>
+    <script src="js/api-client.js"></script>
+    
+    <!-- Dark Mode Toggle Script -->
+    <script>
+    // Dark mode toggle logic
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon = document.getElementById('darkModeIcon');
+    const root = document.documentElement;
+    
+    function setDarkMode(enabled) {
+        if (enabled) {
+            root.classList.add('dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        } else {
+            root.classList.remove('dark');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+        }
+        localStorage.setItem('darkMode', enabled ? '1' : '0');
+    }
+    
+    // On load, set mode from localStorage or system preference
+    (function() {
+        const saved = localStorage.getItem('darkMode');
+        if (saved === '1' || (saved === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setDarkMode(true);
+        } else {
+            setDarkMode(false);
+        }
+    })();
+    
+    darkModeToggle.addEventListener('click', function() {
+        setDarkMode(!root.classList.contains('dark'));
+    });
     </script>
     </body>
 </html> <!-- Restored index-tailwind.html: Tailwind-based resume homepage. This is the same as the new index.html. -->

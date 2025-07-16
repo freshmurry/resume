@@ -19,6 +19,7 @@
     <!-- Custom Tailwind Config -->
     <script>
         tailwind.config = {
+        darkMode: 'class',
         theme: {
             extend: {
             colors: {
@@ -54,12 +55,15 @@
         .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 dark:bg-gray-900 dark:text-gray-100">
     <!-- Responsive Navbar -->
-    <nav class="fixed top-0 w-full bg-primary z-50 flex justify-between items-center px-5 py-3 text-white flex-wrap shadow-lg">
+    <nav class="fixed top-0 w-full bg-primary dark:bg-gray-950 z-50 flex justify-between items-center px-5 py-3 text-white flex-wrap shadow-lg">
         <a href="index.html" class="text-white font-bold text-xl no-underline transition-opacity duration-300 hover:opacity-80">
         Lawrence Murry
         </a>
+        <button id="darkModeToggle" aria-label="Toggle dark mode" class="ml-4 text-xl p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-300">
+            <i id="darkModeIcon" class="fas fa-moon"></i>
+        </button>
         <div class="md:hidden text-white text-2xl cursor-pointer p-4 transition-transform duration-300 hover:scale-110" onclick="toggleNavbar()">
         <i class="fas fa-bars"></i>
         </div>
@@ -136,18 +140,18 @@
         </div>
     </nav>
     <!-- Main Content (Testimonials section remains unchanged) -->
-    <main class="pt-20 pb-16 bg-gray-50 min-h-screen">
+    <main class="pt-20 pb-16 bg-gray-50 dark:bg-gray-900 min-h-screen">
       <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl font-bold text-center text-primary mb-12 mt-12">Testimonials</h1>
+        <h1 class="text-4xl font-bold text-center text-primary dark:text-yellow-300 mb-12 mt-12">Testimonials</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Testimonial Card 1 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/D4E03AQHUofmHvUMotA/profile-displayphoto-shrink_100_100/B4EZOKF_mwHEAY-/0/1733188648442?e=1757548800&v=beta&t=RqIJvOdYioXswviGKaGZiIfKlerNdmITRnXkVs4Vccc" alt="Scott Jobe" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“I had a brief opportunity to work with Lawrence Murray in his role as a Proposal Manager and was impressed by his responsiveness and attention to detail. Even in a short interaction, it was clear that he brings a high level of professionalism and organization to his work. His support helped move things forward efficiently, and I appreciated the clarity he brought to the process.”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“I had a brief opportunity to work with Lawrence Murray in his role as a Proposal Manager and was impressed by his responsiveness and attention to detail. Even in a short interaction, it was clear that he brings a high level of professionalism and organization to his work. His support helped move things forward efficiently, and I appreciated the clarity he brought to the process.”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/rscottjobe" target="_blank" class="font-bold text-primary hover:underline">Scott Jobe</a>
                 <div class="text-sm text-gray-500">Regional Sales Manager (SLED), Cloudflare, Inc.</div>
@@ -155,13 +159,13 @@
             </div>
           </div>
           <!-- Testimonial Card 2 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/D5603AQGn2nVW5ppg6Q/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1696391953812?e=1757548800&v=beta&t=f0g1JuHcLsn39WwuyA-4oGPNy6T-Jzt4I6Q8q0soQ8E" alt="Armando Siliceo-Roman" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“I had the pleasure of working with Lawrence on a large and complex RFP, and his performance as Project Manager was exceptional. He brought structure, clarity, and a calm confidence to a fast-moving and high-stakes process. His attention to detail, communication skills, and ability to keep cross-functional teams aligned were critical to our success. Lawrence is someone you can rely on to navigate complexity and deliver results. I’d welcome the opportunity to work with him again.”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“I had the pleasure of working with Lawrence on a large and complex RFP, and his performance as Project Manager was exceptional. He brought structure, clarity, and a calm confidence to a fast-moving and high-stakes process. His attention to detail, communication skills, and ability to keep cross-functional teams aligned were critical to our success. Lawrence is someone you can rely on to navigate complexity and deliver results. I’d welcome the opportunity to work with him again.”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/armandos" target="_blank" class="font-bold text-primary hover:underline">Armando Siliceo-Roman</a>
                 <div class="text-sm text-gray-500">Senior Account Executive, Cloudflare, Inc.</div>
@@ -169,13 +173,13 @@
             </div>
           </div>
           <!-- Testimonial Card 3 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/D4D03AQFFLv_wcTejDQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1722291028887?e=2147483647&amp;v=beta&amp;t=jC5T5hgC7ZXwz_OUBO56hTI3eAkCHmSmTPWdN25QFMc" alt="Brad Koontz" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“I had the pleasure of managing Lawrence Murry during his time at Hitachi Solutions, and I can confidently say that he is an exceptional professional. Lawrence helped expand the scope, scale and quality of presales/deal desk function, and installed a level of professionalism to the RFx produced by the firm. He led the complex effort of implementing a new AI-powered response platform for the larger sales team. Lawrence's innovative thinking and problem-solving skills were invaluable to our team, and he often went above and beyond to ensure the success of our initiatives. I highly recommend Lawrence for any role that requires dedication, expertise, and a proactive approach. He will undoubtedly be a tremendous asset to any organization.”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“I had the pleasure of managing Lawrence Murry during his time at Hitachi Solutions, and I can confidently say that he is an exceptional professional. Lawrence helped expand the scope, scale and quality of presales/deal desk function, and installed a level of professionalism to the RFx produced by the firm. He led the complex effort of implementing a new AI-powered response platform for the larger sales team. Lawrence's innovative thinking and problem-solving skills were invaluable to our team, and he often went above and beyond to ensure the success of our initiatives. I highly recommend Lawrence for any role that requires dedication, expertise, and a proactive approach. He will undoubtedly be a tremendous asset to any organization.”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/bradkoontz" target="_blank" class="font-bold text-primary hover:underline">Brad Koontz, MBA</a>
                 <div class="text-sm text-gray-500">Vice President, Pre-Sales, Hitachi Solutions</div>
@@ -183,13 +187,13 @@
             </div>
           </div>
           <!-- Testimonial Card 4 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/D5603AQGCWspunDweXQ/profile-displayphoto-shrink_100_100/B56ZStdUXvGsAU-/0/1738076931877?e=1753920000&v=beta&t=gRl9BTRu_CiDYnyJLSK0AvuxZBkXi5Ujn1pVd0Rf758" alt="Adan Adam Miranda" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“Lawrence and I worked together during his time at Oracle. Lawrence's attention to detail was a difference-maker as a proposal manager. At the same time, he expertly navigated the management of a team from various business units who shared responsibilities for creating, auditing, and completing business proposals for multi-billion dollar organizations. Lawrence translated our strategy into a thoughtfully delivered proposal that exceeded the prospect's expectations.”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“Lawrence and I worked together during his time at Oracle. Lawrence's attention to detail was a difference-maker as a proposal manager. At the same time, he expertly navigated the management of a team from various business units who shared responsibilities for creating, auditing, and completing business proposals for multi-billion dollar organizations. Lawrence translated our strategy into a thoughtfully delivered proposal that exceeded the prospect's expectations.”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/adanrmiranda" target="_blank" class="font-bold text-primary hover:underline">Adan "Adam" Miranda</a>
                 <div class="text-sm text-gray-500">Account Executive - Local Government ERP, Oracle</div>
@@ -197,13 +201,13 @@
             </div>
           </div>
           <!-- Testimonial Card 5 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/C5603AQEBPeOMseJFVQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1598828510603?e=1753920000&v=beta&t=jUtykvlLT8TxC05WTCApelutS_dlfeUQxzkr5klxZOQ" alt="Karin Hardison" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“I had the pleasure to mentor Lawrence during his time at Oracle and recommend him when you need someone that is tenacious, cares about quality, self-starter, quick learner and excellent at building relationships. I looked forward to our bi-directional conversations where both of us come away with a gift; those are the best mentor – mentee relationships.”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“I had the pleasure to mentor Lawrence during his time at Oracle and recommend him when you need someone that is tenacious, cares about quality, self-starter, quick learner and excellent at building relationships. I looked forward to our bi-directional conversations where both of us come away with a gift; those are the best mentor – mentee relationships.”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/karinhardison" target="_blank" class="font-bold text-primary hover:underline">Karin Hardison</a>
                 <div class="text-sm text-gray-500">Director - Energy & Water, Oracle</div>
@@ -211,13 +215,13 @@
             </div>
           </div>
           <!-- Testimonial Card 6 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/C5603AQEAmV8JYXPzFA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1611098218278?e=1753920000&v=beta&t=dXx9G3VdzDAaDcM9lBx-LQI_b-TtVC8NoP6MpQ81pEw" alt="Kevin O'Meara" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“Lawrence has been a pleasure to work with and more importantly, an effective business partner when writing bids in the public sector. My team has won every bid when partnered with Lawrence, batting 1000. His professionalism and attention to detail have been key to his success. I would choose to work with Lawrence anywhere anytime!”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“Lawrence has been a pleasure to work with and more importantly, an effective business partner when writing bids in the public sector. My team has won every bid when partnered with Lawrence, batting 1000. His professionalism and attention to detail have been key to his success. I would choose to work with Lawrence anywhere anytime!”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/ktomeara" target="_blank" class="font-bold text-primary hover:underline">Kevin O'Meara</a>
                 <div class="text-sm text-gray-500">Account Manager, Oracle NetSuite</div>
@@ -225,13 +229,13 @@
             </div>
           </div>
           <!-- Testimonial Card 7 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/D4E03AQEtYimx3h5pIw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1698595056324?e=1753920000&v=beta&t=pmS7TqMeCiV7HoITDJrqWwKXcxkJyEqVgwwXB0Wzj1I" alt="Rachel Wolsfelt" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“I've worked with Lawrence on multiple proposals and he was a great asset to each process. When he is working on a proposal, the process always goes smoothly. He communicated his plan and executed it with ease and as promised with his timeline. He is very organized and gets the job done successfully! I would recommend Lawrence for any proposal!”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“I've worked with Lawrence on multiple proposals and he was a great asset to each process. When he is working on a proposal, the process always goes smoothly. He communicated his plan and executed it with ease and as promised with his timeline. He is very organized and gets the job done successfully! I would recommend Lawrence for any proposal!”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/rachelwolsfelt" target="_blank" class="font-bold text-primary hover:underline">Rachel Wolsfelt</a>
                 <div class="text-sm text-gray-500">Account Manager, Oracle NetSuite</div>
@@ -239,13 +243,13 @@
             </div>
           </div>
           <!-- Testimonial Card 8 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/D4E03AQGpWKb2ejpOBQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1680710227160?e=1753920000&v=beta&t=pYzv7fNJguQemZufA461htju6BpfS7rIsvsSG0paAkc" alt="Eric Browning" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“Lawrence and I first worked together on what was my first RFP with NetSuite in March of 2020, and it was a fairly complex public sector one at that. Immediately Lawrence took the reins and administered the RFP process in such a detailed and defined manner that it allowed me comfort that this process was under complete control and nothing would slip through the cracks. We won that RFP because of Lawrence's well-defined timeline, and his ability to somehow manage the project in spite of the varying geographic locations of the personnel he's coordinating with. There were key areas required to tie this all together, and those areas pertained to both project and time management, in which he excels. A year later, we have collaborated on several other RFPs and his process has only gotten tighter and more refined. He catches mistakes others may have made as he's compiling the many pieces required to put together a response. That is invaluable in any proposal process. The shortest way I can get my point across is to state that when Lawrence gets assigned to an RFP I've received, I smile because I know it will be handled flawlessly.”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“Lawrence and I first worked together on what was my first RFP with NetSuite in March of 2020, and it was a fairly complex public sector one at that. Immediately Lawrence took the reins and administered the RFP process in such a detailed and defined manner that it allowed me comfort that this process was under complete control and nothing would slip through the cracks. We won that RFP because of Lawrence's well-defined timeline, and his ability to somehow manage the project in spite of the varying geographic locations of the personnel he's coordinating with. There were key areas required to tie this all together, and those areas pertained to both project and time management, in which he excels. A year later, we have collaborated on several other RFPs and his process has only gotten tighter and more refined. He catches mistakes others may have made as he's compiling the many pieces required to put together a response. That is invaluable in any proposal process. The shortest way I can get my point across is to state that when Lawrence gets assigned to an RFP I've received, I smile because I know it will be handled flawlessly.”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/doomedrecords" target="_blank" class="font-bold text-primary hover:underline">Eric Browning</a>
                 <div class="text-sm text-gray-500">Account Executive, Oracle NetSuite (HigherEd)</div>
@@ -253,13 +257,13 @@
             </div>
           </div>
           <!-- Testimonial Card 9 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/C4E03AQGG0tYvciGp1Q/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1561044480188?e=1753920000&v=beta&t=mwz7H1PkKgjrEaZ4wVDAAw4mYrWFxtAPZQ0L9w6Y-Uo" alt="James Wilson" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“Lawrence and I have partnered on multiple projects with great success. He is talented and driven which is why he such a pleasure to partner with. Thanks for all of your assistance over the past two years Lawrence!”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“Lawrence and I have partnered on multiple projects with great success. He is talented and driven which is why he such a pleasure to partner with. Thanks for all of your assistance over the past two years Lawrence!”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/james-wilson-mba-6a911084" target="_blank" class="font-bold text-primary hover:underline">James Wilson, MBA</a>
                 <div class="text-sm text-gray-500">Account Executive, Oracle NetSuite</div>
@@ -267,13 +271,13 @@
             </div>
           </div>
           <!-- Testimonial Card 10 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/D5603AQG6ptCGVjvfsQ/profile-displayphoto-scale_100_100/B56ZfVbMJ0HQAk-/0/1751632365693?e=1757548800&v=beta&t=jocGpGwcad-KrXdxGY2Kq0HNc-pvyCGyp4COxtiXaYA" alt="Chelsea Snell" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“I have had the pleasure of working with Lawrence on many occasions when completing Requests for Proposals for clients. He is incredibly professional and efficient at coordinating these projects. He delegates the appropriate portion of the project to the team members who specifically address those areas, communicates clear deadlines and expectations, and is such a delight to work with. I highly recommend Lawrence.”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“I have had the pleasure of working with Lawrence on many occasions when completing Requests for Proposals for clients. He is incredibly professional and efficient at coordinating these projects. He delegates the appropriate portion of the project to the team members who specifically address those areas, communicates clear deadlines and expectations, and is such a delight to work with. I highly recommend Lawrence.”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/chelsea-snell" target="_blank" class="font-bold text-primary hover:underline">Chelsea Snell, MAcc</a>
                 <div class="text-sm text-gray-500">Account Executive, Oracle NetSuite (NonProfits)</div>
@@ -281,13 +285,13 @@
             </div>
           </div>
           <!-- Testimonial Card 11 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/C4E03AQGnR1YWQR2K_g/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1544802743159?e=1753920000&v=beta&t=63yKEf8o30IMVm1PKjWmQr31yw9eYhJGDtyFl9l6DVE" alt="Adam Conrad" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“Lawrence and the work his team does is an incredible support. He always delivers top quality material, and does it ahead of schedule. He's organized, diligent, and keeps the team moving forward. I've benefited tremendously from the fantastic work he does.”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“Lawrence and the work his team does is an incredible support. He always delivers top quality material, and does it ahead of schedule. He's organized, diligent, and keeps the team moving forward. I've benefited tremendously from the fantastic work he does.”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/jadamconrad" target="_blank" class="font-bold text-primary hover:underline">Adam Conrad</a>
                 <div class="text-sm text-gray-500">Account Executive, Cupa Software</div>
@@ -295,13 +299,13 @@
             </div>
           </div>
           <!-- Testimonial Card 12 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/C4E03AQF19_BN4LUkNQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1626970157150?e=1753920000&v=beta&t=vK0oE1v4y99IMRWo1km_hLmyto2ZFgVZpI5yyZSJDlc" alt="Kendall Ray" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“Lawrence and I have worked together on a couple of request for proposals from organizations. Often, these requests were very complex detailing the specific functionality an organization was looking for. When working with Lawrence, I was never concerned for our ability to turnaround these requests in a timely manner despite the complexities. Lawrence is extremely professional, capable and skilled in managing intricate proposals. He keeps our whole team on track when RFPs are received. Awesome resource to work with!”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“Lawrence and I have worked together on a couple of request for proposals from organizations. Often, these requests were very complex detailing the specific functionality an organization was looking for. When working with Lawrence, I was never concerned for our ability to turnaround these requests in a timely manner despite the complexities. Lawrence is extremely professional, capable and skilled in managing intricate proposals. He keeps our whole team on track when RFPs are received. Awesome resource to work with!”</p>
               <div class="mt-4">
                 <a href="https://www.linkedin.com/in/kendallrayadams" target="_blank" class="font-bold text-primary hover:underline">Kendall Ray</a>
                 <div class="text-sm text-gray-500">Account Executive, Oracle NetSuite (Emerging Markets)</div>
@@ -309,13 +313,13 @@
             </div>
           </div>
           <!-- Testimonial Card 13 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/D5603AQEzPropmL8qog/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1697847350393?e=1753920000&v=beta&t=KWJqnETDQZRUZik1YQC11toWOMuKDXsNTHi_j5hcstM" alt="Erica Wellman" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“I have had the pleasure of working closely with Lawrence for the past 2 years. Lawrence, is a Senior Proposal Manager on our RFP team who consistently manages multiple RFP responses at any given time. Lawrence is extremely organized and thorough, and those qualities are evident in the work he produces. Lawrence successfully meets deadlines while delivering RFPs that result in winning bids. I have enjoyed working with Lawrence and he has proven to be a reliable and valuable teammate.”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“I have had the pleasure of working closely with Lawrence for the past 2 years. Lawrence, is a Senior Proposal Manager on our RFP team who consistently manages multiple RFP responses at any given time. Lawrence is extremely organized and thorough, and those qualities are evident in the work he produces. Lawrence successfully meets deadlines while delivering RFPs that result in winning bids. I have enjoyed working with Lawrence and he has proven to be a reliable and valuable teammate.”</p>
               <div class="mt-4">
                 <span class="font-bold text-primary">Erica Wellman</span>
                 <div class="text-sm text-gray-500">Proposal Team Manager, Oracle NetSuite</div>
@@ -323,13 +327,13 @@
             </div>
           </div>
           <!-- Testimonial Card 14 -->
-          <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center card-hover">
             <img src="https://media.licdn.com/dms/image/v2/D5603AQGa07gPKWiXxQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1697049902325?e=1753920000&v=beta&t=Mivk8DTpKo6GigxW2UpWAN5RB1ZVSYqjuiNNdP4r8fo" alt="Colleen McFarland" class="w-24 h-24 rounded-full shadow mb-4 object-cover">
             <div class="text-center">
               <div class="flex justify-center mb-2 text-yellow-400">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
               </div>
-              <p class="text-gray-700 mb-4 italic">“Lawrence was amazing from beginning to end! Our team faced many challenges in the way of getting this RFP completed but Lawrence kept us on track and on schedule to provide our customer with the absolute best possible response. Thank you, Lawrence!”</p>
+              <p class="text-gray-700 dark:text-gray-200 mb-4 italic">“Lawrence was amazing from beginning to end! Our team faced many challenges in the way of getting this RFP completed but Lawrence kept us on track and on schedule to provide our customer with the absolute best possible response. Thank you, Lawrence!”</p>
               <div class="mt-4">
                 <span class="font-bold text-primary">Colleen McFarland</span>
                 <div class="text-sm text-gray-500">Enterprise Application Sales Manager, Oracle</div>
@@ -388,6 +392,40 @@
             }
         }
         document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+    <!-- Dark Mode Toggle Script -->
+    <script>
+    // Dark mode toggle logic
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon = document.getElementById('darkModeIcon');
+    const root = document.documentElement;
+    
+    function setDarkMode(enabled) {
+        if (enabled) {
+            root.classList.add('dark');
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+        } else {
+            root.classList.remove('dark');
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+        }
+        localStorage.setItem('darkMode', enabled ? '1' : '0');
+    }
+    
+    // On load, set mode from localStorage or system preference
+    (function() {
+        const saved = localStorage.getItem('darkMode');
+        if (saved === '1' || (saved === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setDarkMode(true);
+        } else {
+            setDarkMode(false);
+        }
+    })();
+    
+    darkModeToggle.addEventListener('click', function() {
+        setDarkMode(!root.classList.contains('dark'));
+    });
     </script>
 </body>
 </html>
