@@ -41,6 +41,9 @@
                 <button onclick="testGeolocationFallback()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded">
                     Test Geolocation Fallback
                 </button>
+                <button onclick="testIPGeoServices()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                    Test IP Geo Services
+                </button>
                 <button onclick="checkIP()" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">
                     Check My IP
                 </button>
@@ -127,6 +130,20 @@
                 
             } catch (error) {
                 console.error('Error testing geolocation fallback:', error);
+                document.getElementById('results').textContent = 'Error: ' + error.message;
+            }
+        }
+        
+        async function testIPGeoServices() {
+            try {
+                const response = await fetch('/api/test-ipapi');
+                const data = await response.json();
+                
+                document.getElementById('results').textContent = 
+                    'IP Geolocation Services Test:\n' + JSON.stringify(data, null, 2);
+                
+            } catch (error) {
+                console.error('Error testing IP geo services:', error);
                 document.getElementById('results').textContent = 'Error: ' + error.message;
             }
         }

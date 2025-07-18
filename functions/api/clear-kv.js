@@ -41,15 +41,32 @@ export async function onRequest(context) {
       let country = context.request.headers.get('CF-IPCountry') || '';
       let zip = context.request.headers.get('CF-IPPostalCode') || '';
       
+      const debugInfo = {
+        ip: ip,
+        cloudflareHeaders: {
+          city: city,
+          region: region,
+          country: country,
+          zip: zip
+        },
+        fallbackAttempted: false,
+        fallbackResult: null,
+        fallbackError: null
+      };
+      
       // If Cloudflare headers are empty, try fallback geolocation service
       if (!city && !region && ip) {
         try {
+          debugInfo.fallbackAttempted = true;
           console.log('Cloudflare headers empty, trying fallback geolocation for IP:', ip);
           
           // Use ipapi.co as fallback (free tier: 1000 requests/day)
           const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`);
+          debugInfo.fallbackResponseStatus = geoResponse.status;
+          
           if (geoResponse.ok) {
             const geoData = await geoResponse.json();
+            debugInfo.fallbackResult = geoData;
             
             // Only use fallback data if we got valid results
             if (geoData.city && geoData.city !== 'null') {
@@ -64,9 +81,11 @@ export async function onRequest(context) {
             }
           } else {
             console.log('Fallback geolocation request failed:', geoResponse.status);
+            debugInfo.fallbackError = `HTTP ${geoResponse.status}`;
           }
         } catch (error) {
           console.log('Fallback geolocation error:', error.message);
+          debugInfo.fallbackError = error.message;
         }
       }
       
@@ -80,7 +99,8 @@ export async function onRequest(context) {
         zip: zip,
         firstVisit: new Date().toISOString(),
         lastVisit: new Date().toISOString(),
-        testData: true
+        testData: true,
+        debugInfo: debugInfo
       };
       
       await kv.put(ipKey, JSON.stringify(visitorData));
@@ -89,7 +109,8 @@ export async function onRequest(context) {
       return new Response(JSON.stringify({
         message: 'Test visitor data stored',
         visitorData: visitorData,
-        storedKey: ipKey
+        storedKey: ipKey,
+        debugInfo: debugInfo
       }, null, 2), { headers: corsHeaders });
     }
     
