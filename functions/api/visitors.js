@@ -57,32 +57,73 @@ export async function onRequest(context) {
     const timezone = context.request.headers.get('CF-IPTimezone') || '';
     const continent = context.request.headers.get('CF-IPContinent') || '';
 
-    // If Cloudflare headers are empty, try fallback geolocation service
+    // If Cloudflare headers are empty, try fallback geolocation services
     if (!city && !region && ip) {
-      try {
-        console.log('Cloudflare headers empty, trying fallback geolocation for IP:', ip);
-        
-        // Use ipapi.co as fallback (free tier: 1000 requests/day)
-        const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`);
-        if (geoResponse.ok) {
-          const geoData = await geoResponse.json();
-          
-          // Only use fallback data if we got valid results
-          if (geoData.city && geoData.city !== 'null') {
-            city = geoData.city || '';
-            region = geoData.region || geoData.region_code || '';
-            country = geoData.country || geoData.country_code || '';
-            zip = geoData.postal || '';
-            
-            console.log('Fallback geolocation successful:', { city, region, country, zip });
-          } else {
-            console.log('Fallback geolocation returned invalid data:', geoData);
-          }
-        } else {
-          console.log('Fallback geolocation request failed:', geoResponse.status);
+      const fallbackServices = [
+        {
+          name: 'ipapi.co',
+          url: `https://ipapi.co/${ip}/json/`,
+          transform: (data) => ({
+            city: data.city,
+            region: data.region || data.region_code,
+            country: data.country || data.country_code,
+            zip: data.postal
+          })
+        },
+        {
+          name: 'ipinfo.io',
+          url: `https://ipinfo.io/${ip}/json`,
+          transform: (data) => ({
+            city: data.city,
+            region: data.region,
+            country: data.country,
+            zip: data.postal
+          })
+        },
+        {
+          name: 'ip-api.com',
+          url: `http://ip-api.com/json/${ip}`,
+          transform: (data) => ({
+            city: data.city,
+            region: data.regionName,
+            country: data.country,
+            zip: data.zip
+          })
         }
-      } catch (error) {
-        console.log('Fallback geolocation error:', error.message);
+      ];
+
+      for (const service of fallbackServices) {
+        try {
+          console.log(`Trying ${service.name} for IP:`, ip);
+          
+          const response = await fetch(service.url, {
+            headers: {
+              'User-Agent': 'Cloudflare-Worker/1.0'
+            }
+          });
+          
+          if (response.ok) {
+            const geoData = await response.json();
+            
+            // Check if we got valid data
+            if (geoData.city && geoData.city !== 'null' && geoData.city !== '') {
+              const transformed = service.transform(geoData);
+              city = transformed.city || '';
+              region = transformed.region || '';
+              country = transformed.country || '';
+              zip = transformed.zip || '';
+              
+              console.log(`${service.name} geolocation successful:`, { city, region, country, zip });
+              break; // Stop trying other services if we got valid data
+            } else {
+              console.log(`${service.name} returned invalid data:`, geoData);
+            }
+          } else {
+            console.log(`${service.name} request failed:`, response.status);
+          }
+        } catch (error) {
+          console.log(`${service.name} error:`, error.message);
+        }
       }
     }
 

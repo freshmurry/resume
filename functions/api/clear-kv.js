@@ -50,42 +50,96 @@ export async function onRequest(context) {
           zip: zip
         },
         fallbackAttempted: false,
-        fallbackResult: null,
-        fallbackError: null
+        fallbackResults: [],
+        successfulService: null
       };
       
-      // If Cloudflare headers are empty, try fallback geolocation service
+      // If Cloudflare headers are empty, try fallback geolocation services
       if (!city && !region && ip) {
-        try {
-          debugInfo.fallbackAttempted = true;
-          console.log('Cloudflare headers empty, trying fallback geolocation for IP:', ip);
-          
-          // Use ipapi.co as fallback (free tier: 1000 requests/day)
-          const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`);
-          debugInfo.fallbackResponseStatus = geoResponse.status;
-          
-          if (geoResponse.ok) {
-            const geoData = await geoResponse.json();
-            debugInfo.fallbackResult = geoData;
-            
-            // Only use fallback data if we got valid results
-            if (geoData.city && geoData.city !== 'null') {
-              city = geoData.city || '';
-              region = geoData.region || geoData.region_code || '';
-              country = geoData.country || geoData.country_code || '';
-              zip = geoData.postal || '';
-              
-              console.log('Fallback geolocation successful:', { city, region, country, zip });
-            } else {
-              console.log('Fallback geolocation returned invalid data:', geoData);
-            }
-          } else {
-            console.log('Fallback geolocation request failed:', geoResponse.status);
-            debugInfo.fallbackError = `HTTP ${geoResponse.status}`;
+        debugInfo.fallbackAttempted = true;
+        
+        const fallbackServices = [
+          {
+            name: 'ipapi.co',
+            url: `https://ipapi.co/${ip}/json/`,
+            transform: (data) => ({
+              city: data.city,
+              region: data.region || data.region_code,
+              country: data.country || data.country_code,
+              zip: data.postal
+            })
+          },
+          {
+            name: 'ipinfo.io',
+            url: `https://ipinfo.io/${ip}/json`,
+            transform: (data) => ({
+              city: data.city,
+              region: data.region,
+              country: data.country,
+              zip: data.postal
+            })
+          },
+          {
+            name: 'ip-api.com',
+            url: `http://ip-api.com/json/${ip}`,
+            transform: (data) => ({
+              city: data.city,
+              region: data.regionName,
+              country: data.country,
+              zip: data.zip
+            })
           }
-        } catch (error) {
-          console.log('Fallback geolocation error:', error.message);
-          debugInfo.fallbackError = error.message;
+        ];
+
+        for (const service of fallbackServices) {
+          try {
+            console.log(`Trying ${service.name} for IP:`, ip);
+            
+            const response = await fetch(service.url, {
+              headers: {
+                'User-Agent': 'Cloudflare-Worker/1.0'
+              }
+            });
+            
+            const serviceResult = {
+              service: service.name,
+              status: response.status,
+              ok: response.ok,
+              data: null,
+              error: null
+            };
+            
+            if (response.ok) {
+              const geoData = await response.json();
+              serviceResult.data = geoData;
+              
+              // Check if we got valid data
+              if (geoData.city && geoData.city !== 'null' && geoData.city !== '') {
+                const transformed = service.transform(geoData);
+                city = transformed.city || '';
+                region = transformed.region || '';
+                country = transformed.country || '';
+                zip = transformed.zip || '';
+                
+                debugInfo.successfulService = service.name;
+                console.log(`${service.name} geolocation successful:`, { city, region, country, zip });
+                break; // Stop trying other services if we got valid data
+              } else {
+                console.log(`${service.name} returned invalid data:`, geoData);
+              }
+            } else {
+              console.log(`${service.name} request failed:`, response.status);
+              serviceResult.error = `HTTP ${response.status}`;
+            }
+            
+            debugInfo.fallbackResults.push(serviceResult);
+          } catch (error) {
+            console.log(`${service.name} error:`, error.message);
+            debugInfo.fallbackResults.push({
+              service: service.name,
+              error: error.message
+            });
+          }
         }
       }
       
