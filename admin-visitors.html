@@ -63,6 +63,12 @@
                 <button onclick="testGeolocation()" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">
                     Test Geolocation
                 </button>
+                <button onclick="clearKVData()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                    Clear KV Data
+                </button>
+                <button onclick="testNewSystem()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
+                    Test New System
+                </button>
             </div>
         </div>
         
@@ -177,6 +183,38 @@
             } catch (error) {
                 console.error('Error testing geolocation:', error);
                 document.getElementById('headersData').textContent = 'Error testing geolocation';
+            }
+        }
+        
+        // Clear KV data
+        async function clearKVData() {
+            if (!confirm('Are you sure you want to clear all KV data? This cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/clear-kv?clear=true');
+                const data = await response.json();
+                document.getElementById('rawData').textContent = JSON.stringify(data, null, 2);
+                alert('KV data cleared successfully!');
+                loadVisitorData(); // Refresh the display
+            } catch (error) {
+                console.error('Error clearing KV data:', error);
+                document.getElementById('rawData').textContent = 'Error clearing KV data: ' + error.message;
+            }
+        }
+        
+        // Test new system
+        async function testNewSystem() {
+            try {
+                const response = await fetch('/api/clear-kv?test=true');
+                const data = await response.json();
+                document.getElementById('rawData').textContent = JSON.stringify(data, null, 2);
+                alert('New system test completed! Check the raw data below.');
+                loadVisitorData(); // Refresh the display
+            } catch (error) {
+                console.error('Error testing new system:', error);
+                document.getElementById('rawData').textContent = 'Error testing new system: ' + error.message;
             }
         }
         
