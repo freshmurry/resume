@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Analytics - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Visitor Analytics</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Total Visitors -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">Total Unique Visitors</h2>
+                <div id="totalVisitors" class="text-3xl font-bold text-blue-600 dark:text-blue-400">Loading...</div>
+            </div>
+            
+            <!-- Recent Visitors -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">Recent Visitors</h2>
+                <div id="recentVisitors" class="space-y-2">Loading...</div>
+            </div>
+        </div>
+        
+        <!-- All Visitors Table -->
+        <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h2 class="text-xl font-semibold mb-4">All Visitors</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b dark:border-gray-700">
+                            <th class="text-left py-2">IP Address</th>
+                            <th class="text-left py-2">Location</th>
+                            <th class="text-left py-2">First Visit</th>
+                            <th class="text-left py-2">Last Visit</th>
+                        </tr>
+                    </thead>
+                    <tbody id="visitorsTable">
+                        <tr><td colspan="4" class="py-4 text-center">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Raw Data -->
+        <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h2 class="text-xl font-semibold mb-4">Raw KV Data</h2>
+            <button onclick="loadRawData()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mb-4">
+                Load Raw Data
+            </button>
+            <pre id="rawData" class="bg-gray-100 dark:bg-gray-700 p-4 rounded text-xs overflow-x-auto">Click button to load raw data...</pre>
+        </div>
+    </div>
+
+    <script>
+        // Load visitor data
+        async function loadVisitorData() {
+            try {
+                const response = await fetch('/api/visitors?debug=true');
+                const data = await response.json();
+                
+                // Display total visitors
+                const totalCount = data.visitor_count || 0;
+                document.getElementById('totalVisitors').textContent = totalCount;
+                
+                // Display recent visitors
+                const visitorsList = data.visitors_list ? JSON.parse(data.visitors_list) : [];
+                const recentVisitors = visitorsList.slice(-5).reverse();
+                
+                const recentHtml = recentVisitors.map(visitor => `
+                    <div class="flex justify-between items-center py-2 border-b dark:border-gray-700">
+                        <div>
+                            <div class="font-medium">${visitor.city || 'Unknown'}, ${visitor.country || 'Unknown'}</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">${visitor.ip}</div>
+                        </div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">
+                            ${new Date(visitor.lastVisit).toLocaleDateString()}
+                        </div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('recentVisitors').innerHTML = recentHtml || 'No visitors yet';
+                
+                // Display all visitors in table
+                const tableHtml = visitorsList.map(visitor => `
+                    <tr class="border-b dark:border-gray-700">
+                        <td class="py-2 font-mono text-xs">${visitor.ip}</td>
+                        <td class="py-2">${visitor.city || 'Unknown'}, ${visitor.region || ''} ${visitor.zip || ''} ${visitor.country || 'Unknown'}</td>
+                        <td class="py-2">${new Date(visitor.firstVisit).toLocaleString()}</td>
+                        <td class="py-2">${new Date(visitor.lastVisit).toLocaleString()}</td>
+                    </tr>
+                `).join('');
+                
+                document.getElementById('visitorsTable').innerHTML = tableHtml || '<tr><td colspan="4" class="py-4 text-center">No visitors yet</td></tr>';
+                
+            } catch (error) {
+                console.error('Error loading visitor data:', error);
+                document.getElementById('totalVisitors').textContent = 'Error loading data';
+            }
+        }
+        
+        // Load raw KV data
+        async function loadRawData() {
+            try {
+                const response = await fetch('/api/visitors?debug=true');
+                const data = await response.json();
+                document.getElementById('rawData').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error('Error loading raw data:', error);
+                document.getElementById('rawData').textContent = 'Error loading raw data';
+            }
+        }
+        
+        // Load data on page load
+        loadVisitorData();
+    </script>
+</body>
+</html> 
