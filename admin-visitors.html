@@ -40,22 +40,42 @@
                             <th class="text-left py-2">Location</th>
                             <th class="text-left py-2">First Visit</th>
                             <th class="text-left py-2">Last Visit</th>
+                            <th class="text-left py-2">Details</th>
                         </tr>
                     </thead>
                     <tbody id="visitorsTable">
-                        <tr><td colspan="4" class="py-4 text-center">Loading...</td></tr>
+                        <tr><td colspan="5" class="py-4 text-center">Loading...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
         
+        <!-- Debug Buttons -->
+        <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h2 class="text-xl font-semibold mb-4">Debug Tools</h2>
+            <div class="flex flex-wrap gap-4">
+                <button onclick="loadRawData()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                    Load Raw KV Data
+                </button>
+                <button onclick="loadHeaders()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+                    View All Headers
+                </button>
+                <button onclick="testGeolocation()" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">
+                    Test Geolocation
+                </button>
+            </div>
+        </div>
+        
         <!-- Raw Data -->
         <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 class="text-xl font-semibold mb-4">Raw KV Data</h2>
-            <button onclick="loadRawData()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mb-4">
-                Load Raw Data
-            </button>
+            <h2 class="text-xl font-semibold mb-4">Raw Data</h2>
             <pre id="rawData" class="bg-gray-100 dark:bg-gray-700 p-4 rounded text-xs overflow-x-auto">Click button to load raw data...</pre>
+        </div>
+        
+        <!-- Headers Data -->
+        <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <h2 class="text-xl font-semibold mb-4">Request Headers</h2>
+            <pre id="headersData" class="bg-gray-100 dark:bg-gray-700 p-4 rounded text-xs overflow-x-auto">Click "View All Headers" to see request headers...</pre>
         </div>
     </div>
 
@@ -95,10 +115,16 @@
                         <td class="py-2">${visitor.city || 'Unknown'}, ${visitor.region || ''} ${visitor.zip || ''} ${visitor.country || 'Unknown'}</td>
                         <td class="py-2">${new Date(visitor.firstVisit).toLocaleString()}</td>
                         <td class="py-2">${new Date(visitor.lastVisit).toLocaleString()}</td>
+                        <td class="py-2">
+                            <button onclick="showVisitorDetails('${JSON.stringify(visitor).replace(/'/g, "\\'")}')" 
+                                    class="text-blue-500 hover:text-blue-700 text-xs">
+                                View Details
+                            </button>
+                        </td>
                     </tr>
                 `).join('');
                 
-                document.getElementById('visitorsTable').innerHTML = tableHtml || '<tr><td colspan="4" class="py-4 text-center">No visitors yet</td></tr>';
+                document.getElementById('visitorsTable').innerHTML = tableHtml || '<tr><td colspan="5" class="py-4 text-center">No visitors yet</td></tr>';
                 
             } catch (error) {
                 console.error('Error loading visitor data:', error);
@@ -116,6 +142,59 @@
                 console.error('Error loading raw data:', error);
                 document.getElementById('rawData').textContent = 'Error loading raw data';
             }
+        }
+        
+        // Load headers data
+        async function loadHeaders() {
+            try {
+                const response = await fetch('/api/visitors?headers=true');
+                const data = await response.json();
+                document.getElementById('headersData').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error('Error loading headers:', error);
+                document.getElementById('headersData').textContent = 'Error loading headers';
+            }
+        }
+        
+        // Test geolocation
+        async function testGeolocation() {
+            try {
+                // First get headers
+                const headersResponse = await fetch('/api/visitors?headers=true');
+                const headers = await headersResponse.json();
+                
+                // Show geolocation-specific headers
+                const geoHeaders = {};
+                Object.keys(headers).forEach(key => {
+                    if (key.startsWith('CF-IP')) {
+                        geoHeaders[key] = headers[key];
+                    }
+                });
+                
+                document.getElementById('headersData').textContent = 
+                    'Geolocation Headers:\n' + JSON.stringify(geoHeaders, null, 2) + 
+                    '\n\nAll Headers:\n' + JSON.stringify(headers, null, 2);
+            } catch (error) {
+                console.error('Error testing geolocation:', error);
+                document.getElementById('headersData').textContent = 'Error testing geolocation';
+            }
+        }
+        
+        // Show visitor details
+        function showVisitorDetails(visitorJson) {
+            const visitor = JSON.parse(visitorJson);
+            alert(`Visitor Details:\n\n` +
+                  `IP: ${visitor.ip}\n` +
+                  `City: ${visitor.city || 'Unknown'}\n` +
+                  `Region: ${visitor.region || 'Unknown'}\n` +
+                  `Country: ${visitor.country || 'Unknown'}\n` +
+                  `ZIP: ${visitor.zip || 'Unknown'}\n` +
+                  `Latitude: ${visitor.latitude || 'Unknown'}\n` +
+                  `Longitude: ${visitor.longitude || 'Unknown'}\n` +
+                  `Timezone: ${visitor.timezone || 'Unknown'}\n` +
+                  `Continent: ${visitor.continent || 'Unknown'}\n` +
+                  `First Visit: ${new Date(visitor.firstVisit).toLocaleString()}\n` +
+                  `Last Visit: ${new Date(visitor.lastVisit).toLocaleString()}`);
         }
         
         // Load data on page load
