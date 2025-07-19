@@ -307,7 +307,7 @@ function analyzeTechnicalData(visitors) {
 function analyzeBehavioralData(visitors) {
   const timeZones = {};
   const visitPatterns = { morning: 0, afternoon: 0, evening: 0, night: 0 };
-  // Use let for mutable counters
+  // Explicitly declare mutable counters to avoid build errors
   let weekendVisits = 0;
   let weekdayVisits = 0;
 
@@ -325,9 +325,12 @@ function analyzeBehavioralData(visitors) {
     else if (hour >= 17 && hour < 22) visitPatterns.evening++;
     else visitPatterns.night++;
 
-    // Weekend vs weekday
-    if (day === 0 || day === 6) weekendVisits++;
-    else weekdayVisits++;
+    // Weekend vs weekday - explicitly increment mutable variables
+    if (day === 0 || day === 6) {
+      weekendVisits = weekendVisits + 1;
+    } else {
+      weekdayVisits = weekdayVisits + 1;
+    }
   });
 
   return {
