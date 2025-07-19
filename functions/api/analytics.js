@@ -13,6 +13,13 @@ export async function onRequest(context) {
     const totalKey = 'visitor_count';
     const totalVisitorCount = parseInt(await env.KV.get(totalKey)) || 0;
 
+    // Get SEO keywords
+    let seoKeywords = [];
+    try {
+      const seoRaw = await env.KV.get('seo_keywords');
+      seoKeywords = seoRaw ? JSON.parse(seoRaw) : [];
+    } catch (e) { seoKeywords = []; }
+
     // Unique visitors by day/hour/month
     async function getUniqueCounts(prefix, periods) {
       const results = [];
@@ -134,7 +141,8 @@ export async function onRequest(context) {
           byDay: uniqueByDay,
           byHour: uniqueByHour,
           byMonth: uniqueByMonth
-        }
+        },
+        seoKeywords
       };
 
       return new Response(JSON.stringify(allData), {

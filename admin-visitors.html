@@ -228,13 +228,20 @@
             <canvas id="uniqueDayChart" width="400" height="200"></canvas>
         </div>
 
-        <!-- SEO/Keyword Tracking Placeholder -->
+        <!-- SEO/Keyword Tracking Section -->
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
             <div class="flex items-center mb-4">
                 <i class="fas fa-search text-pink-600 dark:text-pink-400 mr-2"></i>
                 <h3 class="text-xl font-semibold">SEO & Keyword Tracking</h3>
             </div>
-            <div id="seoKeywords" class="text-gray-600 dark:text-gray-300">Keyword analytics coming soon...</div>
+            <div id="seoKeywordsContainer">
+                <table class="min-w-full text-sm">
+                    <thead>
+                        <tr><th class="text-left py-2">Keyword</th><th class="text-left py-2">Engine</th><th class="text-left py-2">Count</th></tr>
+                    </thead>
+                    <tbody id="seoKeywordsTable"></tbody>
+                </table>
+            </div>
         </div>
 
         <script>
@@ -503,8 +510,15 @@
                         options: { responsive: true, scales: { y: { beginAtZero: true } } }
                     });
 
-                    // SEO/Keyword Tracking Placeholder (to be implemented in backend)
-                    document.getElementById('seoKeywords').textContent = 'Keyword analytics coming soon...';
+                    // SEO/Keyword Tracking Table
+                    const seoKeywordsTable = document.getElementById('seoKeywordsTable');
+                    if (seoKeywordsTable) {
+                        if (data.seoKeywords && data.seoKeywords.length > 0) {
+                            seoKeywordsTable.innerHTML = data.seoKeywords.map(k => `<tr><td class='py-2'>${k.keyword}</td><td class='py-2'>${k.engine}</td><td class='py-2'>${k.count}</td></tr>`).join('');
+                        } else {
+                            seoKeywordsTable.innerHTML = `<tr><td colspan='3' class='py-2 text-center text-gray-500'>No keyword data yet</td></tr>`;
+                        }
+                    }
 
                 } catch (error) {
                     console.error('Error loading analytics:', error);

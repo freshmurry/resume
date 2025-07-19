@@ -65,6 +65,54 @@ export async function onRequest(context) {
     const currentPage = url.pathname || '/';
     const timestamp = new Date().toISOString();
 
+    // Extract SEO keyword from search engine referrer
+    function extractSearchKeyword(referer) {
+      if (!referer) return null;
+      try {
+        const url = new URL(referer);
+        const host = url.hostname;
+        let keyword = null;
+        let engine = null;
+        if (host.includes('google.')) {
+          keyword = url.searchParams.get('q');
+          engine = 'Google';
+        } else if (host.includes('bing.com')) {
+          keyword = url.searchParams.get('q');
+          engine = 'Bing';
+        } else if (host.includes('yahoo.')) {
+          keyword = url.searchParams.get('p');
+          engine = 'Yahoo';
+        } else if (host.includes('duckduckgo.com')) {
+          keyword = url.searchParams.get('q');
+          engine = 'DuckDuckGo';
+        }
+        if (keyword && engine) {
+          return { keyword: keyword.toLowerCase(), engine };
+        }
+      } catch (e) {}
+      return null;
+    }
+    const keywordData = extractSearchKeyword(referer);
+    if (keywordData) {
+      // Store/update keyword in KV
+      const seoKey = 'seo_keywords';
+      let seoKeywords = [];
+      try {
+        const existing = await env.KV.get(seoKey);
+        seoKeywords = existing ? JSON.parse(existing) : [];
+      } catch (e) { seoKeywords = []; }
+      // Find if keyword+engine already exists
+      const idx = seoKeywords.findIndex(k => k.keyword === keywordData.keyword && k.engine === keywordData.engine);
+      if (idx >= 0) {
+        seoKeywords[idx].count = (seoKeywords[idx].count || 1) + 1;
+      } else {
+        seoKeywords.push({ ...keywordData, count: 1 });
+      }
+      // Keep only top 100 keywords
+      seoKeywords = seoKeywords.sort((a, b) => b.count - a.count).slice(0, 100);
+      await env.KV.put(seoKey, JSON.stringify(seoKeywords));
+    }
+
     if (visitorData) {
       // Update existing visitor
       visitorData.lastVisit = timestamp;
