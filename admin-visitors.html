@@ -576,7 +576,7 @@
 
             async function loadRawVisitorsTable() {
                 try {
-                    const response = await fetch('/api/visitors?debug=true');
+                    const response = await fetch('/api/visitors?raw_visitors_list=true');
                     const data = await response.json();
                     _rawVisitorsList = data.visitors_list ? JSON.parse(data.visitors_list) : [];
                     window._allVisitorHeaders = _rawVisitorsList.map(v => v.allHeaders || {});
