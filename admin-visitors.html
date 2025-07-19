@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visitor Analytics - Admin</title>
+    <title>Comprehensive Visitor Analytics - Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class'
@@ -13,230 +14,520 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-8">Visitor Analytics</h1>
+        <h1 class="text-3xl font-bold mb-8">Comprehensive Visitor Analytics</h1>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Total Visitors -->
+        <!-- Real-time Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-4">Total Unique Visitors</h2>
+                <h3 class="text-lg font-semibold mb-2">Total Visitors</h3>
                 <div id="totalVisitors" class="text-3xl font-bold text-blue-600 dark:text-blue-400">Loading...</div>
             </div>
-            
-            <!-- Recent Visitors -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-4">Recent Visitors</h2>
-                <div id="recentVisitors" class="space-y-2">Loading...</div>
+                <h3 class="text-lg font-semibold mb-2">Currently Online</h3>
+                <div id="currentlyOnline" class="text-3xl font-bold text-green-600 dark:text-green-400">Loading...</div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2">Active Last Hour</h3>
+                <div id="activeLastHour" class="text-3xl font-bold text-orange-600 dark:text-orange-400">Loading...</div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2">Active Last Day</h3>
+                <div id="activeLastDay" class="text-3xl font-bold text-purple-600 dark:text-purple-400">Loading...</div>
             </div>
         </div>
-        
-        <!-- All Visitors Table -->
-        <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 class="text-xl font-semibold mb-4">All Visitors</h2>
+
+        <!-- Engagement Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2">Avg Session Duration</h3>
+                <div id="avgSessionDuration" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Loading...</div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2">Bounce Rate</h3>
+                <div id="bounceRate" class="text-2xl font-bold text-red-600 dark:text-red-400">Loading...</div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2">Return Rate</h3>
+                <div id="returnRate" class="text-2xl font-bold text-teal-600 dark:text-teal-400">Loading...</div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2">Total Sessions</h3>
+                <div id="totalSessions" class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Geographic Analytics -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4">Top Countries</h3>
+                <canvas id="countriesChart" width="400" height="200"></canvas>
+            </div>
+            
+            <!-- Temporal Analytics -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4">Hourly Traffic</h3>
+                <canvas id="hourlyChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Device Analytics -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4">Device Types</h3>
+                <canvas id="devicesChart" width="400" height="200"></canvas>
+            </div>
+            
+            <!-- Browser Analytics -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4">Browser Distribution</h3>
+                <canvas id="browsersChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- Detailed Analytics Tables -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Top Cities -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4">Top Cities</h3>
+                <div id="topCities" class="space-y-2">Loading...</div>
+            </div>
+            
+            <!-- Visit Patterns -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4">Visit Patterns</h3>
+                <div id="visitPatterns" class="space-y-2">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Page Views Analytics -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+            <h3 class="text-xl font-semibold mb-4">Page Views & Session Details</h3>
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="border-b dark:border-gray-700">
                             <th class="text-left py-2">IP Address</th>
                             <th class="text-left py-2">Location</th>
-                            <th class="text-left py-2">First Visit</th>
-                            <th class="text-left py-2">Last Visit</th>
+                            <th class="text-left py-2">Pages Viewed</th>
+                            <th class="text-left py-2">Session Duration</th>
+                            <th class="text-left py-2">Device</th>
                             <th class="text-left py-2">Details</th>
                         </tr>
                     </thead>
                     <tbody id="visitorsTable">
-                        <tr><td colspan="5" class="py-4 text-center">Loading...</td></tr>
+                        <tr><td colspan="6" class="py-4 text-center">Loading...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        
-        <!-- Debug Buttons -->
-        <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 class="text-xl font-semibold mb-4">Debug Tools</h2>
-            <div class="flex flex-wrap gap-4">
-                <button onclick="loadRawData()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-                    Load Raw KV Data
-                </button>
-                <button onclick="loadHeaders()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
-                    View All Headers
-                </button>
-                <button onclick="testGeolocation()" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">
-                    Test Geolocation
-                </button>
-                <button onclick="clearKVData()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
-                    Clear KV Data
-                </button>
-                <button onclick="testNewSystem()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
-                    Test New System
-                </button>
+
+        <!-- Visitor Details Modal -->
+        <div id="visitorModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                    <!-- Modal Header -->
+                    <div class="flex items-center justify-between p-6 border-b dark:border-gray-700">
+                        <h3 class="text-xl font-semibold">Visitor Details</h3>
+                        <button onclick="closeVisitorModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Modal Body -->
+                    <div class="p-6">
+                        <div id="visitorDetails" class="space-y-6">
+                            <!-- Loading state -->
+                            <div class="text-center py-8">
+                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                                <p class="mt-2 text-gray-500">Loading visitor details...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        <!-- Raw Data -->
-        <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 class="text-xl font-semibold mb-4">Raw Data</h2>
-            <pre id="rawData" class="bg-gray-100 dark:bg-gray-700 p-4 rounded text-xs overflow-x-auto">Click button to load raw data...</pre>
-        </div>
-        
-        <!-- Headers Data -->
-        <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-            <h2 class="text-xl font-semibold mb-4">Request Headers</h2>
-            <pre id="headersData" class="bg-gray-100 dark:bg-gray-700 p-4 rounded text-xs overflow-x-auto">Click "View All Headers" to see request headers...</pre>
         </div>
     </div>
 
     <script>
-        // Load visitor data
-        async function loadVisitorData() {
+        let charts = {};
+
+        // Load comprehensive analytics data
+        async function loadAnalyticsData() {
             try {
-                const response = await fetch('/api/visitors?debug=true');
+                const response = await fetch('/api/analytics?type=all');
                 const data = await response.json();
                 
-                // Display total visitors
-                const totalCount = data.visitor_count || 0;
-                document.getElementById('totalVisitors').textContent = totalCount;
+                if (data.error) {
+                    console.error('Analytics error:', data.error);
+                    return;
+                }
+
+                // Update real-time stats
+                updateRealTimeStats(data.realtime);
                 
-                // Display recent visitors
-                const visitorsList = data.visitors_list ? JSON.parse(data.visitors_list) : [];
-                const recentVisitors = visitorsList.slice(-5).reverse();
+                // Update engagement metrics
+                updateEngagementMetrics(data.engagement);
                 
-                const recentHtml = recentVisitors.map(visitor => `
-                    <div class="flex justify-between items-center py-2 border-b dark:border-gray-700">
-                        <div>
-                            <div class="font-medium">${visitor.city || 'Unknown'}, ${visitor.country || 'Unknown'}</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">${visitor.ip}</div>
-                        </div>
-                        <div class="text-sm text-gray-500 dark:text-gray-400">
-                            ${new Date(visitor.lastVisit).toLocaleDateString()}
-                        </div>
-                    </div>
-                `).join('');
+                // Create charts
+                createCharts(data);
                 
-                document.getElementById('recentVisitors').innerHTML = recentHtml || 'No visitors yet';
+                // Update detailed tables
+                updateDetailedTables(data);
                 
-                // Display all visitors in table
-                const tableHtml = visitorsList.map(visitor => `
-                    <tr class="border-b dark:border-gray-700">
-                        <td class="py-2 font-mono text-xs">${visitor.ip}</td>
-                        <td class="py-2">${visitor.city || 'Unknown'}, ${visitor.region || ''} ${visitor.zip || ''} ${visitor.country || 'Unknown'}</td>
-                        <td class="py-2">${new Date(visitor.firstVisit).toLocaleString()}</td>
-                        <td class="py-2">${new Date(visitor.lastVisit).toLocaleString()}</td>
-                        <td class="py-2">
-                            <button onclick="showVisitorDetails('${JSON.stringify(visitor).replace(/'/g, "\\'")}')" 
-                                    class="text-blue-500 hover:text-blue-700 text-xs">
-                                View Details
-                            </button>
-                        </td>
-                    </tr>
-                `).join('');
-                
-                document.getElementById('visitorsTable').innerHTML = tableHtml || '<tr><td colspan="5" class="py-4 text-center">No visitors yet</td></tr>';
+                // Load visitor table
+                loadVisitorTable();
                 
             } catch (error) {
-                console.error('Error loading visitor data:', error);
-                document.getElementById('totalVisitors').textContent = 'Error loading data';
+                console.error('Error loading analytics:', error);
             }
         }
-        
-        // Load raw KV data
-        async function loadRawData() {
-            try {
-                const response = await fetch('/api/visitors?debug=true');
-                const data = await response.json();
-                document.getElementById('rawData').textContent = JSON.stringify(data, null, 2);
-            } catch (error) {
-                console.error('Error loading raw data:', error);
-                document.getElementById('rawData').textContent = 'Error loading raw data';
-            }
+
+        // Update real-time statistics
+        function updateRealTimeStats(realtime) {
+            document.getElementById('totalVisitors').textContent = realtime.totalVisitors || 0;
+            document.getElementById('currentlyOnline').textContent = realtime.currentlyOnline || 0;
+            document.getElementById('activeLastHour').textContent = realtime.activeLastHour || 0;
+            document.getElementById('activeLastDay').textContent = realtime.activeLastDay || 0;
         }
-        
-        // Load headers data
-        async function loadHeaders() {
-            try {
-                const response = await fetch('/api/visitors?headers=true');
-                const data = await response.json();
-                document.getElementById('headersData').textContent = JSON.stringify(data, null, 2);
-            } catch (error) {
-                console.error('Error loading headers:', error);
-                document.getElementById('headersData').textContent = 'Error loading headers';
-            }
+
+        // Update engagement metrics
+        function updateEngagementMetrics(engagement) {
+            const formatDuration = (seconds) => {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins}m ${secs}s`;
+            };
+
+            document.getElementById('avgSessionDuration').textContent = formatDuration(engagement.avgSessionDuration || 0);
+            document.getElementById('bounceRate').textContent = `${engagement.bounceRate || 0}%`;
+            document.getElementById('returnRate').textContent = `${engagement.returnRate || 0}%`;
+            document.getElementById('totalSessions').textContent = engagement.totalSessions || 0;
         }
-        
-        // Test geolocation
-        async function testGeolocation() {
-            try {
-                // First get headers
-                const headersResponse = await fetch('/api/visitors?headers=true');
-                const headers = await headersResponse.json();
-                
-                // Show geolocation-specific headers
-                const geoHeaders = {};
-                Object.keys(headers).forEach(key => {
-                    if (key.startsWith('CF-IP')) {
-                        geoHeaders[key] = headers[key];
+
+        // Create charts
+        function createCharts(data) {
+            // Countries Chart
+            const countriesCtx = document.getElementById('countriesChart').getContext('2d');
+            charts.countries = new Chart(countriesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.geographic.topCountries.map(item => item.country),
+                    datasets: [{
+                        data: data.geographic.topCountries.map(item => item.count),
+                        backgroundColor: [
+                            '#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#8B5CF6',
+                            '#06B6D4', '#F97316', '#84CC16', '#EC4899', '#6366F1'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
                     }
-                });
+                }
+            });
+
+            // Hourly Chart
+            const hourlyCtx = document.getElementById('hourlyChart').getContext('2d');
+            charts.hourly = new Chart(hourlyCtx, {
+                type: 'line',
+                data: {
+                    labels: data.temporal.hourly.map(item => `${item.hour}:00`),
+                    datasets: [{
+                        label: 'Visitors',
+                        data: data.temporal.hourly.map(item => item.count),
+                        borderColor: '#3B82F6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Devices Chart
+            const devicesCtx = document.getElementById('devicesChart').getContext('2d');
+            charts.devices = new Chart(devicesCtx, {
+                type: 'pie',
+                data: {
+                    labels: data.technical.devices.map(item => item.device),
+                    datasets: [{
+                        data: data.technical.devices.map(item => item.count),
+                        backgroundColor: ['#3B82F6', '#EF4444', '#10B981']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Browsers Chart
+            const browsersCtx = document.getElementById('browsersChart').getContext('2d');
+            charts.browsers = new Chart(browsersCtx, {
+                type: 'bar',
+                data: {
+                    labels: data.technical.browsers.map(item => item.browser),
+                    datasets: [{
+                        label: 'Users',
+                        data: data.technical.browsers.map(item => item.count),
+                        backgroundColor: '#8B5CF6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update detailed tables
+        function updateDetailedTables(data) {
+            // Top Cities
+            const topCitiesHtml = data.geographic.topCities.map((city, index) => `
+                <div class="flex justify-between items-center py-2 border-b dark:border-gray-700">
+                    <div class="flex items-center">
+                        <span class="text-sm font-medium text-gray-500 w-6">${index + 1}</span>
+                        <span class="font-medium">${city.city}</span>
+                    </div>
+                    <span class="text-sm text-gray-500">${city.count} visitors</span>
+                </div>
+            `).join('');
+            document.getElementById('topCities').innerHTML = topCitiesHtml;
+
+            // Visit Patterns
+            const patternsHtml = Object.entries(data.behavioral.visitPatterns).map(([time, count]) => `
+                <div class="flex justify-between items-center py-2 border-b dark:border-gray-700">
+                    <span class="font-medium capitalize">${time}</span>
+                    <span class="text-sm text-gray-500">${count} visits</span>
+                </div>
+            `).join('');
+            document.getElementById('visitPatterns').innerHTML = patternsHtml;
+        }
+
+        // Load visitor table with page views
+        async function loadVisitorTable() {
+            try {
+                const response = await fetch('/api/visitors?debug=true');
+                const data = await response.json();
                 
-                document.getElementById('headersData').textContent = 
-                    'Geolocation Headers:\n' + JSON.stringify(geoHeaders, null, 2) + 
-                    '\n\nAll Headers:\n' + JSON.stringify(headers, null, 2);
+                const visitorsList = data.visitors_list ? JSON.parse(data.visitors_list) : [];
+                
+                const tableHtml = visitorsList.map(visitor => {
+                    const pageCount = visitor.pageViews ? visitor.pageViews.length : 0;
+                    const sessionDuration = calculateTotalSessionDuration(visitor);
+                    const device = visitor.deviceInfo ? visitor.deviceInfo.deviceType : 'Unknown';
+                    
+                    return `
+                        <tr class="border-b dark:border-gray-700">
+                            <td class="py-2 font-mono text-xs">${maskIP(visitor.ip)}</td>
+                            <td class="py-2">${visitor.city || 'Unknown'}, ${visitor.country || 'Unknown'}</td>
+                            <td class="py-2">${pageCount} pages</td>
+                            <td class="py-2">${formatDuration(sessionDuration)}</td>
+                            <td class="py-2 capitalize">${device}</td>
+                            <td class="py-2">
+                                <button onclick="showVisitorDetails('${JSON.stringify(visitor).replace(/'/g, "\\'")}')" 
+                                        class="text-blue-500 hover:text-blue-700 text-xs">
+                                    View Details
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+                
+                document.getElementById('visitorsTable').innerHTML = tableHtml || '<tr><td colspan="6" class="py-4 text-center">No visitors yet</td></tr>';
+                
             } catch (error) {
-                console.error('Error testing geolocation:', error);
-                document.getElementById('headersData').textContent = 'Error testing geolocation';
+                console.error('Error loading visitor table:', error);
             }
         }
-        
-        // Clear KV data
-        async function clearKVData() {
-            if (!confirm('Are you sure you want to clear all KV data? This cannot be undone.')) {
-                return;
-            }
-            
-            try {
-                const response = await fetch('/api/clear-kv?clear=true');
-                const data = await response.json();
-                document.getElementById('rawData').textContent = JSON.stringify(data, null, 2);
-                alert('KV data cleared successfully!');
-                loadVisitorData(); // Refresh the display
-            } catch (error) {
-                console.error('Error clearing KV data:', error);
-                document.getElementById('rawData').textContent = 'Error clearing KV data: ' + error.message;
-            }
+
+        // Calculate total session duration
+        function calculateTotalSessionDuration(visitor) {
+            if (!visitor.sessions) return 0;
+            return visitor.sessions.reduce((total, session) => total + (session.duration || 0), 0);
         }
-        
-        // Test new system
-        async function testNewSystem() {
-            try {
-                const response = await fetch('/api/clear-kv?test=true');
-                const data = await response.json();
-                document.getElementById('rawData').textContent = JSON.stringify(data, null, 2);
-                alert('New system test completed! Check the raw data below.');
-                loadVisitorData(); // Refresh the display
-            } catch (error) {
-                console.error('Error testing new system:', error);
-                document.getElementById('rawData').textContent = 'Error testing new system: ' + error.message;
-            }
+
+        // Format duration
+        function formatDuration(milliseconds) {
+            const seconds = Math.floor(milliseconds / 1000);
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}m ${secs}s`;
         }
-        
-        // Show visitor details
+
+        // Mask IP address
+        function maskIP(ip) {
+            if (!ip) return 'Unknown';
+            const parts = ip.split('.');
+            if (parts.length === 4) {
+                return `${parts[0]}.${parts[1]}.***.***`;
+            }
+            return ip.substring(0, 8) + '...';
+        }
+
+        // Show visitor details modal with page views
         function showVisitorDetails(visitorJson) {
             const visitor = JSON.parse(visitorJson);
-            alert(`Visitor Details:\n\n` +
-                  `IP: ${visitor.ip}\n` +
-                  `City: ${visitor.city || 'Unknown'}\n` +
-                  `Region: ${visitor.region || 'Unknown'}\n` +
-                  `Country: ${visitor.country || 'Unknown'}\n` +
-                  `ZIP: ${visitor.zip || 'Unknown'}\n` +
-                  `Latitude: ${visitor.latitude || 'Unknown'}\n` +
-                  `Longitude: ${visitor.longitude || 'Unknown'}\n` +
-                  `Timezone: ${visitor.timezone || 'Unknown'}\n` +
-                  `Continent: ${visitor.continent || 'Unknown'}\n` +
-                  `First Visit: ${new Date(visitor.firstVisit).toLocaleString()}\n` +
-                  `Last Visit: ${new Date(visitor.lastVisit).toLocaleString()}`);
+            const modal = document.getElementById('visitorModal');
+            const detailsContainer = document.getElementById('visitorDetails');
+            
+            const detailsHtml = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Basic Information -->
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-3">Basic Information</h4>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span class="font-medium">IP Address:</span>
+                                    <span class="font-mono text-sm">${maskIP(visitor.ip)}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-medium">City:</span>
+                                    <span>${visitor.city || 'Unknown'}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-medium">Country:</span>
+                                    <span>${visitor.country || 'Unknown'}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-medium">Device:</span>
+                                    <span>${visitor.deviceInfo ? visitor.deviceInfo.deviceType : 'Unknown'}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-medium">Browser:</span>
+                                    <span>${visitor.deviceInfo ? visitor.deviceInfo.browser : 'Unknown'}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Visit Information -->
+                        <div>
+                            <h4 class="text-lg font-semibold text-purple-600 dark:text-purple-400 mb-3">Visit Information</h4>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span class="font-medium">Total Visits:</span>
+                                    <span>${visitor.visitCount || 1}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-medium">Sessions:</span>
+                                    <span>${visitor.sessionCount || 1}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-medium">First Visit:</span>
+                                    <span class="text-sm">${new Date(visitor.firstVisit).toLocaleString()}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-medium">Last Visit:</span>
+                                    <span class="text-sm">${new Date(visitor.lastVisit).toLocaleString()}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Page Views -->
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-lg font-semibold text-green-600 dark:text-green-400 mb-3">Page Views (${visitor.pageViews ? visitor.pageViews.length : 0})</h4>
+                            <div class="space-y-2 max-h-64 overflow-y-auto">
+                                ${visitor.pageViews ? visitor.pageViews.map((pageView, index) => `
+                                    <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded">
+                                        <div class="flex justify-between items-start">
+                                            <div class="flex-1">
+                                                <div class="font-medium">${pageView.page}</div>
+                                                <div class="text-sm text-gray-500">${new Date(pageView.timestamp).toLocaleString()}</div>
+                                            </div>
+                                            <span class="text-xs text-gray-400">#${index + 1}</span>
+                                        </div>
+                                    </div>
+                                `).join('') : '<p class="text-gray-500">No page views recorded</p>'}
+                            </div>
+                        </div>
+                        
+                        <!-- Session Details -->
+                        <div>
+                            <h4 class="text-lg font-semibold text-orange-600 dark:text-orange-400 mb-3">Session Details</h4>
+                            <div class="space-y-2 max-h-32 overflow-y-auto">
+                                ${visitor.sessions ? visitor.sessions.map((session, index) => `
+                                    <div class="bg-gray-100 dark:bg-gray-700 p-2 rounded text-sm">
+                                        <div class="flex justify-between">
+                                            <span>Session ${index + 1}</span>
+                                            <span>${formatDuration(session.duration || 0)}</span>
+                                        </div>
+                                    </div>
+                                `).join('') : '<p class="text-gray-500">No session data</p>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Raw Data (Collapsible) -->
+                <div class="mt-6">
+                    <button onclick="toggleRawData()" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium">
+                        Show Raw Data ▼
+                    </button>
+                    <div id="rawVisitorData" class="hidden mt-3">
+                        <pre class="bg-gray-100 dark:bg-gray-700 p-3 rounded text-xs overflow-x-auto">${JSON.stringify(visitor, null, 2)}</pre>
+                    </div>
+                </div>
+            `;
+            
+            detailsContainer.innerHTML = detailsHtml;
+            modal.classList.remove('hidden');
         }
-        
+
+        // Close visitor modal
+        function closeVisitorModal() {
+            document.getElementById('visitorModal').classList.add('hidden');
+        }
+
+        // Toggle raw data visibility
+        function toggleRawData() {
+            const rawData = document.getElementById('rawVisitorData');
+            const button = event.target;
+            
+            if (rawData.classList.contains('hidden')) {
+                rawData.classList.remove('hidden');
+                button.textContent = 'Hide Raw Data ▲';
+            } else {
+                rawData.classList.add('hidden');
+                button.textContent = 'Show Raw Data ▼';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('visitorModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVisitorModal();
+            }
+        });
+
+        // Auto-refresh analytics every 30 seconds
+        setInterval(loadAnalyticsData, 30000);
+
         // Load data on page load
-        loadVisitorData();
+        loadAnalyticsData();
     </script>
 </body>
 </html> 

@@ -1,192 +1,259 @@
 // Cloudflare Function for visitor counter
 export async function onRequest(context) {
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json'
-  };
+  const { request, env } = context;
+  const url = new URL(request.url);
+  const debug = url.searchParams.get('debug') === 'true';
+  const headers = url.searchParams.get('headers') === 'true';
 
-  if (context.request.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+  // Get visitor IP
+  const ip = request.headers.get('CF-Connecting-IP') || 
+             request.headers.get('X-Forwarded-For') || 
+             request.headers.get('X-Real-IP') || 
+             'unknown';
+
+  // Skip tracking for the owner's IP (you can add your IP here)
+  const ownerIPs = ['2607:fb90:a197:82c9:5833:ca60:d7ef:3e2b']; // Add your IPs here
+  if (ownerIPs.includes(ip)) {
+    return new Response(JSON.stringify({ message: 'Owner IP skipped' }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   try {
-    const kv = context.env.VISITOR_COUNTER;
-    const url = new URL(context.request.url);
-    const ip = context.request.headers.get('CF-Connecting-IP');
-
-    // Add endpoint to view all visitor data (for debugging)
-    if (url.searchParams.get('debug') === 'true') {
-      const allKeys = await kv.list();
-      const visitorData = {};
-      
-      for (const key of allKeys.keys) {
-        const value = await kv.get(key.name);
-        visitorData[key.name] = value;
-      }
-      
-      return new Response(JSON.stringify(visitorData, null, 2), { headers: corsHeaders });
-    }
-
-    // Add endpoint to view all headers (for debugging geolocation)
-    if (url.searchParams.get('headers') === 'true') {
-      const allHeaders = {};
-      for (const [key, value] of context.request.headers.entries()) {
-        allHeaders[key] = value;
-      }
-      return new Response(JSON.stringify(allHeaders, null, 2), { headers: corsHeaders });
-    }
-
-    // Exclude owner IPs
-    const ownerIps = ['YOUR_IP_ADDRESS']; // Replace with your real IP(s)
-    if (ip && ownerIps.includes(ip)) {
-      const count = await kv.get('visitor_count') || '0';
-      return new Response(JSON.stringify({ count }), { headers: corsHeaders });
-    }
+    // Get existing visitor data
+    const visitorKey = `visitor:${ip}`;
+    const existingData = await env.KV.get(visitorKey);
+    let visitorData = existingData ? JSON.parse(existingData) : null;
 
     // Get geolocation info from Cloudflare headers
     let city = context.request.headers.get('CF-IPCity') || '';
-    let region = context.request.headers.get('CF-IPRegion') || '';
+    let state = context.request.headers.get('CF-IPRegion') || '';
     let country = context.request.headers.get('CF-IPCountry') || '';
     let zip = context.request.headers.get('CF-IPPostalCode') || '';
-    
-    // Additional geolocation headers that might be available
-    const latitude = context.request.headers.get('CF-IPLatitude') || '';
-    const longitude = context.request.headers.get('CF-IPLongitude') || '';
-    const timezone = context.request.headers.get('CF-IPTimezone') || '';
-    const continent = context.request.headers.get('CF-IPContinent') || '';
+    let latitude = context.request.headers.get('CF-IPLatitude') || '';
+    let longitude = context.request.headers.get('CF-IPLongitude') || '';
+    let timezone = context.request.headers.get('CF-IPTimezone') || '';
+    let continent = context.request.headers.get('CF-IPContinent') || '';
 
-    // If Cloudflare headers are empty, try fallback geolocation services
-    if (!city && !region && ip) {
-      const fallbackServices = [
-        {
-          name: 'ipapi.co',
-          url: `https://ipapi.co/${ip}/json/`,
-          transform: (data) => ({
-            city: data.city,
-            region: data.region || data.region_code,
-            country: data.country || data.country_code,
-            zip: data.postal
-          })
-        },
-        {
-          name: 'ipinfo.io',
-          url: `https://ipinfo.io/${ip}/json`,
-          transform: (data) => ({
-            city: data.city,
-            region: data.region,
-            country: data.country,
-            zip: data.postal
-          })
-        },
-        {
-          name: 'ip-api.com',
-          url: `http://ip-api.com/json/${ip}`,
-          transform: (data) => ({
-            city: data.city,
-            region: data.regionName,
-            country: data.country,
-            zip: data.zip
-          })
-        }
-      ];
-
-      for (const service of fallbackServices) {
-        try {
-          console.log(`Trying ${service.name} for IP:`, ip);
+    // If Cloudflare headers are empty, try free geolocation service
+    if (!city && !state && ip) {
+      try {
+        // Use ipinfo.io (free tier: 50,000 requests/month)
+        const response = await fetch(`https://ipinfo.io/${ip}/json`);
+        if (response.ok) {
+          const geoData = await response.json();
           
-          const response = await fetch(service.url, {
-            headers: {
-              'User-Agent': 'Cloudflare-Worker/1.0'
-            }
-          });
-          
-          if (response.ok) {
-            const geoData = await response.json();
-            
-            // Check if we got valid data
-            if (geoData.city && geoData.city !== 'null' && geoData.city !== '') {
-              const transformed = service.transform(geoData);
-              city = transformed.city || '';
-              region = transformed.region || '';
-              country = transformed.country || '';
-              zip = transformed.zip || '';
-              
-              console.log(`${service.name} geolocation successful:`, { city, region, country, zip });
-              break; // Stop trying other services if we got valid data
-            } else {
-              console.log(`${service.name} returned invalid data:`, geoData);
-            }
-          } else {
-            console.log(`${service.name} request failed:`, response.status);
+          if (geoData.city && geoData.city !== 'null') {
+            city = geoData.city || '';
+            state = geoData.region || '';
+            country = geoData.country || '';
+            zip = geoData.postal || '';
+            // Note: ipinfo.io doesn't provide lat/lng in free tier
           }
-        } catch (error) {
-          console.log(`${service.name} error:`, error.message);
         }
+      } catch (error) {
+        // Silently fail - we'll just use what we have
       }
     }
 
-    if (kv && ip) {
-      // Check if this IP has already visited
-      const ipKey = `visitor:${ip}`;
-      const alreadyVisited = await kv.get(ipKey);
+    // Get device and browser info from User-Agent
+    const userAgent = request.headers.get('User-Agent') || '';
+    const deviceInfo = parseUserAgent(userAgent);
 
-      let count;
-      if (!alreadyVisited) {
-        // New unique visitor
-        const currentCount = await kv.get('visitor_count') || '0';
-        count = parseInt(currentCount) + 1;
-        await kv.put('visitor_count', count.toString());
-        
-        // Store visitor data with timestamp and all available geolocation info
-        const visitorData = {
-          ip: ip,
+    // Get current page info from request
+    const referer = request.headers.get('Referer') || '';
+    const currentPage = url.pathname || '/';
+    const timestamp = new Date().toISOString();
+
+    if (visitorData) {
+      // Update existing visitor
+      visitorData.lastVisit = timestamp;
+      visitorData.visitCount = (visitorData.visitCount || 0) + 1;
+      
+      // Update page views
+      if (!visitorData.pageViews) visitorData.pageViews = [];
+      visitorData.pageViews.push({
+        page: currentPage,
+        timestamp: timestamp,
+        referer: referer,
+        sessionId: visitorData.currentSessionId || generateSessionId()
+      });
+
+      // Update session info
+      const lastVisit = new Date(visitorData.lastVisit);
+      const currentTime = new Date();
+      const timeDiff = currentTime - lastVisit;
+      
+      // If more than 30 minutes have passed, start new session
+      if (timeDiff > 30 * 60 * 1000) {
+        visitorData.currentSessionId = generateSessionId();
+        visitorData.sessionCount = (visitorData.sessionCount || 0) + 1;
+        visitorData.sessions = visitorData.sessions || [];
+        visitorData.sessions.push({
+          sessionId: visitorData.currentSessionId,
+          startTime: timestamp,
+          endTime: timestamp,
+          duration: 0
+        });
+      } else {
+        // Update current session
+        if (visitorData.sessions && visitorData.sessions.length > 0) {
+          const currentSession = visitorData.sessions[visitorData.sessions.length - 1];
+          currentSession.endTime = timestamp;
+          currentSession.duration = new Date(timestamp) - new Date(currentSession.startTime);
+        }
+      }
+
+      // Update device info if changed
+      if (deviceInfo) {
+        visitorData.deviceInfo = deviceInfo;
+      }
+
+    } else {
+      // Create new visitor
+      visitorData = {
+        ip: ip,
+        city: city,
+        state: state,
+        country: country,
+        zip: zip,
+        latitude: latitude,
+        longitude: longitude,
+        timezone: timezone,
+        continent: continent,
+        firstVisit: timestamp,
+        lastVisit: timestamp,
+        visitCount: 1,
+        sessionCount: 1,
+        currentSessionId: generateSessionId(),
+        deviceInfo: deviceInfo,
+        pageViews: [{
+          page: currentPage,
+          timestamp: timestamp,
+          referer: referer,
+          sessionId: generateSessionId()
+        }],
+        sessions: [{
+          sessionId: generateSessionId(),
+          startTime: timestamp,
+          endTime: timestamp,
+          duration: 0
+        }]
+      };
+    }
+
+    // Store visitor data
+    await env.KV.put(visitorKey, JSON.stringify(visitorData));
+
+    // Update total visitor count
+    const totalKey = 'visitor_count';
+    const currentTotal = await env.KV.get(totalKey);
+    const newTotal = visitorData.visitCount === 1 ? (parseInt(currentTotal) || 0) + 1 : (parseInt(currentTotal) || 0);
+    await env.KV.put(totalKey, newTotal.toString());
+
+    // Update visitors list
+    const visitorsListKey = 'visitors_list';
+    let visitorsList = [];
+    try {
+      const existingList = await env.KV.get(visitorsListKey);
+      visitorsList = existingList ? JSON.parse(existingList) : [];
+    } catch (error) {
+      visitorsList = [];
+    }
+
+    // Update or add visitor to list
+    const existingIndex = visitorsList.findIndex(v => v.ip === ip);
+    if (existingIndex >= 0) {
+      visitorsList[existingIndex] = visitorData;
+    } else {
+      visitorsList.push(visitorData);
+    }
+
+    // Keep only last 1000 visitors to prevent KV size issues
+    if (visitorsList.length > 1000) {
+      visitorsList = visitorsList.slice(-1000);
+    }
+
+    await env.KV.put(visitorsListKey, JSON.stringify(visitorsList));
+
+    // Return response
+    const response = {
+      visitor_count: newTotal,
+      current_visitor: visitorData,
+      message: 'Visitor tracked successfully'
+    };
+
+    if (debug) {
+      response.debug = {
+        ip: ip,
+        cloudflareHeaders: {
           city: city,
-          region: region,
+          state: state,
           country: country,
           zip: zip,
           latitude: latitude,
           longitude: longitude,
           timezone: timezone,
-          continent: continent,
-          firstVisit: new Date().toISOString(),
-          lastVisit: new Date().toISOString(),
-          // Store all headers for debugging
-          allHeaders: Object.fromEntries(context.request.headers.entries())
-        };
-        
-        await kv.put(ipKey, JSON.stringify(visitorData));
-        
-        // Also store in a visitors list for easy access
-        const visitorsListKey = 'visitors_list';
-        let visitorsList = await kv.get(visitorsListKey);
-        if (!visitorsList) {
-          visitorsList = [];
-        } else {
-          visitorsList = JSON.parse(visitorsList);
-        }
-        visitorsList.push(visitorData);
-        await kv.put(visitorsListKey, JSON.stringify(visitorsList));
-        
-      } else {
-        // Not a new visitor, but update last visit time
-        const visitorData = JSON.parse(alreadyVisited);
-        visitorData.lastVisit = new Date().toISOString();
-        await kv.put(ipKey, JSON.stringify(visitorData));
-        
-        count = await kv.get('visitor_count') || '0';
-      }
-
-      return new Response(JSON.stringify({ count }), { headers: corsHeaders });
+          continent: continent
+        },
+        deviceInfo: deviceInfo,
+        currentPage: currentPage,
+        timestamp: timestamp
+      };
     }
 
-    // Fallback if KV not set up
-    return new Response(JSON.stringify({ count: Math.floor(Date.now() / 100000) + 500 }), { headers: corsHeaders });
+    return new Response(JSON.stringify(response), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+
   } catch (error) {
-    return new Response(JSON.stringify({
-      count: Math.floor(Math.random() * 1000) + 500,
-      error: 'Using fallback counter'
-    }), { headers: corsHeaders });
+    console.error('Error tracking visitor:', error);
+    return new Response(JSON.stringify({ 
+      error: 'Failed to track visitor',
+      message: error.message 
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
+}
+
+// Helper function to parse User-Agent
+function parseUserAgent(userAgent) {
+  if (!userAgent) return null;
+
+  const ua = userAgent.toLowerCase();
+  
+  // Device type
+  let deviceType = 'desktop';
+  if (ua.includes('mobile')) deviceType = 'mobile';
+  else if (ua.includes('tablet') || ua.includes('ipad')) deviceType = 'tablet';
+
+  // Browser
+  let browser = 'unknown';
+  if (ua.includes('chrome')) browser = 'Chrome';
+  else if (ua.includes('firefox')) browser = 'Firefox';
+  else if (ua.includes('safari') && !ua.includes('chrome')) browser = 'Safari';
+  else if (ua.includes('edge')) browser = 'Edge';
+  else if (ua.includes('opera')) browser = 'Opera';
+
+  // OS
+  let os = 'unknown';
+  if (ua.includes('windows')) os = 'Windows';
+  else if (ua.includes('mac')) os = 'macOS';
+  else if (ua.includes('linux')) os = 'Linux';
+  else if (ua.includes('android')) os = 'Android';
+  else if (ua.includes('ios') || ua.includes('iphone') || ua.includes('ipad')) os = 'iOS';
+
+  return {
+    deviceType,
+    browser,
+    os,
+    userAgent: userAgent.substring(0, 200) // Truncate for storage
+  };
+}
+
+// Helper function to generate session ID
+function generateSessionId() {
+  return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 } 

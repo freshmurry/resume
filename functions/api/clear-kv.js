@@ -40,106 +40,24 @@ export async function onRequest(context) {
       let region = context.request.headers.get('CF-IPRegion') || '';
       let country = context.request.headers.get('CF-IPCountry') || '';
       let zip = context.request.headers.get('CF-IPPostalCode') || '';
-      
-      const debugInfo = {
-        ip: ip,
-        cloudflareHeaders: {
-          city: city,
-          region: region,
-          country: country,
-          zip: zip
-        },
-        fallbackAttempted: false,
-        fallbackResults: [],
-        successfulService: null
-      };
-      
-      // If Cloudflare headers are empty, try fallback geolocation services
-      if (!city && !region && ip) {
-        debugInfo.fallbackAttempted = true;
-        
-        const fallbackServices = [
-          {
-            name: 'ipapi.co',
-            url: `https://ipapi.co/${ip}/json/`,
-            transform: (data) => ({
-              city: data.city,
-              region: data.region || data.region_code,
-              country: data.country || data.country_code,
-              zip: data.postal
-            })
-          },
-          {
-            name: 'ipinfo.io',
-            url: `https://ipinfo.io/${ip}/json`,
-            transform: (data) => ({
-              city: data.city,
-              region: data.region,
-              country: data.country,
-              zip: data.postal
-            })
-          },
-          {
-            name: 'ip-api.com',
-            url: `http://ip-api.com/json/${ip}`,
-            transform: (data) => ({
-              city: data.city,
-              region: data.regionName,
-              country: data.country,
-              zip: data.zip
-            })
-          }
-        ];
 
-        for (const service of fallbackServices) {
-          try {
-            console.log(`Trying ${service.name} for IP:`, ip);
+      // If Cloudflare headers are empty, try free geolocation service
+      if (!city && !region && ip) {
+        try {
+          // Use ipinfo.io (free tier: 50,000 requests/month)
+          const response = await fetch(`https://ipinfo.io/${ip}/json`);
+          if (response.ok) {
+            const geoData = await response.json();
             
-            const response = await fetch(service.url, {
-              headers: {
-                'User-Agent': 'Cloudflare-Worker/1.0'
-              }
-            });
-            
-            const serviceResult = {
-              service: service.name,
-              status: response.status,
-              ok: response.ok,
-              data: null,
-              error: null
-            };
-            
-            if (response.ok) {
-              const geoData = await response.json();
-              serviceResult.data = geoData;
-              
-              // Check if we got valid data
-              if (geoData.city && geoData.city !== 'null' && geoData.city !== '') {
-                const transformed = service.transform(geoData);
-                city = transformed.city || '';
-                region = transformed.region || '';
-                country = transformed.country || '';
-                zip = transformed.zip || '';
-                
-                debugInfo.successfulService = service.name;
-                console.log(`${service.name} geolocation successful:`, { city, region, country, zip });
-                break; // Stop trying other services if we got valid data
-              } else {
-                console.log(`${service.name} returned invalid data:`, geoData);
-              }
-            } else {
-              console.log(`${service.name} request failed:`, response.status);
-              serviceResult.error = `HTTP ${response.status}`;
+            if (geoData.city && geoData.city !== 'null') {
+              city = geoData.city || '';
+              region = geoData.region || '';
+              country = geoData.country || '';
+              zip = geoData.postal || '';
             }
-            
-            debugInfo.fallbackResults.push(serviceResult);
-          } catch (error) {
-            console.log(`${service.name} error:`, error.message);
-            debugInfo.fallbackResults.push({
-              service: service.name,
-              error: error.message
-            });
           }
+        } catch (error) {
+          // Silently fail - we'll just use what we have
         }
       }
       
@@ -153,8 +71,7 @@ export async function onRequest(context) {
         zip: zip,
         firstVisit: new Date().toISOString(),
         lastVisit: new Date().toISOString(),
-        testData: true,
-        debugInfo: debugInfo
+        testData: true
       };
       
       await kv.put(ipKey, JSON.stringify(visitorData));
@@ -163,8 +80,7 @@ export async function onRequest(context) {
       return new Response(JSON.stringify({
         message: 'Test visitor data stored',
         visitorData: visitorData,
-        storedKey: ipKey,
-        debugInfo: debugInfo
+        storedKey: ipKey
       }, null, 2), { headers: corsHeaders });
     }
     
