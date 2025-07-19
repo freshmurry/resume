@@ -233,7 +233,7 @@
                             <tr>
                                 <th class="text-left py-2">IP</th>
                                 <th class="text-left py-2">City</th>
-                                <th class="text-left py-2">Region</th>
+                                <th class="text-left py-2">State</th>
                                 <th class="text-left py-2">Country</th>
                                 <th class="text-left py-2">ZIP</th>
                                 <th class="text-left py-2">First Visit</th>
@@ -581,10 +581,8 @@
                     _rawVisitorsList = data.visitors_list ? JSON.parse(data.visitors_list) : [];
                     window._allVisitorHeaders = _rawVisitorsList.map(v => v.allHeaders || {});
                     renderRawVisitorsTable();
-                    renderAllVisitorsTable();
                 } catch (error) {
                     document.getElementById('rawVisitorsTable').innerHTML = '<tr><td colspan="8" class="py-4 text-center text-red-500">Error loading data</td></tr>';
-                    document.getElementById('visitorsTable').innerHTML = '<tr><td colspan="5" class="py-4 text-center text-red-500">Error loading data</td></tr>';
                 }
             }
 
@@ -612,7 +610,7 @@
                     <tr class="border-b dark:border-gray-700">
                         <td class="py-2 font-mono text-xs">${visitor.ip}</td>
                         <td class="py-2">${visitor.city || ''}</td>
-                        <td class="py-2">${visitor.region || ''}</td>
+                        <td class="py-2">${visitor.state || ''}</td>
                         <td class="py-2">${visitor.country || ''}</td>
                         <td class="py-2">${visitor.zip || ''}</td>
                         <td class="py-2">${visitor.firstVisit ? new Date(visitor.firstVisit).toLocaleString() : ''}</td>
@@ -625,31 +623,11 @@
                 document.getElementById('rawVisitorsTable').innerHTML = tableHtml || '<tr><td colspan="8" class="py-4 text-center">No visitors yet</td></tr>';
             }
 
-            function renderAllVisitorsTable() {
-                const tableBody = document.getElementById('visitorsTable');
-                if (!_rawVisitorsList.length) {
-                    tableBody.innerHTML = '<tr><td colspan="5" class="py-4 text-center">No visitors yet</td></tr>';
-                    return;
-                }
-                const tableHtml = _rawVisitorsList.map(visitor => `
-                    <tr class="border-b dark:border-gray-700">
-                        <td class="py-2 font-mono text-xs">${visitor.ip}</td>
-                        <td class="py-2">${visitor.city || 'Unknown'}, ${visitor.region || ''} ${visitor.zip || ''} ${visitor.country || 'Unknown'}</td>
-                        <td class="py-2">${visitor.firstVisit ? new Date(visitor.firstVisit).toLocaleString() : ''}</td>
-                        <td class="py-2">${visitor.lastVisit ? new Date(visitor.lastVisit).toLocaleString() : ''}</td>
-                        <td class="py-2">
-                            <button onclick="showVisitorDetails('${JSON.stringify(visitor).replace(/'/g, "\\'")}')" class="text-blue-500 hover:text-blue-700 text-xs">View Details</button>
-                        </td>
-                    </tr>
-                `).join('');
-                tableBody.innerHTML = tableHtml;
-            }
-
             function exportRawVisitorsCSV() {
                 if (!_rawVisitorsFiltered.length) return;
-                const header = ['IP','City','Region','Country','ZIP','First Visit','Last Visit'];
+                const header = ['IP','City','State','Country','ZIP','First Visit','Last Visit'];
                 const rows = _rawVisitorsFiltered.map(v => [
-                    v.ip, v.city, v.region, v.country, v.zip,
+                    v.ip, v.city, v.state, v.country, v.zip,
                     v.firstVisit ? new Date(v.firstVisit).toLocaleString() : '',
                     v.lastVisit ? new Date(v.lastVisit).toLocaleString() : ''
                 ]);
@@ -672,7 +650,7 @@
                 document.getElementById('headersModalSummary').innerHTML = `
                     <div><b>IP:</b> ${visitor.ip || ''}</div>
                     <div><b>City:</b> ${visitor.city || ''}</div>
-                    <div><b>Region:</b> ${visitor.region || ''}</div>
+                    <div><b>State:</b> ${visitor.state || ''}</div>
                     <div><b>Country:</b> ${visitor.country || ''}</div>
                     <div><b>ZIP:</b> ${visitor.zip || ''}</div>
                     <div><b>First Visit:</b> ${visitor.firstVisit ? new Date(visitor.firstVisit).toLocaleString() : ''}</div>
