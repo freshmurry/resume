@@ -307,6 +307,7 @@ function analyzeTechnicalData(visitors) {
 function analyzeBehavioralData(visitors) {
   const timeZones = {};
   const visitPatterns = { morning: 0, afternoon: 0, evening: 0, night: 0 };
+  // Use let for mutable counters
   let weekendVisits = 0;
   let weekdayVisits = 0;
 
