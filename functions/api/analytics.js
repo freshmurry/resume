@@ -13,6 +13,38 @@ export async function onRequest(context) {
     const totalKey = 'visitor_count';
     const totalVisitorCount = parseInt(await env.KV.get(totalKey)) || 0;
 
+    // Unique visitors by day/hour/month
+    async function getUniqueCounts(prefix, periods) {
+      const results = [];
+      for (const period of periods) {
+        const key = `${prefix}:${period}`;
+        let count = 0;
+        try {
+          const set = await env.KV.get(key);
+          count = set ? JSON.parse(set).length : 0;
+        } catch (e) { count = 0; }
+        results.push({ period, count });
+      }
+      return results;
+    }
+    // Prepare periods
+    const now = new Date();
+    const days = Array.from({length: 7}, (_,i) => {
+      const d = new Date(now); d.setUTCDate(now.getUTCDate()-i);
+      return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
+    }).reverse();
+    const hours = Array.from({length: 24}, (_,i) => {
+      const d = new Date(now); d.setUTCHours(now.getUTCHours()-i);
+      return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}:${String(d.getUTCHours()).padStart(2,'0')}`;
+    }).reverse();
+    const months = Array.from({length: 12}, (_,i) => {
+      const d = new Date(now); d.setUTCMonth(now.getUTCMonth()-i);
+      return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}`;
+    }).reverse();
+    const uniqueByDay = await getUniqueCounts('unique_visitors:day', days);
+    const uniqueByHour = await getUniqueCounts('unique_visitors:hour', hours);
+    const uniqueByMonth = await getUniqueCounts('unique_visitors:month', months);
+
     if (type === 'all' || type === 'geographic') {
       // Geographic Analytics
       const geographicData = analyzeGeographicData(visitors);
@@ -97,7 +129,12 @@ export async function onRequest(context) {
         technical: analyzeTechnicalData(visitors),
         behavioral: analyzeBehavioralData(visitors),
         realtime: analyzeRealtimeData(visitors, totalVisitorCount),
-        referrer: analyzeReferrerData(visitors)
+        referrer: analyzeReferrerData(visitors),
+        uniqueVisitors: {
+          byDay: uniqueByDay,
+          byHour: uniqueByHour,
+          byMonth: uniqueByMonth
+        }
       };
 
       return new Response(JSON.stringify(allData), {

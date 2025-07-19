@@ -145,6 +145,30 @@ export async function onRequest(context) {
     // Store visitor data
     await env.KV.put(visitorKey, JSON.stringify(visitorData));
 
+    // Persist unique visitor IDs by day, hour, and month
+    const now = new Date();
+    const dayKey = `unique_visitors:day:${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,'0')}-${String(now.getUTCDate()).padStart(2,'0')}`;
+    const hourKey = `unique_visitors:hour:${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,'0')}-${String(now.getUTCDate()).padStart(2,'0')}:${String(now.getUTCHours()).padStart(2,'0')}`;
+    const monthKey = `unique_visitors:month:${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,'0')}`;
+
+    // Helper to update a set in KV
+    async function addUniqueVisitor(key, ip) {
+      let set = [];
+      try {
+        const existing = await env.KV.get(key);
+        set = existing ? JSON.parse(existing) : [];
+      } catch (e) { set = []; }
+      if (!set.includes(ip)) {
+        set.push(ip);
+        // Keep set size reasonable (e.g., 10k per period)
+        if (set.length > 10000) set = set.slice(-10000);
+        await env.KV.put(key, JSON.stringify(set));
+      }
+    }
+    await addUniqueVisitor(dayKey, ip);
+    await addUniqueVisitor(hourKey, ip);
+    await addUniqueVisitor(monthKey, ip);
+
     // Update total visitor count
     const totalKey = 'visitor_count';
     const currentTotal = await env.KV.get(totalKey);
