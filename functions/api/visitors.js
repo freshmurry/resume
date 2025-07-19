@@ -65,11 +65,6 @@ export async function onRequest(context) {
     const currentPage = url.pathname || '/';
     const timestamp = new Date().toISOString();
 
-    // Track the website referrer (first visit)
-    if (visitorData && !visitorData.referrer && referer) {
-      visitorData.referrer = referer;
-    }
-
     if (visitorData) {
       // Update existing visitor
       visitorData.lastVisit = timestamp;
@@ -132,7 +127,6 @@ export async function onRequest(context) {
         sessionCount: 1,
         currentSessionId: generateSessionId(),
         deviceInfo: deviceInfo,
-        referrer: referer, // Track referrer for first visit
         pageViews: [{
           page: currentPage,
           timestamp: timestamp,
@@ -154,8 +148,7 @@ export async function onRequest(context) {
     // Update total visitor count
     const totalKey = 'visitor_count';
     const currentTotal = await env.KV.get(totalKey);
-    const isNewVisitor = !existingData; // Only increment if no existing data for this IP
-    const newTotal = isNewVisitor ? (parseInt(currentTotal) || 0) + 1 : (parseInt(currentTotal) || 0);
+    const newTotal = visitorData.visitCount === 1 ? (parseInt(currentTotal) || 0) + 1 : (parseInt(currentTotal) || 0);
     await env.KV.put(totalKey, newTotal.toString());
 
     // Update visitors list
