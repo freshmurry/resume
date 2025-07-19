@@ -5,6 +5,19 @@ export async function onRequest(context) {
   const debug = url.searchParams.get('debug') === 'true';
   const headers = url.searchParams.get('headers') === 'true';
 
+  // Add at the top of the onRequest function, after parsing url
+  if (url.searchParams.get('raw_visitors_list') === 'true') {
+    const visitorsListKey = 'visitors_list';
+    let visitorsList = [];
+    try {
+      const existingList = await env.VISITOR_COUNTER.get(visitorsListKey);
+      visitorsList = existingList ? JSON.parse(existingList) : [];
+    } catch (error) {
+      return new Response(JSON.stringify({ error: 'Failed to fetch visitors_list', message: error.message }), { status: 500, headers: { 'Content-Type': 'application/json' }});
+    }
+    return new Response(JSON.stringify({ visitors_list: visitorsList }), { headers: { 'Content-Type': 'application/json' }});
+  }
+
   // Get visitor IP
   const ip = request.headers.get('CF-Connecting-IP') || 
              request.headers.get('X-Forwarded-For') || 
@@ -248,6 +261,16 @@ export async function onRequest(context) {
 
     await env.VISITOR_COUNTER.put(visitorsListKey, JSON.stringify(visitorsList));
 
+    // After updating visitorsList and before returning the response
+    let debugVisitorsList = undefined;
+    if (debug) {
+      try {
+        debugVisitorsList = await env.VISITOR_COUNTER.get(visitorsListKey);
+      } catch (e) {
+        debugVisitorsList = 'Error fetching visitors_list: ' + e.message;
+      }
+    }
+
     // Return response
     const response = {
       visitor_count: newTotal,
@@ -270,7 +293,8 @@ export async function onRequest(context) {
         },
         deviceInfo: deviceInfo,
         currentPage: currentPage,
-        timestamp: timestamp
+        timestamp: timestamp,
+        visitors_list: debugVisitorsList // Always include this line
       };
     }
 
