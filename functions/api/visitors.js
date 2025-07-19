@@ -154,7 +154,8 @@ export async function onRequest(context) {
     // Update total visitor count
     const totalKey = 'visitor_count';
     const currentTotal = await env.KV.get(totalKey);
-    const newTotal = visitorData.visitCount === 1 ? (parseInt(currentTotal) || 0) + 1 : (parseInt(currentTotal) || 0);
+    const isNewVisitor = !existingData; // Only increment if no existing data for this IP
+    const newTotal = isNewVisitor ? (parseInt(currentTotal) || 0) + 1 : (parseInt(currentTotal) || 0);
     await env.KV.put(totalKey, newTotal.toString());
 
     // Update visitors list
