@@ -22,7 +22,7 @@ export async function onRequest(context) {
   try {
     // Get existing visitor data
     const visitorKey = `visitor:${ip}`;
-    const existingData = await env.KV.get(visitorKey);
+    const existingData = await env.VISITOR_COUNTER.get(visitorKey);
     let visitorData = existingData ? JSON.parse(existingData) : null;
 
     // Get geolocation info from Cloudflare headers
@@ -98,7 +98,7 @@ export async function onRequest(context) {
       const seoKey = 'seo_keywords';
       let seoKeywords = [];
       try {
-        const existing = await env.KV.get(seoKey);
+        const existing = await env.VISITOR_COUNTER.get(seoKey);
         seoKeywords = existing ? JSON.parse(existing) : [];
       } catch (e) { seoKeywords = []; }
       // Find if keyword+engine already exists
@@ -110,7 +110,7 @@ export async function onRequest(context) {
       }
       // Keep only top 100 keywords
       seoKeywords = seoKeywords.sort((a, b) => b.count - a.count).slice(0, 100);
-      await env.KV.put(seoKey, JSON.stringify(seoKeywords));
+      await env.VISITOR_COUNTER.put(seoKey, JSON.stringify(seoKeywords));
     }
 
     if (visitorData) {
@@ -191,7 +191,7 @@ export async function onRequest(context) {
     }
 
     // Store visitor data
-    await env.KV.put(visitorKey, JSON.stringify(visitorData));
+    await env.VISITOR_COUNTER.put(visitorKey, JSON.stringify(visitorData));
 
     // Persist unique visitor IDs by day, hour, and month
     const now = new Date();
@@ -203,14 +203,14 @@ export async function onRequest(context) {
     async function addUniqueVisitor(key, ip) {
       let set = [];
       try {
-        const existing = await env.KV.get(key);
+        const existing = await env.VISITOR_COUNTER.get(key);
         set = existing ? JSON.parse(existing) : [];
       } catch (e) { set = []; }
       if (!set.includes(ip)) {
         set.push(ip);
         // Keep set size reasonable (e.g., 10k per period)
         if (set.length > 10000) set = set.slice(-10000);
-        await env.KV.put(key, JSON.stringify(set));
+        await env.VISITOR_COUNTER.put(key, JSON.stringify(set));
       }
     }
     await addUniqueVisitor(dayKey, ip);
@@ -219,15 +219,15 @@ export async function onRequest(context) {
 
     // Update total visitor count
     const totalKey = 'visitor_count';
-    const currentTotal = await env.KV.get(totalKey);
+    const currentTotal = await env.VISITOR_COUNTER.get(totalKey);
     const newTotal = visitorData.visitCount === 1 ? (parseInt(currentTotal) || 0) + 1 : (parseInt(currentTotal) || 0);
-    await env.KV.put(totalKey, newTotal.toString());
+    await env.VISITOR_COUNTER.put(totalKey, newTotal.toString());
 
     // Update visitors list
     const visitorsListKey = 'visitors_list';
     let visitorsList = [];
     try {
-      const existingList = await env.KV.get(visitorsListKey);
+      const existingList = await env.VISITOR_COUNTER.get(visitorsListKey);
       visitorsList = existingList ? JSON.parse(existingList) : [];
     } catch (error) {
       visitorsList = [];
@@ -246,7 +246,7 @@ export async function onRequest(context) {
       visitorsList = visitorsList.slice(-1000);
     }
 
-    await env.KV.put(visitorsListKey, JSON.stringify(visitorsList));
+    await env.VISITOR_COUNTER.put(visitorsListKey, JSON.stringify(visitorsList));
 
     // Return response
     const response = {

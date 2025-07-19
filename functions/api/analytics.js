@@ -6,17 +6,17 @@ export async function onRequest(context) {
   try {
     // Get all visitors data
     const visitorsListKey = 'visitors_list';
-    const visitorsListData = await env.KV.get(visitorsListKey);
+    const visitorsListData = await env.VISITOR_COUNTER.get(visitorsListKey);
     const visitors = visitorsListData ? JSON.parse(visitorsListData) : [];
 
     // Get persistent total visitor count
     const totalKey = 'visitor_count';
-    const totalVisitorCount = parseInt(await env.KV.get(totalKey)) || 0;
+    const totalVisitorCount = parseInt(await env.VISITOR_COUNTER.get(totalKey)) || 0;
 
     // Get SEO keywords
     let seoKeywords = [];
     try {
-      const seoRaw = await env.KV.get('seo_keywords');
+      const seoRaw = await env.VISITOR_COUNTER.get('seo_keywords');
       seoKeywords = seoRaw ? JSON.parse(seoRaw) : [];
     } catch (e) { seoKeywords = []; }
 
@@ -27,7 +27,7 @@ export async function onRequest(context) {
         const key = `${prefix}:${period}`;
         let count = 0;
         try {
-          const set = await env.KV.get(key);
+          const set = await env.VISITOR_COUNTER.get(key);
           count = set ? JSON.parse(set).length : 0;
         } catch (e) { count = 0; }
         results.push({ period, count });

@@ -244,6 +244,76 @@
             </div>
         </div>
 
+        <!-- Raw Visitors Table Section with Controls -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-database text-blue-600 dark:text-blue-400 mr-2"></i>
+                <h3 class="text-xl font-semibold">Raw Visitor Data</h3>
+            </div>
+            <div class="flex flex-wrap gap-4 mb-4">
+                <div>
+                    <label for="rawSortBy" class="block text-xs font-medium mb-1">Sort By</label>
+                    <select id="rawSortBy" class="rounded border-gray-300 dark:bg-gray-800 dark:text-gray-100">
+                        <option value="lastVisit">Last Visit</option>
+                        <option value="firstVisit">First Visit</option>
+                        <option value="ip">IP</option>
+                        <option value="city">City</option>
+                        <option value="country">Country</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="rawFilterBy" class="block text-xs font-medium mb-1">Filter By</label>
+                    <select id="rawFilterBy" class="rounded border-gray-300 dark:bg-gray-800 dark:text-gray-100">
+                        <option value="none">None</option>
+                        <option value="ip">IP</option>
+                        <option value="city">City</option>
+                        <option value="country">Country</option>
+                    </select>
+                </div>
+                <div id="rawFilterValueContainer" style="display:none">
+                    <label for="rawFilterValue" class="block text-xs font-medium mb-1">Value</label>
+                    <input id="rawFilterValue" class="rounded border-gray-300 dark:bg-gray-800 dark:text-gray-100" type="text" placeholder="Enter value..." />
+                </div>
+                <div class="flex items-end">
+                    <button onclick="exportRawVisitorsCSV()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-xs">Export CSV</button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-left py-2">IP</th>
+                            <th class="text-left py-2">City</th>
+                            <th class="text-left py-2">Region</th>
+                            <th class="text-left py-2">Country</th>
+                            <th class="text-left py-2">ZIP</th>
+                            <th class="text-left py-2">First Visit</th>
+                            <th class="text-left py-2">Last Visit</th>
+                            <th class="text-left py-2">Headers</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rawVisitorsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal for All Headers (Enhanced) -->
+        <div id="headersModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                    <div class="flex items-center justify-between p-4 border-b dark:border-gray-700">
+                        <h3 class="text-lg font-semibold">Visitor Details & Headers</h3>
+                        <button onclick="closeHeadersModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="p-4">
+                        <div id="headersModalSummary" class="mb-4 text-sm"></div>
+                        <pre id="headersModalContent" class="bg-gray-100 dark:bg-gray-700 p-3 rounded text-xs overflow-x-auto"></pre>
+                        <button onclick="copyHeadersToClipboard()" class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">Copy Headers</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             // Load visitor data
             async function loadVisitorData() {
@@ -528,6 +598,126 @@
             
             // Load data on page load
             loadAnalyticsData();
+        </script>
+        <!-- Load and render raw visitors table -->
+        <script>
+            let _rawVisitorsList = [];
+            let _rawVisitorsFiltered = [];
+            let _rawVisitorsSortBy = 'lastVisit';
+            let _rawVisitorsFilterBy = 'none';
+            let _rawVisitorsFilterValue = '';
+
+            document.getElementById('rawSortBy').addEventListener('change', e => {
+                _rawVisitorsSortBy = e.target.value;
+                renderRawVisitorsTable();
+            });
+            document.getElementById('rawFilterBy').addEventListener('change', e => {
+                _rawVisitorsFilterBy = e.target.value;
+                const show = _rawVisitorsFilterBy !== 'none';
+                document.getElementById('rawFilterValueContainer').style.display = show ? '' : 'none';
+                if (!show) _rawVisitorsFilterValue = '';
+                renderRawVisitorsTable();
+            });
+            document.getElementById('rawFilterValue').addEventListener('input', e => {
+                _rawVisitorsFilterValue = e.target.value;
+                renderRawVisitorsTable();
+            });
+
+            async function loadRawVisitorsTable() {
+                try {
+                    const response = await fetch('/api/visitors?debug=true');
+                    const data = await response.json();
+                    _rawVisitorsList = data.visitors_list ? JSON.parse(data.visitors_list) : [];
+                    window._allVisitorHeaders = _rawVisitorsList.map(v => v.allHeaders || {});
+                    renderRawVisitorsTable();
+                } catch (error) {
+                    document.getElementById('rawVisitorsTable').innerHTML = '<tr><td colspan="8" class="py-4 text-center text-red-500">Error loading data</td></tr>';
+                }
+            }
+
+            function renderRawVisitorsTable() {
+                // Filter
+                _rawVisitorsFiltered = _rawVisitorsList.filter(v => {
+                    if (_rawVisitorsFilterBy === 'none' || !_rawVisitorsFilterValue) return true;
+                    const val = _rawVisitorsFilterValue.toLowerCase();
+                    if (_rawVisitorsFilterBy === 'ip') return (v.ip || '').toLowerCase().includes(val);
+                    if (_rawVisitorsFilterBy === 'city') return (v.city || '').toLowerCase().includes(val);
+                    if (_rawVisitorsFilterBy === 'country') return (v.country || '').toLowerCase().includes(val);
+                    return true;
+                });
+                // Sort
+                _rawVisitorsFiltered.sort((a, b) => {
+                    if (_rawVisitorsSortBy === 'lastVisit') return new Date(b.lastVisit) - new Date(a.lastVisit);
+                    if (_rawVisitorsSortBy === 'firstVisit') return new Date(b.firstVisit) - new Date(a.firstVisit);
+                    if (_rawVisitorsSortBy === 'ip') return (a.ip || '').localeCompare(b.ip || '');
+                    if (_rawVisitorsSortBy === 'city') return (a.city || '').localeCompare(b.city || '');
+                    if (_rawVisitorsSortBy === 'country') return (a.country || '').localeCompare(b.country || '');
+                    return 0;
+                });
+                // Render
+                const tableHtml = _rawVisitorsFiltered.map((visitor, idx) => `
+                    <tr class="border-b dark:border-gray-700">
+                        <td class="py-2 font-mono text-xs">${visitor.ip}</td>
+                        <td class="py-2">${visitor.city || ''}</td>
+                        <td class="py-2">${visitor.region || ''}</td>
+                        <td class="py-2">${visitor.country || ''}</td>
+                        <td class="py-2">${visitor.zip || ''}</td>
+                        <td class="py-2">${visitor.firstVisit ? new Date(visitor.firstVisit).toLocaleString() : ''}</td>
+                        <td class="py-2">${visitor.lastVisit ? new Date(visitor.lastVisit).toLocaleString() : ''}</td>
+                        <td class="py-2">
+                            <button onclick="showHeadersModal(${idx})" class="text-blue-500 hover:text-blue-700 text-xs">View</button>
+                        </td>
+                    </tr>
+                `).join('');
+                document.getElementById('rawVisitorsTable').innerHTML = tableHtml || '<tr><td colspan="8" class="py-4 text-center">No visitors yet</td></tr>';
+            }
+
+            function exportRawVisitorsCSV() {
+                if (!_rawVisitorsFiltered.length) return;
+                const header = ['IP','City','Region','Country','ZIP','First Visit','Last Visit'];
+                const rows = _rawVisitorsFiltered.map(v => [
+                    v.ip, v.city, v.region, v.country, v.zip,
+                    v.firstVisit ? new Date(v.firstVisit).toLocaleString() : '',
+                    v.lastVisit ? new Date(v.lastVisit).toLocaleString() : ''
+                ]);
+                const csv = [header, ...rows].map(r => r.map(x => '"'+(x||'')+'"').join(',')).join('\n');
+                const blob = new Blob([csv], {type: 'text/csv'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'raw_visitors.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            function showHeadersModal(idx) {
+                const visitor = _rawVisitorsFiltered[idx] || {};
+                const headers = window._allVisitorHeaders && window._allVisitorHeaders[idx] ? window._allVisitorHeaders[idx] : {};
+                // Show summary
+                document.getElementById('headersModalSummary').innerHTML = `
+                    <div><b>IP:</b> ${visitor.ip || ''}</div>
+                    <div><b>City:</b> ${visitor.city || ''}</div>
+                    <div><b>Region:</b> ${visitor.region || ''}</div>
+                    <div><b>Country:</b> ${visitor.country || ''}</div>
+                    <div><b>ZIP:</b> ${visitor.zip || ''}</div>
+                    <div><b>First Visit:</b> ${visitor.firstVisit ? new Date(visitor.firstVisit).toLocaleString() : ''}</div>
+                    <div><b>Last Visit:</b> ${visitor.lastVisit ? new Date(visitor.lastVisit).toLocaleString() : ''}</div>
+                `;
+                document.getElementById('headersModalContent').textContent = JSON.stringify(headers, null, 2);
+                document.getElementById('headersModal').classList.remove('hidden');
+            }
+            function closeHeadersModal() {
+                document.getElementById('headersModal').classList.add('hidden');
+            }
+            function copyHeadersToClipboard() {
+                const text = document.getElementById('headersModalContent').textContent;
+                navigator.clipboard.writeText(text);
+                alert('Headers copied to clipboard!');
+            }
+            // Load on page load
+            loadRawVisitorsTable();
         </script>
     </body>
 </html>
