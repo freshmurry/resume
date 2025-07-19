@@ -201,6 +201,42 @@
             </div>
         </div>
 
+        <!-- Device Types Chart -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-mobile-alt text-indigo-600 dark:text-indigo-400 mr-2"></i>
+                <h3 class="text-xl font-semibold">Device Types</h3>
+            </div>
+            <canvas id="devicesChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Browser Distribution Chart -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-browser text-orange-600 dark:text-orange-400 mr-2"></i>
+                <h3 class="text-xl font-semibold">Browser Distribution</h3>
+            </div>
+            <canvas id="browsersChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Unique Visitors by Day Chart -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-user-check text-green-600 dark:text-green-400 mr-2"></i>
+                <h3 class="text-xl font-semibold">Unique Visitors by Day</h3>
+            </div>
+            <canvas id="uniqueDayChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- SEO/Keyword Tracking Placeholder -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-search text-pink-600 dark:text-pink-400 mr-2"></i>
+                <h3 class="text-xl font-semibold">SEO & Keyword Tracking</h3>
+            </div>
+            <div id="seoKeywords" class="text-gray-600 dark:text-gray-300">Keyword analytics coming soon...</div>
+        </div>
+
         <script>
             // Load visitor data
             async function loadVisitorData() {
@@ -351,8 +387,133 @@
                     `Last Visit: ${new Date(visitor.lastVisit).toLocaleString()}`);
             }
             
+            async function loadAnalyticsData() {
+                try {
+                    const response = await fetch('/api/analytics?type=all');
+                    const data = await response.json();
+
+                    // Update cards
+                    document.getElementById('totalVisitors').textContent = data.realtime.totalVisitors || 0;
+                    // Today: use uniqueVisitors.byDay (last entry is today)
+                    const todayUnique = data.uniqueVisitors.byDay[data.uniqueVisitors.byDay.length - 1];
+                    document.getElementById('totalVisitorsToday').textContent = todayUnique ? todayUnique.count : 0;
+                    document.getElementById('currentlyOnline').textContent = data.realtime.currentlyOnline || 0;
+                    document.getElementById('activeLastHour').textContent = data.realtime.activeLastHour || 0;
+                    document.getElementById('activeLastDay').textContent = data.realtime.activeLastDay || 0;
+                    document.getElementById('avgSessionDuration').textContent = (data.engagement && typeof data.engagement.avgSessionDuration !== 'undefined') ? `${Math.floor(data.engagement.avgSessionDuration/60)}m ${data.engagement.avgSessionDuration%60}s` : '0m 0s';
+                    document.getElementById('bounceRate').textContent = (data.engagement && typeof data.engagement.bounceRate !== 'undefined') ? `${data.engagement.bounceRate}%` : '0%';
+                    document.getElementById('returnRate').textContent = (data.engagement && typeof data.engagement.returnRate !== 'undefined') ? `${data.engagement.returnRate}%` : '0%';
+                    document.getElementById('totalSessions').textContent = data.engagement.totalSessions || 0;
+
+                    // Hourly Traffic Chart
+                    if (window.hourlyChartInstance) window.hourlyChartInstance.destroy();
+                    const hourlyCtx = document.getElementById('hourlyChart').getContext('2d');
+                    window.hourlyChartInstance = new Chart(hourlyCtx, {
+                        type: 'line',
+                        data: {
+                            labels: data.temporal.hourly.map(d => `${d.hour}:00`),
+                            datasets: [{
+                                label: 'Visitors',
+                                data: data.temporal.hourly.map(d => d.count),
+                                borderColor: '#8B5CF6',
+                                backgroundColor: 'rgba(139,92,246,0.1)',
+                                tension: 0.4
+                            }]
+                        },
+                        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                    });
+
+                    // Daily Traffic Chart
+                    if (window.dailyChartInstance) window.dailyChartInstance.destroy();
+                    const dailyCtx = document.getElementById('dailyChart').getContext('2d');
+                    window.dailyChartInstance = new Chart(dailyCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.temporal.daily.map(d => d.day),
+                            datasets: [{
+                                label: 'Visitors',
+                                data: data.temporal.daily.map(d => d.count),
+                                backgroundColor: '#10B981'
+                            }]
+                        },
+                        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                    });
+
+                    // Monthly Traffic Chart
+                    if (window.monthlyChartInstance) window.monthlyChartInstance.destroy();
+                    const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+                    window.monthlyChartInstance = new Chart(monthlyCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.temporal.monthly.map(d => d.month),
+                            datasets: [{
+                                label: 'Visitors',
+                                data: data.temporal.monthly.map(d => d.count),
+                                backgroundColor: '#3B82F6'
+                            }]
+                        },
+                        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                    });
+
+                    // Device Types Chart
+                    if (window.devicesChartInstance) window.devicesChartInstance.destroy();
+                    const devicesCtx = document.getElementById('devicesChart').getContext('2d');
+                    window.devicesChartInstance = new Chart(devicesCtx, {
+                        type: 'pie',
+                        data: {
+                            labels: data.technical.devices.map(d => d.device),
+                            datasets: [{
+                                label: 'Devices',
+                                data: data.technical.devices.map(d => d.count),
+                                backgroundColor: ['#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#8B5CF6']
+                            }]
+                        },
+                        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+                    });
+
+                    // Browser Distribution Chart
+                    if (window.browsersChartInstance) window.browsersChartInstance.destroy();
+                    const browsersCtx = document.getElementById('browsersChart').getContext('2d');
+                    window.browsersChartInstance = new Chart(browsersCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.technical.browsers.map(d => d.browser),
+                            datasets: [{
+                                label: 'Users',
+                                data: data.technical.browsers.map(d => d.count),
+                                backgroundColor: '#F59E0B'
+                            }]
+                        },
+                        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                    });
+
+                    // Unique Visitors by Day Chart
+                    if (window.uniqueDayChartInstance) window.uniqueDayChartInstance.destroy();
+                    const uniqueDayCtx = document.getElementById('uniqueDayChart').getContext('2d');
+                    window.uniqueDayChartInstance = new Chart(uniqueDayCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.uniqueVisitors.byDay.map(d => d.period),
+                            datasets: [{
+                                label: 'Unique Visitors',
+                                data: data.uniqueVisitors.byDay.map(d => d.count),
+                                backgroundColor: '#6366F1'
+                            }]
+                        },
+                        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                    });
+
+                    // SEO/Keyword Tracking Placeholder (to be implemented in backend)
+                    document.getElementById('seoKeywords').textContent = 'Keyword analytics coming soon...';
+
+                } catch (error) {
+                    console.error('Error loading analytics:', error);
+                    document.getElementById('totalVisitors').textContent = 'Error loading data';
+                }
+            }
+            
             // Load data on page load
-            loadVisitorData();
+            loadAnalyticsData();
         </script>
     </body>
 </html>
