@@ -9,6 +9,10 @@ export async function onRequest(context) {
     const visitorsListData = await env.KV.get(visitorsListKey);
     const visitors = visitorsListData ? JSON.parse(visitorsListData) : [];
 
+    // Get persistent total visitor count
+    const totalKey = 'visitor_count';
+    const totalVisitorCount = parseInt(await env.KV.get(totalKey)) || 0;
+
     if (type === 'all' || type === 'geographic') {
       // Geographic Analytics
       const geographicData = analyzeGeographicData(visitors);
@@ -66,7 +70,7 @@ export async function onRequest(context) {
 
     if (type === 'all' || type === 'realtime') {
       // Real-time Analytics
-      const realtimeData = analyzeRealtimeData(visitors);
+      const realtimeData = analyzeRealtimeData(visitors, totalVisitorCount);
       
       if (type === 'realtime') {
         return new Response(JSON.stringify(realtimeData), {
@@ -92,7 +96,7 @@ export async function onRequest(context) {
         engagement: analyzeEngagementData(visitors),
         technical: analyzeTechnicalData(visitors),
         behavioral: analyzeBehavioralData(visitors),
-        realtime: analyzeRealtimeData(visitors),
+        realtime: analyzeRealtimeData(visitors, totalVisitorCount),
         referrer: analyzeReferrerData(visitors)
       };
 
@@ -292,7 +296,7 @@ function analyzeBehavioralData(visitors) {
 }
 
 // Real-time Analytics
-function analyzeRealtimeData(visitors) {
+function analyzeRealtimeData(visitors, totalVisitorCount) {
   const now = new Date();
   const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000);
   const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
@@ -314,7 +318,7 @@ function analyzeRealtimeData(visitors) {
     currentlyOnline,
     activeLastHour,
     activeLastDay,
-    totalVisitors: visitors.length
+    totalVisitors: totalVisitorCount
   };
 } 
 
