@@ -75,6 +75,15 @@ export async function onRequest(context) {
       }
     }
 
+    if (type === 'all' || type === 'referrer') {
+      const referrerData = analyzeReferrerData(visitors);
+      if (type === 'referrer') {
+        return new Response(JSON.stringify(referrerData), {
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+    }
+
     if (type === 'all') {
       // Return all analytics data
       const allData = {
@@ -83,7 +92,8 @@ export async function onRequest(context) {
         engagement: analyzeEngagementData(visitors),
         technical: analyzeTechnicalData(visitors),
         behavioral: analyzeBehavioralData(visitors),
-        realtime: analyzeRealtimeData(visitors)
+        realtime: analyzeRealtimeData(visitors),
+        referrer: analyzeReferrerData(visitors)
       };
 
       return new Response(JSON.stringify(allData), {
@@ -248,8 +258,8 @@ function analyzeTechnicalData(visitors) {
 function analyzeBehavioralData(visitors) {
   const timeZones = {};
   const visitPatterns = { morning: 0, afternoon: 0, evening: 0, night: 0 };
-  const weekendVisits = 0;
-  const weekdayVisits = 0;
+  let weekendVisits = 0;
+  let weekdayVisits = 0;
 
   visitors.forEach(visitor => {
     const lastVisit = new Date(visitor.lastVisit);
@@ -306,4 +316,22 @@ function analyzeRealtimeData(visitors) {
     activeLastDay,
     totalVisitors: visitors.length
   };
+} 
+
+function analyzeReferrerData(visitors) {
+  const referrers = {};
+  visitors.forEach(visitor => {
+    let ref = visitor.referrer || 'Direct/None';
+    // Simplify referrer (strip protocol, path, etc.)
+    try {
+      if (ref && ref !== 'Direct/None') {
+        ref = (new URL(ref)).hostname;
+      }
+    } catch (e) {}
+    referrers[ref] = (referrers[ref] || 0) + 1;
+  });
+  return Object.entries(referrers)
+    .sort(([,a], [,b]) => b - a)
+    .slice(0, 10)
+    .map(([referrer, count]) => ({ referrer, count }));
 } 

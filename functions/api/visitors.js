@@ -65,6 +65,11 @@ export async function onRequest(context) {
     const currentPage = url.pathname || '/';
     const timestamp = new Date().toISOString();
 
+    // Track the website referrer (first visit)
+    if (visitorData && !visitorData.referrer && referer) {
+      visitorData.referrer = referer;
+    }
+
     if (visitorData) {
       // Update existing visitor
       visitorData.lastVisit = timestamp;
@@ -127,6 +132,7 @@ export async function onRequest(context) {
         sessionCount: 1,
         currentSessionId: generateSessionId(),
         deviceInfo: deviceInfo,
+        referrer: referer, // Track referrer for first visit
         pageViews: [{
           page: currentPage,
           timestamp: timestamp,
