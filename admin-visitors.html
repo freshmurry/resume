@@ -250,6 +250,9 @@
                 
                 if (data.error) {
                     console.error('Analytics error:', data.error);
+                    // Set all tiles to fallback values
+                    updateRealTimeStats(null);
+                    updateEngagementMetrics(null);
                     return;
                 }
 
@@ -274,15 +277,18 @@
                 
             } catch (error) {
                 console.error('Error loading analytics:', error);
+                // Set all tiles to fallback values
+                updateRealTimeStats(null);
+                updateEngagementMetrics(null);
             }
         }
 
         // Update real-time statistics
         function updateRealTimeStats(realtime) {
-            document.getElementById('totalVisitors').textContent = realtime.totalVisitors || 0;
-            document.getElementById('currentlyOnline').textContent = realtime.currentlyOnline || 0;
-            document.getElementById('activeLastHour').textContent = realtime.activeLastHour || 0;
-            document.getElementById('activeLastDay').textContent = realtime.activeLastDay || 0;
+            document.getElementById('totalVisitors').textContent = (realtime && typeof realtime.totalVisitors !== 'undefined') ? realtime.totalVisitors : '0';
+            document.getElementById('currentlyOnline').textContent = (realtime && typeof realtime.currentlyOnline !== 'undefined') ? realtime.currentlyOnline : '0';
+            document.getElementById('activeLastHour').textContent = (realtime && typeof realtime.activeLastHour !== 'undefined') ? realtime.activeLastHour : '0';
+            document.getElementById('activeLastDay').textContent = (realtime && typeof realtime.activeLastDay !== 'undefined') ? realtime.activeLastDay : '0';
         }
 
         // Update engagement metrics
@@ -293,10 +299,10 @@
                 return `${mins}m ${secs}s`;
             };
 
-            document.getElementById('avgSessionDuration').textContent = formatDuration(engagement.avgSessionDuration || 0);
-            document.getElementById('bounceRate').textContent = `${engagement.bounceRate || 0}%`;
-            document.getElementById('returnRate').textContent = `${engagement.returnRate || 0}%`;
-            document.getElementById('totalSessions').textContent = engagement.totalSessions || 0;
+            document.getElementById('avgSessionDuration').textContent = (engagement && typeof engagement.avgSessionDuration !== 'undefined') ? formatDuration(engagement.avgSessionDuration) : '0m 0s';
+            document.getElementById('bounceRate').textContent = (engagement && typeof engagement.bounceRate !== 'undefined') ? `${engagement.bounceRate}%` : '0%';
+            document.getElementById('returnRate').textContent = (engagement && typeof engagement.returnRate !== 'undefined') ? `${engagement.returnRate}%` : '0%';
+            document.getElementById('totalSessions').textContent = (engagement && typeof engagement.totalSessions !== 'undefined') ? engagement.totalSessions : '0';
         }
 
         // Load recent visitors
@@ -621,7 +627,8 @@
                     <div class="space-y-4">
                         <div>
                             <h4 class="text-lg font-semibold text-green-600 dark:text-green-400 mb-3">
-                                <i class="fas fa-file-alt mr-2"></i>Page Views (${visitor.pageViews ? visitor.pageViews.length : 0})
+                                <i class="fas fa-file-alt mr-2"></i>Page Views (${visitor.pageViews ? visitor.pageViews.length : 0})gi add .
+                                
                             </h4>
                             <div class="space-y-2 max-h-64 overflow-y-auto">
                                 ${visitor.pageViews ? visitor.pageViews.map((pageView, index) => `
