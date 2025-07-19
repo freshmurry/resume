@@ -119,208 +119,146 @@
                     </div>
                     <div id="totalSessions" class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">Loading...</div>
                 </div>
+                <!-- Recent Visitors Card -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow col-span-1 md:col-span-2 lg:col-span-4">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-user-clock text-blue-600 dark:text-blue-400 mr-2"></i>
+                        <h3 class="text-xl font-semibold">Recent Visitors</h3>
+                    </div>
+                    <div id="recentVisitors" class="space-y-2">Loading...</div>
+                </div>
+                <!-- Hourly Traffic Chart -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow col-span-1 md:col-span-2 lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-area text-purple-600 dark:text-purple-400 mr-2"></i>
+                        <h3 class="text-xl font-semibold">Hourly Traffic</h3>
+                    </div>
+                    <canvas id="hourlyChart" width="400" height="200"></canvas>
+                </div>
+                <!-- Daily Traffic Chart -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow col-span-1 md:col-span-2 lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-calendar-day text-green-600 dark:text-green-400 mr-2"></i>
+                        <h3 class="text-xl font-semibold">Daily Traffic</h3>
+                    </div>
+                    <canvas id="dailyChart" width="400" height="200"></canvas>
+                </div>
+                <!-- Monthly Traffic Chart -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow col-span-1 md:col-span-2 lg:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-calendar-alt text-blue-600 dark:text-blue-400 mr-2"></i>
+                        <h3 class="text-xl font-semibold">Monthly Traffic</h3>
+                    </div>
+                    <canvas id="monthlyChart" width="400" height="200"></canvas>
+                </div>
+                <!-- Device Types Chart -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-mobile-alt text-indigo-600 dark:text-indigo-400 mr-2"></i>
+                        <h3 class="text-xl font-semibold">Device Types</h3>
+                    </div>
+                    <canvas id="devicesChart" width="400" height="200"></canvas>
+                </div>
+                <!-- Browser Distribution Chart -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-browser text-orange-600 dark:text-orange-400 mr-2"></i>
+                        <h3 class="text-xl font-semibold">Browser Distribution</h3>
+                    </div>
+                    <canvas id="browsersChart" width="400" height="200"></canvas>
+                </div>
+                <!-- Unique Visitors by Day Chart -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-user-check text-green-600 dark:text-green-400 mr-2"></i>
+                        <h3 class="text-xl font-semibold">Unique Visitors by Day</h3>
+                    </div>
+                    <canvas id="uniqueDayChart" width="400" height="200"></canvas>
+                </div>
             </div>
 
-            <!-- Recent Visitors Card -->
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+            <!-- SEO/Keyword Tracking Section -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8 w-full">
                 <div class="flex items-center mb-4">
-                    <i class="fas fa-user-clock text-blue-600 dark:text-blue-400 mr-2"></i>
-                    <h3 class="text-xl font-semibold">Recent Visitors</h3>
+                    <i class="fas fa-search text-pink-600 dark:text-pink-400 mr-2"></i>
+                    <h3 class="text-xl font-semibold">SEO & Keyword Tracking</h3>
                 </div>
-                <div id="recentVisitors" class="space-y-2">Loading...</div>
-            </div>
-
-            <!-- Hourly Traffic Chart -->
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
-                <div class="flex items-center mb-4">
-                    <i class="fas fa-chart-area text-purple-600 dark:text-purple-400 mr-2"></i>
-                    <h3 class="text-xl font-semibold">Hourly Traffic</h3>
-                </div>
-                <canvas id="hourlyChart" width="400" height="200"></canvas>
-            </div>
-
-            <!-- Daily Traffic Chart -->
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
-                <div class="flex items-center mb-4">
-                    <i class="fas fa-calendar-day text-green-600 dark:text-green-400 mr-2"></i>
-                    <h3 class="text-xl font-semibold">Daily Traffic</h3>
-                </div>
-                <canvas id="dailyChart" width="400" height="200"></canvas>
-            </div>
-
-            <!-- Monthly Traffic Chart -->
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
-                <div class="flex items-center mb-4">
-                    <i class="fas fa-calendar-alt text-blue-600 dark:text-blue-400 mr-2"></i>
-                    <h3 class="text-xl font-semibold">Monthly Traffic</h3>
-                </div>
-                <canvas id="monthlyChart" width="400" height="200"></canvas>
-            </div>
-            
-            <!-- All Visitors Table -->
-            <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-4">All Visitors</h2>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm">
+                <div id="seoKeywordsContainer">
+                    <table class="min-w-full text-sm">
                         <thead>
-                            <tr class="border-b dark:border-gray-700">
-                                <th class="text-left py-2">IP Address</th>
-                                <th class="text-left py-2">Location</th>
-                                <th class="text-left py-2">First Visit</th>
-                                <th class="text-left py-2">Last Visit</th>
-                                <th class="text-left py-2">Details</th>
-                            </tr>
+                            <tr><th class="text-left py-2">Keyword</th><th class="text-left py-2">Engine</th><th class="text-left py-2">Count</th></tr>
                         </thead>
-                        <tbody id="visitorsTable">
-                            <tr><td colspan="5" class="py-4 text-center">Loading...</td></tr>
-                        </tbody>
+                        <tbody id="seoKeywordsTable"></tbody>
                     </table>
                 </div>
             </div>
-            
-            <!-- Debug Buttons -->
-            <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-4">Debug Tools</h2>
-                <div class="flex flex-wrap gap-4">
-                    <button onclick="loadRawData()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-                        Load Raw KV Data
-                    </button>
-                    <button onclick="loadHeaders()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
-                        View All Headers
-                    </button>
-                    <button onclick="testGeolocation()" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">
-                        Test Geolocation
-                    </button>
-                    <button onclick="clearKVData()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
-                        Clear KV Data
-                    </button>
-                    <button onclick="testNewSystem()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
-                        Test New System
-                    </button>
+
+            <!-- Raw Visitors Table Section with Controls -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8 w-full">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-database text-blue-600 dark:text-blue-400 mr-2"></i>
+                    <h3 class="text-xl font-semibold">Raw Visitor Data</h3>
                 </div>
-            </div>
-            
-            <!-- Raw Data -->
-            <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-4">Raw Data</h2>
-                <pre id="rawData" class="bg-gray-100 dark:bg-gray-700 p-4 rounded text-xs overflow-x-auto">Click button to load raw data...</pre>
-            </div>
-            
-            <!-- Headers Data -->
-            <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-4">Request Headers</h2>
-                <pre id="headersData" class="bg-gray-100 dark:bg-gray-700 p-4 rounded text-xs overflow-x-auto">Click "View All Headers" to see request headers...</pre>
-            </div>
-        </div>
-
-        <!-- Device Types Chart -->
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
-            <div class="flex items-center mb-4">
-                <i class="fas fa-mobile-alt text-indigo-600 dark:text-indigo-400 mr-2"></i>
-                <h3 class="text-xl font-semibold">Device Types</h3>
-            </div>
-            <canvas id="devicesChart" width="400" height="200"></canvas>
-        </div>
-
-        <!-- Browser Distribution Chart -->
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
-            <div class="flex items-center mb-4">
-                <i class="fas fa-browser text-orange-600 dark:text-orange-400 mr-2"></i>
-                <h3 class="text-xl font-semibold">Browser Distribution</h3>
-            </div>
-            <canvas id="browsersChart" width="400" height="200"></canvas>
-        </div>
-
-        <!-- Unique Visitors by Day Chart -->
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
-            <div class="flex items-center mb-4">
-                <i class="fas fa-user-check text-green-600 dark:text-green-400 mr-2"></i>
-                <h3 class="text-xl font-semibold">Unique Visitors by Day</h3>
-            </div>
-            <canvas id="uniqueDayChart" width="400" height="200"></canvas>
-        </div>
-
-        <!-- SEO/Keyword Tracking Section -->
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
-            <div class="flex items-center mb-4">
-                <i class="fas fa-search text-pink-600 dark:text-pink-400 mr-2"></i>
-                <h3 class="text-xl font-semibold">SEO & Keyword Tracking</h3>
-            </div>
-            <div id="seoKeywordsContainer">
-                <table class="min-w-full text-sm">
-                    <thead>
-                        <tr><th class="text-left py-2">Keyword</th><th class="text-left py-2">Engine</th><th class="text-left py-2">Count</th></tr>
-                    </thead>
-                    <tbody id="seoKeywordsTable"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Raw Visitors Table Section with Controls -->
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
-            <div class="flex items-center mb-4">
-                <i class="fas fa-database text-blue-600 dark:text-blue-400 mr-2"></i>
-                <h3 class="text-xl font-semibold">Raw Visitor Data</h3>
-            </div>
-            <div class="flex flex-wrap gap-4 mb-4">
-                <div>
-                    <label for="rawSortBy" class="block text-xs font-medium mb-1">Sort By</label>
-                    <select id="rawSortBy" class="rounded border-gray-300 dark:bg-gray-800 dark:text-gray-100">
-                        <option value="lastVisit">Last Visit</option>
-                        <option value="firstVisit">First Visit</option>
-                        <option value="ip">IP</option>
-                        <option value="city">City</option>
-                        <option value="country">Country</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="rawFilterBy" class="block text-xs font-medium mb-1">Filter By</label>
-                    <select id="rawFilterBy" class="rounded border-gray-300 dark:bg-gray-800 dark:text-gray-100">
-                        <option value="none">None</option>
-                        <option value="ip">IP</option>
-                        <option value="city">City</option>
-                        <option value="country">Country</option>
-                    </select>
-                </div>
-                <div id="rawFilterValueContainer" style="display:none">
-                    <label for="rawFilterValue" class="block text-xs font-medium mb-1">Value</label>
-                    <input id="rawFilterValue" class="rounded border-gray-300 dark:bg-gray-800 dark:text-gray-100" type="text" placeholder="Enter value..." />
-                </div>
-                <div class="flex items-end">
-                    <button onclick="exportRawVisitorsCSV()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-xs">Export CSV</button>
-                </div>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="min-w-full text-sm">
-                    <thead>
-                        <tr>
-                            <th class="text-left py-2">IP</th>
-                            <th class="text-left py-2">City</th>
-                            <th class="text-left py-2">Region</th>
-                            <th class="text-left py-2">Country</th>
-                            <th class="text-left py-2">ZIP</th>
-                            <th class="text-left py-2">First Visit</th>
-                            <th class="text-left py-2">Last Visit</th>
-                            <th class="text-left py-2">Headers</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rawVisitorsTable"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Modal for All Headers (Enhanced) -->
-        <div id="headersModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-            <div class="flex items-center justify-center min-h-screen p-4">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                    <div class="flex items-center justify-between p-4 border-b dark:border-gray-700">
-                        <h3 class="text-lg font-semibold">Visitor Details & Headers</h3>
-                        <button onclick="closeHeadersModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"><i class="fas fa-times"></i></button>
+                <div class="flex flex-wrap gap-4 mb-4">
+                    <div>
+                        <label for="rawSortBy" class="block text-xs font-medium mb-1">Sort By</label>
+                        <select id="rawSortBy" class="rounded border-gray-300 dark:bg-gray-800 dark:text-gray-100">
+                            <option value="lastVisit">Last Visit</option>
+                            <option value="firstVisit">First Visit</option>
+                            <option value="ip">IP</option>
+                            <option value="city">City</option>
+                            <option value="country">Country</option>
+                        </select>
                     </div>
-                    <div class="p-4">
-                        <div id="headersModalSummary" class="mb-4 text-sm"></div>
-                        <pre id="headersModalContent" class="bg-gray-100 dark:bg-gray-700 p-3 rounded text-xs overflow-x-auto"></pre>
-                        <button onclick="copyHeadersToClipboard()" class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">Copy Headers</button>
+                    <div>
+                        <label for="rawFilterBy" class="block text-xs font-medium mb-1">Filter By</label>
+                        <select id="rawFilterBy" class="rounded border-gray-300 dark:bg-gray-800 dark:text-gray-100">
+                            <option value="none">None</option>
+                            <option value="ip">IP</option>
+                            <option value="city">City</option>
+                            <option value="country">Country</option>
+                        </select>
+                    </div>
+                    <div id="rawFilterValueContainer" style="display:none">
+                        <label for="rawFilterValue" class="block text-xs font-medium mb-1">Value</label>
+                        <input id="rawFilterValue" class="rounded border-gray-300 dark:bg-gray-800 dark:text-gray-100" type="text" placeholder="Enter value..." />
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="exportRawVisitorsCSV()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-xs">Export CSV</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr>
+                                <th class="text-left py-2">IP</th>
+                                <th class="text-left py-2">City</th>
+                                <th class="text-left py-2">Region</th>
+                                <th class="text-left py-2">Country</th>
+                                <th class="text-left py-2">ZIP</th>
+                                <th class="text-left py-2">First Visit</th>
+                                <th class="text-left py-2">Last Visit</th>
+                                <th class="text-left py-2">Headers</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rawVisitorsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal for All Headers (Enhanced) -->
+            <div id="headersModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+                <div class="flex items-center justify-center min-h-screen p-4">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                        <div class="flex items-center justify-between p-4 border-b dark:border-gray-700">
+                            <h3 class="text-lg font-semibold">Visitor Details & Headers</h3>
+                            <button onclick="closeHeadersModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="p-4">
+                            <div id="headersModalSummary" class="mb-4 text-sm"></div>
+                            <pre id="headersModalContent" class="bg-gray-100 dark:bg-gray-700 p-3 rounded text-xs overflow-x-auto"></pre>
+                            <button onclick="copyHeadersToClipboard()" class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">Copy Headers</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -643,8 +581,10 @@
                     _rawVisitorsList = data.visitors_list ? JSON.parse(data.visitors_list) : [];
                     window._allVisitorHeaders = _rawVisitorsList.map(v => v.allHeaders || {});
                     renderRawVisitorsTable();
+                    renderAllVisitorsTable();
                 } catch (error) {
                     document.getElementById('rawVisitorsTable').innerHTML = '<tr><td colspan="8" class="py-4 text-center text-red-500">Error loading data</td></tr>';
+                    document.getElementById('visitorsTable').innerHTML = '<tr><td colspan="5" class="py-4 text-center text-red-500">Error loading data</td></tr>';
                 }
             }
 
@@ -683,6 +623,26 @@
                     </tr>
                 `).join('');
                 document.getElementById('rawVisitorsTable').innerHTML = tableHtml || '<tr><td colspan="8" class="py-4 text-center">No visitors yet</td></tr>';
+            }
+
+            function renderAllVisitorsTable() {
+                const tableBody = document.getElementById('visitorsTable');
+                if (!_rawVisitorsList.length) {
+                    tableBody.innerHTML = '<tr><td colspan="5" class="py-4 text-center">No visitors yet</td></tr>';
+                    return;
+                }
+                const tableHtml = _rawVisitorsList.map(visitor => `
+                    <tr class="border-b dark:border-gray-700">
+                        <td class="py-2 font-mono text-xs">${visitor.ip}</td>
+                        <td class="py-2">${visitor.city || 'Unknown'}, ${visitor.region || ''} ${visitor.zip || ''} ${visitor.country || 'Unknown'}</td>
+                        <td class="py-2">${visitor.firstVisit ? new Date(visitor.firstVisit).toLocaleString() : ''}</td>
+                        <td class="py-2">${visitor.lastVisit ? new Date(visitor.lastVisit).toLocaleString() : ''}</td>
+                        <td class="py-2">
+                            <button onclick="showVisitorDetails('${JSON.stringify(visitor).replace(/'/g, "\\'")}')" class="text-blue-500 hover:text-blue-700 text-xs">View Details</button>
+                        </td>
+                    </tr>
+                `).join('');
+                tableBody.innerHTML = tableHtml;
             }
 
             function exportRawVisitorsCSV() {
