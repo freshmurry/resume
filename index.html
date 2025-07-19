@@ -69,6 +69,23 @@
         .navbar-link.active { @apply bg-white/20 text-white; }
         .ad-container { @apply my-8 p-4 bg-gray-100 rounded-lg text-center; }
         .affiliate-card { @apply bg-white rounded-lg shadow-lg p-6 card-hover border-l-4 border-primary; }
+        
+        /* Scroll offset for fixed navbar */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Add scroll margin to all section anchors */
+        #education, #certifications, #professional-development, #web-projects, #get-in-touch {
+            scroll-margin-top: 80px; /* Adjust based on navbar height */
+        }
+        
+        /* Additional offset for mobile */
+        @media (max-width: 768px) {
+            #education, #certifications, #professional-development, #web-projects, #get-in-touch {
+                scroll-margin-top: 120px; /* More offset for mobile navbar */
+            }
+        }
     </style>
     </head>
 
