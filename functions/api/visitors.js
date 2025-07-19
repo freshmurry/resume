@@ -6,6 +6,30 @@ export async function onRequest(context) {
   const headers = url.searchParams.get('headers') === 'true';
 
   // Add at the top of the onRequest function, after parsing url
+  if (url.searchParams.get('migrate_state_country') === 'true') {
+    const visitorsListKey = 'visitors_list';
+    let visitorsList = [];
+    let updated = 0;
+    try {
+      const existingList = await env.VISITOR_COUNTER.get(visitorsListKey);
+      visitorsList = existingList ? JSON.parse(existingList) : [];
+      visitorsList = visitorsList.map(v => {
+        // Migrate region to state if state is missing
+        if (!v.state && v.region) v.state = v.region;
+        // Migrate country if missing (should always be present, but just in case)
+        if (!v.country && v.countryCode) v.country = v.countryCode;
+        // Remove region/countryCode fields if present
+        if (v.region) delete v.region;
+        if (v.countryCode) delete v.countryCode;
+        updated++;
+        return v;
+      });
+      await env.VISITOR_COUNTER.put(visitorsListKey, JSON.stringify(visitorsList));
+    } catch (error) {
+      return new Response(JSON.stringify({ error: 'Failed to migrate visitors_list', message: error.message }), { status: 500, headers: { 'Content-Type': 'application/json' }});
+    }
+    return new Response(JSON.stringify({ message: 'Migration complete', updated, visitors: visitorsList }), { headers: { 'Content-Type': 'application/json' }});
+  }
   if (url.searchParams.get('raw_visitors_list') === 'true') {
     const visitorsListKey = 'visitors_list';
     let visitorsList = [];
@@ -126,10 +150,12 @@ export async function onRequest(context) {
       await env.VISITOR_COUNTER.put(seoKey, JSON.stringify(seoKeywords));
     }
 
+    // After geolocation logic and before creating/updating visitorData
+    // Ensure state and country are always set correctly
+    // If using geoData, assign to state/country variables
     if (visitorData) {
-      // Update existing visitor
-      visitorData.lastVisit = timestamp;
-      visitorData.visitCount = (visitorData.visitCount || 0) + 1;
+      visitorData.state = state;
+      visitorData.country = country;
       
       // Update page views
       if (!visitorData.pageViews) visitorData.pageViews = [];
@@ -201,6 +227,13 @@ export async function onRequest(context) {
           duration: 0
         }]
       };
+    }
+
+    // After all geolocation logic, always set these fields for visitorData
+    // (before storing visitorData)
+    if (visitorData) {
+      visitorData.state = state;
+      visitorData.country = country;
     }
 
     // Store visitor data
