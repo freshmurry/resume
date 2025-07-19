@@ -268,6 +268,9 @@
                 // Load visitor table and recent visitors
                 loadVisitorTable();
                 loadRecentVisitors();
+
+                // Update referrer analytics (chart and table)
+                updateReferrerAnalytics(data.referrer);
                 
             } catch (error) {
                 console.error('Error loading analytics:', error);
@@ -705,32 +708,32 @@
         // Load data on page load
         loadAnalyticsData();
 
-        // Fetch and render referrer analytics
-        fetch('functions/api/analytics.js?type=referrer')
-          .then(res => res.json())
-          .then(data => {
-            // Render Chart.js bar chart
+        // Update referrer analytics chart and table
+        function updateReferrerAnalytics(referrerData) {
+            if (!referrerData) return;
+            // Destroy previous chart if exists
+            if (charts.referrer) charts.referrer.destroy();
             const ctx = document.getElementById('referrerChart').getContext('2d');
-            new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: data.map(d => d.referrer),
-                datasets: [{
-                  label: 'Visitors',
-                  data: data.map(d => d.count),
-                  backgroundColor: 'rgba(236,72,153,0.7)'
-                }]
-              },
-              options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: { x: { ticks: { color: '#111' } }, y: { beginAtZero: true, ticks: { color: '#111' } } }
-              }
+            charts.referrer = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: referrerData.map(d => d.referrer),
+                    datasets: [{
+                        label: 'Visitors',
+                        data: referrerData.map(d => d.count),
+                        backgroundColor: 'rgba(236,72,153,0.7)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { ticks: { color: '#111' } }, y: { beginAtZero: true, ticks: { color: '#111' } } }
+                }
             });
             // Render table
             document.getElementById('referrerTable').innerHTML =
-              data.map(d => `<tr><td class='py-2'>${d.referrer}</td><td class='py-2'>${d.count}</td></tr>`).join('');
-          });
+                referrerData.map(d => `<tr><td class='py-2'>${d.referrer}</td><td class='py-2'>${d.count}</td></tr>`).join('');
+        }
     </script>
 </body>
 </html> 
