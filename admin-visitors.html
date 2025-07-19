@@ -118,6 +118,15 @@
                 </div>
             </div>
 
+            <!-- Recent Visitors Card -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-user-clock text-blue-600 dark:text-blue-400 mr-2"></i>
+                    <h3 class="text-xl font-semibold">Recent Visitors</h3>
+                </div>
+                <div id="recentVisitors" class="space-y-2">Loading...</div>
+            </div>
+
             <!-- Hourly Traffic Chart -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-8">
                 <div class="flex items-center mb-4">
@@ -464,6 +473,7 @@
                     `Last Visit: ${new Date(visitor.lastVisit).toLocaleString()}`);
             }
             
+            // Only keep the robust analytics script for dashboard cards/charts
             async function loadAnalyticsData() {
                 try {
                     const response = await fetch('/api/analytics?type=all');
@@ -718,6 +728,33 @@
             }
             // Load on page load
             loadRawVisitorsTable();
+        </script>
+        <!-- Load and render recent visitors card (using raw visitors for now) -->
+        <script>
+            async function loadRecentVisitorsCard() {
+                try {
+                    const response = await fetch('/api/visitors?debug=true');
+                    const data = await response.json();
+                    const visitorsList = data.visitors_list ? JSON.parse(data.visitors_list) : [];
+                    const recentVisitors = visitorsList.slice(-5).reverse();
+                    const recentHtml = recentVisitors.map(visitor => `
+                        <div class="flex justify-between items-center py-2 border-b dark:border-gray-700">
+                            <div>
+                                <div class="font-medium">${visitor.city || 'Unknown'}, ${visitor.country || 'Unknown'}</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">${visitor.ip}</div>
+                            </div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                ${visitor.lastVisit ? new Date(visitor.lastVisit).toLocaleString() : ''}
+                            </div>
+                        </div>
+                    `).join('');
+                    document.getElementById('recentVisitors').innerHTML = recentHtml || '<div class="text-gray-500 text-center">No visitors yet</div>';
+                } catch (error) {
+                    document.getElementById('recentVisitors').innerHTML = '<div class="text-red-500 text-center">Error loading recent visitors</div>';
+                }
+            }
+            // Load on page load
+            loadRecentVisitorsCard();
         </script>
     </body>
 </html>
