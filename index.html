@@ -433,11 +433,11 @@
                     </div>
                 </div>
                 <!-- Site Visitors Widget -->
-                <div id="visitor-counter" class="min-h-[50px] mb-8">
+                <div class="min-h-[50px] mb-8">
                     <div class="bg-gradient-to-r from-green-500 to-blue-500 text-white p-4 rounded-lg shadow-lg">
                         <div class="text-center">
                             <h3 class="text-lg font-semibold">Site Visitors</h3>
-                            <p class="text-3xl font-bold" id="visitor-count-value">Loading...</p>
+                            <p class="text-3xl font-bold" id="visitor-counter">Loading...</p>
                             <p class="text-sm opacity-90">Thank you for visiting!</p>
                         </div>
                     </div>
@@ -1163,14 +1163,34 @@
             document.getElementById('weather-widget').innerHTML = '<p class="text-gray-600">Weather unavailable</p>';
         }
         
-        // Simulate visitor counter
-        const visitorCount = Math.floor(Math.random() * 1000) + 500;
-        document.getElementById('visitor-counter').textContent = visitorCount.toLocaleString();
+        // Visitor Counter
+        addEventListener('fetch', event => {
+          event.respondWith(handleRequest(event.request))
+        })
         
-        // Load news feed
-        document.getElementById('news-feed').innerHTML = `
-            <p class="text-sm text-gray-600">Latest proposal management insights and industry updates</p>
-        `;
+        async function handleRequest(request) {
+          // Get the current count
+          let count = await VISITOR_COUNTER.get('count')
+          if (!count) count = 0
+        
+          // Increment
+          count = parseInt(count) + 1
+          await VISITOR_COUNTER.put('count', count.toString())
+        
+          // Build HTML response
+          const html = `
+            <div>
+              Visitors: <span id="visitor-counter">${count.toLocaleString()}</span>
+            </div>
+            <div id="news-feed">
+              <p class="text-sm text-gray-600">Latest proposal management insights and industry updates</p>
+            </div>
+          `
+        
+          return new Response(html, {
+            headers: { 'Content-Type': 'text/html;charset=UTF-8' },
+          })
+        }
         
         // Load GitHub projects
         const projects = [
@@ -1271,4 +1291,5 @@
 <!-- If you need the exact content, please let me know or provide a backup. -->
 
 <!-- ... (Insert the full content of the previous index.html or index-tailwind.html here) ... --> 
+
 
