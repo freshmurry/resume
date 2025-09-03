@@ -1164,33 +1164,19 @@
         }
         
         // Visitor Counter
-        addEventListener('fetch', event => {
-          event.respondWith(handleRequest(event.request))
-        })
-        
-        async function handleRequest(request) {
-          // Get the current count
-          let count = await VISITOR_COUNTER.get('count')
-          if (!count) count = 0
-        
-          // Increment
-          count = parseInt(count) + 1
-          await VISITOR_COUNTER.put('count', count.toString())
-        
-          // Build HTML response
-          const html = `
-            <div>
-              Visitors: <span id="visitor-counter">${count.toLocaleString()}</span>
-            </div>
-            <div id="news-feed">
-              <p class="text-sm text-gray-600">Latest proposal management insights and industry updates</p>
-            </div>
-          `
-        
-          return new Response(html, {
-            headers: { 'Content-Type': 'text/html;charset=UTF-8' },
-          })
+        async function updateVisitorCount() {
+          try {
+            const response = await fetch('/api/visitor-count')
+            const data = await response.json()
+            document.getElementById('visitor-counter').textContent = data.count.toLocaleString()
+          } catch (error) {
+            document.getElementById('visitor-counter').textContent = 'Visitor count unavailable.'
+            console.error('Error fetching visitor count:', error)
+          }
         }
+        
+        // Call on page load
+        updateVisitorCount()
         
         // Load GitHub projects
         const projects = [
@@ -1291,5 +1277,6 @@
 <!-- If you need the exact content, please let me know or provide a backup. -->
 
 <!-- ... (Insert the full content of the previous index.html or index-tailwind.html here) ... --> 
+
 
 
